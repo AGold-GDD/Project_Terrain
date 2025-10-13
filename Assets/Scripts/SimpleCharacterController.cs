@@ -16,8 +16,11 @@ public class SimpleCharacterController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center of screen
+        Cursor.lockState = CursorLockMode.Locked; // Start with cursor locked/hidden for open world
+        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center of screen (uncomment if desired)
     }
+
 
     void Update()
     {
@@ -46,6 +49,19 @@ public class SimpleCharacterController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
+
+    public void ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void HideCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
 
     private void OnCollisionStay(Collision collision)
     {
