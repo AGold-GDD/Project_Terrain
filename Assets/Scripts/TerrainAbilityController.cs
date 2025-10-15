@@ -7,7 +7,7 @@ public class TerrainAbilityController : MonoBehaviour
     public float rechargeRate = 10f;       // Amount recharged per second
 
     [Header("Regeneration Delay")]
-    public float regenerationDelay = 3f;   // Seconds to wait before starting recharge after depletion
+    public float regenerationDelay = 8f;   // Seconds to wait before starting recharge after depletion
 
     private float currentAbilityAmount;
     private float lastDepletedTime = -1f;  // Time when ability last hit zero
