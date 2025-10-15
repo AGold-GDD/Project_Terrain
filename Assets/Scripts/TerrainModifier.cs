@@ -85,7 +85,7 @@ public class TerrainModifier : MonoBehaviour
                     // (Replaces linear falloff: 1f - (distance / radiusInPixels))
                     // This creates a natural curve: full strength at center, smooth taper to 0 at edge
                     float normalizedDistance = distance / radiusInPixels;
-                    float falloff = 0.5f * (1f + Mathf.Cos(normalizedDistance * Mathf.PI));
+                    float falloff = 0.9f * (1f + Mathf.Cos(normalizedDistance * Mathf.PI));
 
                     heights[z, x] += amount * falloff;
                     heights[z, x] = Mathf.Clamp01(heights[z, x]);
