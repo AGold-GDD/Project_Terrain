@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic; // For List, if preferred over array
 
 public class TerrainModifier : MonoBehaviour
 {
     public TerrainAbilityController abilityController;
     public float abilityCostPerSecond = 15f; // Cost per second while holding key
-    public Terrain terrain; // Assign your Terrain object in Inspector
+    public Terrain[] terrains; // Array of all 9 terrains (assign in Inspector)
     public float raiseAmountPerSecond = 0.01f; // How much to raise the terrain per second
     public float modifyRadius = 3f; // Radius around player to modify
 
@@ -38,61 +39,81 @@ public class TerrainModifier : MonoBehaviour
 
     void ModifyTerrainHeight(float amount)
     {
-        TerrainData terrainData = terrain.terrainData;
+        // Loop through all terrains and modify each one where it intersects the modification circle
+        foreach (Terrain terr in terrains)
+        {
+            ModifySingleTerrain(terr, amount);
+        }
+    }
 
-        Vector3 terrainPos = terrain.transform.position;
-        Vector3 playerPos = transform.position - terrainPos;
+    void ModifySingleTerrain(Terrain terr, float amount)
+    {
+        TerrainData terrainData = terr.terrainData;
+        Vector3 terrainPos = terr.transform.position;
+        Vector3 playerPos = transform.position - terrainPos; // Player position relative to this terrain
 
         int heightmapWidth = terrainData.heightmapResolution;
         int heightmapHeight = terrainData.heightmapResolution;
+        float terrainSizeX = terrainData.size.x;
+        float terrainSizeZ = terrainData.size.z;
 
-        float normX = playerPos.x / terrainData.size.x;
-        float normZ = playerPos.z / terrainData.size.z;
+        // Calculate the bounding box of the modification circle in this terrain's local space
+        // Clamp to terrain bounds to find the intersecting area
+        float minX = Mathf.Max(playerPos.x - modifyRadius, 0);
+        float maxX = Mathf.Min(playerPos.x + modifyRadius, terrainSizeX);
+        float minZ = Mathf.Max(playerPos.z - modifyRadius, 0);
+        float maxZ = Mathf.Min(playerPos.z + modifyRadius, terrainSizeZ);
 
-        int posXInTerrain = Mathf.RoundToInt(normX * (heightmapWidth - 1));
-        int posZInTerrain = Mathf.RoundToInt(normZ * (heightmapHeight - 1));
+        // If no intersection, skip this terrain
+        if (minX >= maxX || minZ >= maxZ) return;
 
-        int radiusInPixels = Mathf.RoundToInt(modifyRadius / terrainData.size.x * heightmapWidth);
+        // Convert world bounds to heightmap pixel coordinates
+        int startX = Mathf.RoundToInt(minX / terrainSizeX * (heightmapWidth - 1));
+        int endX = Mathf.RoundToInt(maxX / terrainSizeX * (heightmapWidth - 1));
+        int startZ = Mathf.RoundToInt(minZ / terrainSizeZ * (heightmapHeight - 1));
+        int endZ = Mathf.RoundToInt(maxZ / terrainSizeZ * (heightmapHeight - 1));
 
-        int startX = Mathf.Clamp(posXInTerrain - radiusInPixels, 0, heightmapWidth - 1);
-        int startZ = Mathf.Clamp(posZInTerrain - radiusInPixels, 0, heightmapHeight - 1);
-        int endX = Mathf.Clamp(posXInTerrain + radiusInPixels, 0, heightmapWidth - 1);
-        int endZ = Mathf.Clamp(posZInTerrain + radiusInPixels, 0, heightmapHeight - 1);
+        // Clamp to valid heightmap bounds
+        startX = Mathf.Clamp(startX, 0, heightmapWidth - 1);
+        endX = Mathf.Clamp(endX, 0, heightmapWidth - 1);
+        startZ = Mathf.Clamp(startZ, 0, heightmapHeight - 1);
+        endZ = Mathf.Clamp(endZ, 0, heightmapHeight - 1);
 
         int width = endX - startX + 1;
         int height = endZ - startZ + 1;
 
-        if (width <= 0 || height <= 0)
-        {
-            Debug.LogWarning("Invalid terrain modification area.");
-            return;
-        }
+        if (width <= 0 || height <= 0) return;
 
+        // Get the heightmap data for the intersecting area
         float[,] heights = terrainData.GetHeights(startX, startZ, width, height);
 
+        // Modify heights only for points within the circle
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
             {
-                // Calculate distance from center for smooth falloff
-                float distX = x + startX - posXInTerrain;
-                float distZ = z + startZ - posZInTerrain;
+                // Calculate world position of this heightmap pixel
+                float worldX = (startX + x) / (float)(heightmapWidth - 1) * terrainSizeX;
+                float worldZ = (startZ + z) / (float)(heightmapHeight - 1) * terrainSizeZ;
+
+                // Distance from player to this pixel
+                float distX = worldX - playerPos.x;
+                float distZ = worldZ - playerPos.z;
                 float distance = Mathf.Sqrt(distX * distX + distZ * distZ);
 
-                if (distance <= radiusInPixels)
+                if (distance <= modifyRadius)
                 {
-                    // NEW: Cosine falloff for a smooth, rounded mound shape
-                    // (Replaces linear falloff: 1f - (distance / radiusInPixels))
-                    // This creates a natural curve: full strength at center, smooth taper to 0 at edge
-                    float normalizedDistance = distance / radiusInPixels;
+                    // Cosine falloff for smooth modification
+                    float normalizedDistance = distance / modifyRadius;
                     float falloff = 0.9f * (1f + Mathf.Cos(normalizedDistance * Mathf.PI));
 
                     heights[z, x] += amount * falloff;
-                    heights[z, x] = Mathf.Clamp01(heights[z, x]);
+                    heights[z, x] = Mathf.Clamp01(heights[z, x]); // Clamp to valid height range
                 }
             }
         }
 
+        // Apply the modified heights back to the terrain
         terrainData.SetHeights(startX, startZ, heights);
     }
 }

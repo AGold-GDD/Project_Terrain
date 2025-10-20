@@ -1178,7 +1178,7 @@ GameObject:
   - component: {fileID: 627220228}
   m_Layer: 0
   m_Name: Terrain_Extended_4
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1516,7 +1516,7 @@ GameObject:
   - component: {fileID: 1008847259}
   m_Layer: 0
   m_Name: Terrain_Extended_2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2151,7 +2151,7 @@ GameObject:
   - component: {fileID: 1309514744}
   m_Layer: 0
   m_Name: Terrain_Extended_3
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2568,7 +2568,7 @@ GameObject:
   - component: {fileID: 1547704148}
   m_Layer: 0
   m_Name: Terrain_Extended_8
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3228,7 +3228,7 @@ GameObject:
   - component: {fileID: 1645541557}
   m_Layer: 0
   m_Name: Terrain_Extended_1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3459,7 +3459,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TerrainModifier
   abilityController: {fileID: 1707501165}
   abilityCostPerSecond: 30
-  terrain: {fileID: 1680004734}
+  terrains:
+  - {fileID: 1680004734}
+  - {fileID: 1645541558}
+  - {fileID: 1008847260}
+  - {fileID: 1309514745}
+  - {fileID: 627220229}
+  - {fileID: 2034558457}
+  - {fileID: 1748192683}
+  - {fileID: 2082665678}
+  - {fileID: 1547704149}
   raiseAmountPerSecond: 0.003
   modifyRadius: 10
 --- !u!114 &1707501163
@@ -3653,7 +3662,7 @@ GameObject:
   - component: {fileID: 1748192682}
   m_Layer: 0
   m_Name: Terrain_Extended_6
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4205,7 +4214,7 @@ GameObject:
   - component: {fileID: 2034558456}
   m_Layer: 0
   m_Name: Terrain_Extended_5
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4409,7 +4418,7 @@ GameObject:
   - component: {fileID: 2082665677}
   m_Layer: 0
   m_Name: Terrain_Extended_7
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
