@@ -10,6 +10,7 @@ public class StartingSlope : MonoBehaviour
         if (other.gameObject.tag == "Cart")
         {
             Debug.Log("Starting");
+            slopeMinigame.Timer.SetActive(true);
             slopeMinigame.TimerCheck = true;
             //this.gameObject.SetActive(false);
         }

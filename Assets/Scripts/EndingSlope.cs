@@ -13,6 +13,7 @@ public class EndingSlope : MonoBehaviour
         {
             Debug.Log("Ending");
             slopeMinigame.TimerCheck = false;
+            slopeMinigame.Timer.SetActive(false);
             //this.gameObject.SetActive(false);
         } 
         else if(other.gameObject.tag == "Samples")
