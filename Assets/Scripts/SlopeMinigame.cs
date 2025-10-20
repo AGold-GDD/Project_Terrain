@@ -5,12 +5,17 @@ using UnityEngine.UI;
 public class SlopeMinigame : MonoBehaviour
 {
 
-    public TextMeshProUGUI Timer;
+    public TextMeshProUGUI TimerText;
+    public GameObject Timer;
 
     private float TimeSlope = 0;
 
     public bool TimerCheck = false;
 
+    public void Start()
+    {
+        Timer.SetActive(false);
+    }
     public void Update()
     {
         if (TimerCheck)
@@ -23,7 +28,7 @@ public class SlopeMinigame : MonoBehaviour
         }
 
 
-        Timer.text = $"{TimeSlope:F2}";
+        TimerText.text = $"{TimeSlope:F2}";
     }
 
     public void TimeStart()
