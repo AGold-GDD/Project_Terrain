@@ -14,7 +14,7 @@ public class ChangeGunMode : MonoBehaviour
     public Color laserColor = Color.green;  // Green for mode2
 
     private MeshRenderer gunRenderer;
-    private int currentMode = 1;
+    private int currentMode = 2;  // Changed: Start in mode 2
     private Material[] originalMaterials;
 
     void Start()
@@ -30,7 +30,7 @@ public class ChangeGunMode : MonoBehaviour
         Debug.Log($"GunModeSwitcher: Found MeshRenderer on '{gunRenderer.name}'.");
 
         originalMaterials = gunRenderer.materials;
-        ApplyMaterial(mode1Material);
+        ApplyMaterial(mode2Material);  // Changed: Apply mode 2 material at start
 
         // Laser setup: Ensure references are valid
         if (muzzlePoint == null)
@@ -53,8 +53,8 @@ public class ChangeGunMode : MonoBehaviour
             }
         }
 
-        // Initial state: Disable laser
-        laserRenderer.enabled = false;
+        // Initial state: Enable laser for mode 2  // Changed: Enable laser at start
+        laserRenderer.enabled = true;
         laserRenderer.startColor = laserColor;
         laserRenderer.endColor = laserColor;
         laserRenderer.positionCount = 2;  // Line from start to end point
@@ -150,4 +150,3 @@ public class ChangeGunMode : MonoBehaviour
     }
     */
 }
-

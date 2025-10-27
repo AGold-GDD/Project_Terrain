@@ -11,6 +11,8 @@ public class Win_Teleport : MonoBehaviour
     private int currentIndex = 0; // Tracks which location to use next for advancement
     private Vector3 lastRespawnPoint; // Stores the last player teleported position
     private Vector3 lastBallSpawnPoint; // Stores the last ball teleported position
+    private float teleportCooldown = 0f; // Prevents rapid repeated teleports
+    private float cooldownDuration = 0.5f; // Time in seconds to wait before allowing another teleport
 
     void Start()
     {
@@ -18,29 +20,47 @@ public class Win_Teleport : MonoBehaviour
         if (targetPositions.Count > 0)
         {
             lastRespawnPoint = targetPositions[0];
+            Debug.Log("Initialized lastRespawnPoint to: " + lastRespawnPoint);
         }
         else
         {
             lastRespawnPoint = playerTransform.position;
+            Debug.Log("No targetPositions set; using player's current position as lastRespawnPoint: " + lastRespawnPoint);
         }
 
         if (ballSpawnPositions.Count > 0)
         {
             lastBallSpawnPoint = ballSpawnPositions[0];
+            Debug.Log("Initialized lastBallSpawnPoint to: " + lastBallSpawnPoint);
         }
         else
         {
             lastBallSpawnPoint = ballTransform.position;
+            Debug.Log("No ballSpawnPositions set; using ball's current position as lastBallSpawnPoint: " + lastBallSpawnPoint);
         }
+
+        Debug.Log("targetPositions count: " + targetPositions.Count + ", ballSpawnPositions count: " + ballSpawnPositions.Count);
     }
 
     // This method will be called by the Button's OnClick event (advances to next for both)
     public void Teleport()
     {
+        // Prevent rapid repeated calls
+        if (Time.time < teleportCooldown)
+        {
+            Debug.Log("Teleport on cooldown. Ignoring call.");
+            return;
+        }
+
+        Debug.Log("Teleport called. Current index before increment: " + currentIndex);
+
         if (playerTransform != null && ballTransform != null && targetPositions.Count > 0 && ballSpawnPositions.Count > 0)
         {
             // Increment the index first to advance before teleporting
-            currentIndex = (currentIndex + 1) % Mathf.Min(targetPositions.Count, ballSpawnPositions.Count);
+            int minCount = Mathf.Min(targetPositions.Count, ballSpawnPositions.Count);
+            currentIndex = (currentIndex + 1) % minCount;
+
+            Debug.Log("Index incremented to: " + currentIndex + " (min count: " + minCount + ")");
 
             if (currentIndex >= targetPositions.Count || currentIndex >= ballSpawnPositions.Count)
             {
@@ -50,23 +70,31 @@ public class Win_Teleport : MonoBehaviour
             }
 
             // Teleport player to the new current position in the list
-            playerTransform.position = targetPositions[currentIndex];
-            lastRespawnPoint = targetPositions[currentIndex];
+            Vector3 playerTarget = targetPositions[currentIndex];
+            playerTransform.position = playerTarget;
+            lastRespawnPoint = playerTarget;
+            Debug.Log("Player teleported to: " + playerTarget);
 
             // Teleport ball to the corresponding position
-            ballTransform.position = ballSpawnPositions[currentIndex];
-            lastBallSpawnPoint = ballSpawnPositions[currentIndex];
+            Vector3 ballTarget = ballSpawnPositions[currentIndex];
+            ballTransform.position = ballTarget;
+            lastBallSpawnPoint = ballTarget;
+            Debug.Log("Ball teleported to: " + ballTarget);
 
             // Optional: Reset velocities if using physics
             ResetVelocities();
 
-            Debug.Log($"Advanced to location {currentIndex}. Next will be {(currentIndex + 1) % Mathf.Min(targetPositions.Count, ballSpawnPositions.Count)}.");
+            // Set cooldown to prevent immediate re-calls
+            teleportCooldown = Time.time + cooldownDuration;
+
+            Debug.Log($"Advanced to location {currentIndex}. Next will be {(currentIndex + 1) % minCount}. Cooldown active until: " + teleportCooldown);
         }
         else
         {
-            Debug.LogError("Transforms not assigned or one or both lists are empty!");
+            Debug.LogError("Transforms not assigned or one or both lists are empty! Player: " + (playerTransform != null) + ", Ball: " + (ballTransform != null) + ", Target count: " + targetPositions.Count + ", Ball count: " + ballSpawnPositions.Count);
         }
     }
+
     // Respawn only the player to the last respawn point
     private void RespawnPlayer()
     {
@@ -82,7 +110,7 @@ public class Win_Teleport : MonoBehaviour
                 rb.angularVelocity = Vector3.zero;
             }
 
-            Debug.Log("Player respawned to last respawn point.");
+            Debug.Log("Player respawned to last respawn point: " + lastRespawnPoint);
         }
         else
         {
@@ -105,7 +133,7 @@ public class Win_Teleport : MonoBehaviour
                 rb.angularVelocity = Vector3.zero;
             }
 
-            Debug.Log("Ball respawned to last respawn point.");
+            Debug.Log("Ball respawned to last respawn point: " + lastBallSpawnPoint);
         }
         else
         {
@@ -135,6 +163,7 @@ public class Win_Teleport : MonoBehaviour
     public void ResetIndex()
     {
         currentIndex = 0;
+        teleportCooldown = 0f; // Reset cooldown on index reset
         if (targetPositions.Count > 0)
         {
             lastRespawnPoint = targetPositions[0];
@@ -143,6 +172,7 @@ public class Win_Teleport : MonoBehaviour
         {
             lastBallSpawnPoint = ballSpawnPositions[0];
         }
+        Debug.Log("Index reset to 0. Last points updated. Cooldown reset.");
     }
 
     void Update()
