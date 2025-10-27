@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI; // Required for Slider
 using System.Collections.Generic; // For List, if preferred over array
 
 public class TerrainModifier : MonoBehaviour
@@ -7,11 +8,39 @@ public class TerrainModifier : MonoBehaviour
     public float abilityCostPerSecond = 15f; // Cost per second while holding key
     public Terrain[] terrains; // Array of all 9 terrains (assign in Inspector)
     public float raiseAmountPerSecond = 0.01f; // How much to raise the terrain per second
-    public float modifyRadius = 3f; // Radius around player to modify
+    public float modifyRadius = 3f; // Radius around modification point to modify
+    public Transform muzzle; // Assign the muzzle transform in Inspector (e.g., the gun's muzzle point)
+    public float maxRayDistance = 100f; // Maximum distance for the raycast
+    public float radiusChangeSpeed = 1f; // How much the radius changes per scroll unit
+    public Slider radiusSlider; // Assign the UI Slider in Inspector (read-only reflection)
+
+    void Start()
+    {
+        // Initialize slider to match current radius (read-only)
+        if (radiusSlider != null)
+        {
+            radiusSlider.minValue = 1f;
+            radiusSlider.maxValue = 10f;
+            radiusSlider.value = modifyRadius;
+            // Slider is read-only; no event listener needed
+        }
+    }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.E)) // Press E to raise terrain
+        // Adjust radius with mouse wheel
+        if (Input.mouseScrollDelta.y != 0)
+        {
+            modifyRadius += Input.mouseScrollDelta.y * radiusChangeSpeed;
+            modifyRadius = Mathf.Clamp(modifyRadius, 1f, 10f);
+            // Update slider to reflect new radius
+            if (radiusSlider != null)
+            {
+                radiusSlider.value = modifyRadius;
+            }
+        }
+
+        if (Input.GetMouseButton(0)) // Press left click to raise terrain
         {
             float costThisFrame = abilityCostPerSecond * Time.deltaTime;
             if (abilityController.UseAbility(costThisFrame))
@@ -23,7 +52,7 @@ public class TerrainModifier : MonoBehaviour
                 Debug.Log("Not enough ability to raise terrain.");
             }
         }
-        else if (Input.GetKey(KeyCode.Q)) // Press Q to lower terrain
+        else if (Input.GetMouseButton(1)) // Press right click to lower terrain
         {
             float costThisFrame = abilityCostPerSecond * Time.deltaTime;
             if (abilityController.UseAbility(costThisFrame))
@@ -39,18 +68,29 @@ public class TerrainModifier : MonoBehaviour
 
     void ModifyTerrainHeight(float amount)
     {
-        // Loop through all terrains and modify each one where it intersects the modification circle
-        foreach (Terrain terr in terrains)
+        // Cast a ray from the muzzle forward
+        Ray ray = new Ray(muzzle.position, muzzle.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, maxRayDistance))
         {
-            ModifySingleTerrain(terr, amount);
+            Vector3 modifyPos = hit.point;
+            // Loop through all terrains and modify each one where it intersects the modification circle
+            foreach (Terrain terr in terrains)
+            {
+                ModifySingleTerrain(terr, amount, modifyPos);
+            }
+        }
+        else
+        {
+            Debug.Log("No terrain hit by raycast.");
         }
     }
 
-    void ModifySingleTerrain(Terrain terr, float amount)
+    void ModifySingleTerrain(Terrain terr, float amount, Vector3 modifyPos)
     {
         TerrainData terrainData = terr.terrainData;
         Vector3 terrainPos = terr.transform.position;
-        Vector3 playerPos = transform.position - terrainPos; // Player position relative to this terrain
+        Vector3 localModifyPos = modifyPos - terrainPos; // Modification position relative to this terrain
 
         int heightmapWidth = terrainData.heightmapResolution;
         int heightmapHeight = terrainData.heightmapResolution;
@@ -59,10 +99,10 @@ public class TerrainModifier : MonoBehaviour
 
         // Calculate the bounding box of the modification circle in this terrain's local space
         // Clamp to terrain bounds to find the intersecting area
-        float minX = Mathf.Max(playerPos.x - modifyRadius, 0);
-        float maxX = Mathf.Min(playerPos.x + modifyRadius, terrainSizeX);
-        float minZ = Mathf.Max(playerPos.z - modifyRadius, 0);
-        float maxZ = Mathf.Min(playerPos.z + modifyRadius, terrainSizeZ);
+        float minX = Mathf.Max(localModifyPos.x - modifyRadius, 0);
+        float maxX = Mathf.Min(localModifyPos.x + modifyRadius, terrainSizeX);
+        float minZ = Mathf.Max(localModifyPos.z - modifyRadius, 0);
+        float maxZ = Mathf.Min(localModifyPos.z + modifyRadius, terrainSizeZ);
 
         // If no intersection, skip this terrain
         if (minX >= maxX || minZ >= maxZ) return;
@@ -96,9 +136,9 @@ public class TerrainModifier : MonoBehaviour
                 float worldX = (startX + x) / (float)(heightmapWidth - 1) * terrainSizeX;
                 float worldZ = (startZ + z) / (float)(heightmapHeight - 1) * terrainSizeZ;
 
-                // Distance from player to this pixel
-                float distX = worldX - playerPos.x;
-                float distZ = worldZ - playerPos.z;
+                // Distance from modification point to this pixel
+                float distX = worldX - localModifyPos.x;
+                float distZ = worldZ - localModifyPos.z;
                 float distance = Mathf.Sqrt(distX * distX + distZ * distZ);
 
                 if (distance <= modifyRadius)
