@@ -6,12 +6,15 @@ public class SimpleCharacterController : MonoBehaviour
     public float jumpForce = 5f;
     public float mouseSensitivity = 100f;
 
-    private Rigidbody rb;
+    public Rigidbody rb;
     private bool isGrounded;
 
     private float xRotation = 0f; // For vertical camera rotation
 
     public Transform playerCamera; // Assign your camera transform here in Inspector
+
+    public bool isRiding = false; // Add this line
+
 
     void Start()
     {
@@ -29,8 +32,7 @@ public class SimpleCharacterController : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Clamp vertical rotation
-
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
@@ -38,10 +40,23 @@ public class SimpleCharacterController : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
-        // Move relative to player orientation
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
         Vector3 newVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
         rb.linearVelocity = newVelocity;
+
+        if (isRiding)
+        {
+            // Still allow camera rotation while riding
+            mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            transform.Rotate(Vector3.up * mouseX);
+
+            return; // Skip movement
+        }
 
         // Jump
         if (Input.GetButtonDown("Jump") && isGrounded)
@@ -49,6 +64,7 @@ public class SimpleCharacterController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
+
 
     public void ShowCursor()
     {
