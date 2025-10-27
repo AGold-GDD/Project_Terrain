@@ -36,13 +36,7 @@ public class CartRespawn : MonoBehaviour
 
             if(checkpointcheck.CheckPoint == true)
             {
-                Rock.transform.position = RespawnRPoint.position;
-
-                if (cartRb != null)
-                {
-                    RockRb.linearVelocity = Vector3.zero;
-                    RockRb.angularVelocity = Vector3.zero;
-                }
+                GameObject rocks = Instantiate(Rock, RespawnRPoint.position, RespawnRPoint.rotation);
             }
         }
     }

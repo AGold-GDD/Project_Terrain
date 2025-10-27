@@ -3,6 +3,11 @@ using UnityEngine;
 public class CheckPointCheck : MonoBehaviour
 {
     public GameObject Respawner;
+
+    public Transform playerPoint;
+   
+    public PlayerRespawner playerRespawner;
+
     public bool CheckPoint = false;
 
     public void Start()
@@ -17,6 +22,8 @@ public class CheckPointCheck : MonoBehaviour
             Debug.Log("check");
             Respawner.SetActive(true);
             CheckPoint = true;
+            playerRespawner.respawnPoint = playerPoint;
+            this.gameObject.SetActive(false);
         }
 
     }
