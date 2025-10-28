@@ -4,9 +4,10 @@ public class CheckPointCheck : MonoBehaviour
 {
     public GameObject Respawner;
 
-    public Transform playerPoint;
+    //public Transform playerPoint;
+
    
-    public PlayerRespawner playerRespawner;
+    //public PlayerRespawner playerRespawner;
 
     public bool CheckPoint = false;
 
@@ -17,14 +18,13 @@ public class CheckPointCheck : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Rock")
+        if (other.gameObject.tag == "Rock" && !CheckPoint)
         {
             Debug.Log("check");
             Respawner.SetActive(true);
             CheckPoint = true;
-            playerRespawner.respawnPoint = playerPoint;
+            //playerRespawner.respawnPoint = playerPoint;
             this.gameObject.SetActive(false);
         }
-
     }
 }

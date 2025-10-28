@@ -6,7 +6,7 @@ public class TheRock : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "0")
+        if (collision.gameObject.tag == "Ground")
         {
             this.gameObject.SetActive(false);
         }
