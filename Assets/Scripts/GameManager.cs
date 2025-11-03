@@ -30,6 +30,6 @@ public class GameManager : MonoBehaviour
 
     void UpdateUI()
     {
-        collectibleCounterText.text = "Spheres Collected: " + collectedCount;
+        collectibleCounterText.text = "USB Keys Collected: " + collectedCount;
     }
 }

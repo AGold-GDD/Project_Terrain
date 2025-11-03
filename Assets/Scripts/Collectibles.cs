@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CollectibleSphere : MonoBehaviour
+public class Collectibles : MonoBehaviour
 {
     // This method is called when any trigger collider attached to this GameObject or its children is entered
     private void OnTriggerEnter(Collider other)
