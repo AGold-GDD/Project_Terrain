@@ -8,11 +8,12 @@ TagManager:
   - Ball
   - Cart
   - Rock
+  - Target
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - ThePlayer
   - Water
   - UI
   - 
