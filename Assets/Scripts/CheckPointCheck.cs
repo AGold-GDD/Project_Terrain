@@ -4,10 +4,10 @@ public class CheckPointCheck : MonoBehaviour
 {
     public GameObject Respawner;
 
-    //public Transform playerPoint;
+    //player respawn point
+    public GameObject RSPoint;
 
-   
-    //public PlayerRespawner playerRespawner;
+    public CartMinigame cartmini;
 
     public bool CheckPoint = false;
 
@@ -23,7 +23,7 @@ public class CheckPointCheck : MonoBehaviour
             Debug.Log("check");
             Respawner.SetActive(true);
             CheckPoint = true;
-            //playerRespawner.respawnPoint = playerPoint;
+            cartmini.playerRespawnPoint = RSPoint;
             this.gameObject.SetActive(false);
         }
     }

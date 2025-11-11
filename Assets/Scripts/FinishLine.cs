@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FinishLine : MonoBehaviour
 {
+    /*
     public GameObject FinishText;
 
     public void Start()
@@ -16,4 +17,6 @@ public class FinishLine : MonoBehaviour
             FinishText.SetActive(true);
         }
     }
+    */
 }
+
