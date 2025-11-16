@@ -15,6 +15,14 @@ public class SimpleCharacterController : MonoBehaviour
 
     public bool isRiding = false; // Add this line
 
+    public AudioSource jumpAudioSource;
+
+    public AudioSource footstepAudioSource;  // Assign in Inspector
+    public float stepInterval = 0.5f;  // Time between steps (adjust for pace)
+    private float stepTimer = 0f;
+
+
+
 
     void Start()
     {
@@ -44,6 +52,24 @@ public class SimpleCharacterController : MonoBehaviour
         Vector3 newVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
         rb.linearVelocity = newVelocity;
 
+        if (isGrounded && (moveX != 0 || moveZ != 0) && !isRiding)
+        {
+            stepTimer -= Time.deltaTime;
+            if (stepTimer <= 0)
+            {
+                if (footstepAudioSource != null)
+                {
+                    footstepAudioSource.Play();
+                }
+                stepTimer = stepInterval;  // Reset timer
+            }
+        }
+        else
+        {
+            stepTimer = 0f;  // Reset if not moving or not grounded
+        }
+
+
         if (isRiding)
         {
             // Still allow camera rotation while riding
@@ -62,6 +88,10 @@ public class SimpleCharacterController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            if (jumpAudioSource != null)
+            {
+                jumpAudioSource.Play(); //Play jumping sound effect
+            }
         }
     }
 
