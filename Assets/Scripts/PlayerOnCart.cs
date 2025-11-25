@@ -21,7 +21,7 @@ public class CartSeatTrigger : MonoBehaviour
 
                 // Snap to seat position
                 other.transform.SetParent(seatPoint);
-                other.transform.localPosition = Vector3.zero + new Vector3(0,2,0);
+                other.transform.localPosition = Vector3.zero + new Vector3(0,8,0);
                 other.transform.localRotation = Quaternion.identity;
             }
         }

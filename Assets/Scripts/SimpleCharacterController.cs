@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SimpleCharacterController : MonoBehaviour
 {
     public float speed = 5f;
     public float jumpForce = 5f;
-    public float mouseSensitivity = 100f;
+    public float mouseSensitivity; //public float mouseSensitivity = 100f;
+
+    // mouse sensitivity stuff
+    public Slider MouseSlider;
 
     public Rigidbody rb;
     private bool isGrounded;
@@ -35,6 +39,9 @@ public class SimpleCharacterController : MonoBehaviour
 
     void Update()
     {
+        // setting the mouse sensit
+        mouseSensitivity = 100 * MouseSlider.value;
+
         // Mouse look
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;

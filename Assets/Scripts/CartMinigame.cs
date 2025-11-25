@@ -17,10 +17,11 @@ public class CartMinigame : MonoBehaviour
         {
             Player.position = currentResPoint.position;
         }
-
+        /*
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             SceneManager.LoadScene("MainLobby");
         }
+        */
     }
 }
