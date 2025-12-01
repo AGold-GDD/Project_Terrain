@@ -18,11 +18,12 @@ public class TheLift : MonoBehaviour
             Door.SetActive(false);
             //Debug.Log("reached");
 
-            if (!(transform.position.y <= 101))
+            if (!(transform.position.y <= 101.5))
             {
                 transform.position -= Vector3.up * speed * Time.deltaTime;
+                transform.localEulerAngles = new Vector3(0, -90, 0);
             }
-            else if (transform.position.y <= 101)
+            else if (transform.position.y <= 101.5)
             {
                 transform.position = transform.position;
             }
@@ -31,13 +32,14 @@ public class TheLift : MonoBehaviour
         {
             Door.SetActive(true);
             //Debug.Log("reached");
-            if (!(transform.position.y >= 115))
+            if (!(transform.position.y >= 113))
             {
                 transform.position += Vector3.up * speed * Time.deltaTime;
             }
             else if (transform.position.y >= 113)
             {
                 transform.position = transform.position;
+                transform.localEulerAngles = new Vector3(15, -90, 0);
             }
         }
     }
