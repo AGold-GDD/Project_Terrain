@@ -1471,6 +1471,54 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: repelForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: attractForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: spherePrefab
+      value: 
+      objectReference: {fileID: 9063531382413399694, guid: b2def5a358b17be4d96f21d2e58ea470, type: 3}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: mode1Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 4cddc13ed15c39c4b84cebb5fa2a3433, type: 2}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: mode2Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 55d4fe78fe4ce9449b2869b738860fec, type: 2}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: mode3Material
+      value: 
+      objectReference: {fileID: 2100000, guid: e0841b96ce03a3c47b81bf7d512cdcb5, type: 2}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: attractRepelRange
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: terrainModifyStrength
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: laserLayerMaskMode1.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: laserLayerMaskMode23.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: attractRepelLayerMask.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: sphereShootingLayerMask.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6890077183774346034, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
       propertyPath: 'terrains.Array.data[0]'
       value: 
@@ -1509,15 +1557,15 @@ PrefabInstance:
       objectReference: {fileID: 158855152}
     - target: {fileID: 7168243815346979190, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 482.1455
+      value: 443.897
       objectReference: {fileID: 0}
     - target: {fileID: 7168243815346979190, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.264634
+      value: 9.132
       objectReference: {fileID: 0}
     - target: {fileID: 7168243815346979190, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 217.19908
+      value: 224.187
       objectReference: {fileID: 0}
     - target: {fileID: 7168243815346979190, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1583,11 +1631,58 @@ PrefabInstance:
       propertyPath: 'terrains.Array.data[8]'
       value: 
       objectReference: {fileID: 158855152}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5697850794031124169, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5106452850105709972, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1842783961}
   m_SourcePrefab: {fileID: 100100000, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+--- !u!1 &1842783960 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5106452850105709972, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+  m_PrefabInstance: {fileID: 1842783959}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1842783961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842783960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f50ffd0444b0bf43b9f02ac39782af5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiGunMode
+  mode1Material: {fileID: 0}
+  mode2Material: {fileID: 0}
+  mode3Material: {fileID: 0}
+  muzzlePoint: {fileID: 0}
+  laserRenderer: {fileID: 0}
+  laserLayerMaskMode1:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  laserLayerMaskMode23:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  maxLaserDistance: 100
+  terrainModifyRadius: 5
+  terrainModifyStrength: 0.1
+  attractRepelLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  attractRepelRange: 50
+  attractForce: 10
+  repelForce: 10
+  sphereShootingLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  spherePrefab: {fileID: 0}
+  shootForce: 20
+  sphereSpreadAngle: 10
 --- !u!1 &2128673551
 GameObject:
   m_ObjectHideFlags: 0

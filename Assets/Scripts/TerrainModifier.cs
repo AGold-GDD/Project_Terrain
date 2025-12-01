@@ -155,5 +155,8 @@ public class TerrainModifier : MonoBehaviour
 
         // Apply the modified heights back to the terrain
         terrainData.SetHeights(startX, startZ, heights);
+
+        // Force update to visuals and collider
+        terr.Flush();
     }
 }

@@ -193,7 +193,6 @@ GameObject:
   - component: {fileID: 2601905288875245712}
   - component: {fileID: 5690390718299490504}
   - component: {fileID: 8039508338982950239}
-  - component: {fileID: 3822209927052362828}
   m_Layer: 0
   m_Name: Sphere Collectible
   m_TagString: Untagged
@@ -322,15 +321,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3822209927052362828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9063531382413399694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ecd9e00b33dad45922d965c1c5e74e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CollectibleSphere
