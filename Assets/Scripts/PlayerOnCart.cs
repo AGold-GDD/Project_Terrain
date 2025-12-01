@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class CartSeatTrigger : MonoBehaviour
 {
-    public Transform seatPoint; // assign SeatPosition in Inspector
+    public Transform seatPoint;
     private SimpleCharacterController currentPlayer;
+    private Quaternion savedRotation;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,14 +15,18 @@ public class CartSeatTrigger : MonoBehaviour
             {
                 currentPlayer = controller;
 
-                // Disable player movement
+                // Save original rotation BEFORE parenting
+                savedRotation = other.transform.rotation;
+
                 controller.isRiding = true;
-                controller.rb.isKinematic = true; // stop external physics
+                controller.rb.isKinematic = true;
                 controller.rb.linearVelocity = Vector3.zero;
 
-                // Snap to seat position
+                // Parent player to seatpoint
                 other.transform.SetParent(seatPoint);
-                other.transform.localPosition = Vector3.zero + new Vector3(0,8,0);
+
+                // Snap to local position without inheriting rotation
+                other.transform.localPosition = new Vector3(0, 8, 0);
                 other.transform.localRotation = Quaternion.identity;
             }
         }
@@ -31,12 +36,17 @@ public class CartSeatTrigger : MonoBehaviour
     {
         if (currentPlayer != null && Input.GetButtonDown("Jump"))
         {
-            // Unmount player
             currentPlayer.rb.isKinematic = false;
             currentPlayer.isRiding = false;
-            currentPlayer.transform.SetParent(null);
 
-            // Small upward hop so they don’t instantly collide again
+            // Remove parent
+            Transform playerTransform = currentPlayer.transform;
+            playerTransform.SetParent(null);
+
+            // Restore world rotation so camera is normal again
+            playerTransform.rotation = savedRotation;
+
+            // Hop off
             currentPlayer.rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
 
             currentPlayer = null;
