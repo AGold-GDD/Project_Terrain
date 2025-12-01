@@ -1038,7 +1038,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2151,9 +2151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef72cdba27520c4f8bd05ac936a9c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlopeMinigame
-  TimerText: {fileID: 1603747436}
-  Timer: {fileID: 1603747434}
-  TimerCheck: 0
+  Respawner: {fileID: 0}
+  PlayerrespawnPoint: {fileID: 0}
 --- !u!4 &958469590
 Transform:
   m_ObjectHideFlags: 0
@@ -2634,7 +2633,13 @@ MonoBehaviour:
   speed: 8
   jumpForce: 15
   mouseSensitivity: 135
+  MouseSlider: {fileID: 0}
+  rb: {fileID: 0}
   playerCamera: {fileID: 393218454}
+  isRiding: 0
+  jumpAudioSource: {fileID: 0}
+  footstepAudioSource: {fileID: 0}
+  stepInterval: 0.5
 --- !u!54 &1126206278
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3179,7 +3184,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CartRespawn
   RespawnPoint: {fileID: 580644555}
+  RespawnRPoint: {fileID: 0}
   Cart: {fileID: 1114476481}
+  Rock: {fileID: 0}
+  checkpointcheck: {fileID: 0}
 --- !u!136 &1224300399
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5342,7 +5350,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 9e5e95b598dc9f94d9f2f04b5317a55b, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -5420,9 +5428,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TerrainModifier
   abilityController: {fileID: 1707501165}
   abilityCostPerSecond: 30
-  terrain: {fileID: 1680004734}
+  terrains: []
   raiseAmountPerSecond: 0.003
   modifyRadius: 10
+  muzzle: {fileID: 0}
+  maxRayDistance: 100
+  radiusChangeSpeed: 1
+  radiusSlider: {fileID: 0}
 --- !u!114 &1707501163
 MonoBehaviour:
   m_ObjectHideFlags: 0
