@@ -27,14 +27,14 @@ public class PlayerPauseMenu : MonoBehaviour
     public void Paused()
     {
         IsPaused = true;
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
     }
 
     public void Resume()
     {
         IsPaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
     }
 
