@@ -490,7 +490,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 9e5e95b598dc9f94d9f2f04b5317a55b, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -4996,7 +4996,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 9e5e95b598dc9f94d9f2f04b5317a55b, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -6232,7 +6232,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 9e5e95b598dc9f94d9f2f04b5317a55b, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -7707,7 +7707,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 9e5e95b598dc9f94d9f2f04b5317a55b, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -9510,7 +9510,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 9e5e95b598dc9f94d9f2f04b5317a55b, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -14087,7 +14087,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 9e5e95b598dc9f94d9f2f04b5317a55b, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -14774,7 +14774,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 9e5e95b598dc9f94d9f2f04b5317a55b, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -14968,7 +14968,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -16786,6 +16786,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4501920109162739676, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4546565111189200814, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: m_fontSize
       value: 36
@@ -16874,6 +16878,38 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1930432332}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[1]'
+      value: 
+      objectReference: {fileID: 56473918}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[2]'
+      value: 
+      objectReference: {fileID: 864733164}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[3]'
+      value: 
+      objectReference: {fileID: 716203962}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1064128813}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1064128813}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[6]'
+      value: 
+      objectReference: {fileID: 1836710958}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[7]'
+      value: 
+      objectReference: {fileID: 611407048}
     - target: {fileID: 6803288070810235763, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -16967,37 +17003,41 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: terrains.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: raiseAmountPerSecond
       value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: 'terrains.Array.data[0]'
       value: 
-      objectReference: {fileID: 1836710958}
+      objectReference: {fileID: 1930432332}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: 'terrains.Array.data[1]'
       value: 
-      objectReference: {fileID: 864733164}
+      objectReference: {fileID: 56473918}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: 'terrains.Array.data[2]'
       value: 
-      objectReference: {fileID: 716203962}
+      objectReference: {fileID: 864733164}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: 'terrains.Array.data[3]'
       value: 
-      objectReference: {fileID: 1064128813}
+      objectReference: {fileID: 716203962}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: 'terrains.Array.data[4]'
       value: 
-      objectReference: {fileID: 1836710958}
+      objectReference: {fileID: 1064128813}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: 'terrains.Array.data[5]'
       value: 
-      objectReference: {fileID: 611407048}
+      objectReference: {fileID: 1836710958}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: 'terrains.Array.data[6]'
       value: 
-      objectReference: {fileID: 1930432332}
+      objectReference: {fileID: 611407048}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
