@@ -1189,7 +1189,7 @@ PrefabInstance:
     - target: {fileID: 70559719970375037, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: rb
       value: 
-      objectReference: {fileID: 1401540311}
+      objectReference: {fileID: 1001795176}
     - target: {fileID: 1439748811107696902, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -1277,11 +1277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7472866126383412580, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 121
+      value: 120.89
       objectReference: {fileID: 0}
     - target: {fileID: 7472866126383412580, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.51
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7472866126383412580, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3517,6 +3517,11 @@ Transform:
   - {fileID: 374502831}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -2.217, y: -309.527, z: -8.972}
+--- !u!54 &1001795176 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 321186704847920832, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+  m_PrefabInstance: {fileID: 294739658}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1008847258
 GameObject:
   m_ObjectHideFlags: 0
@@ -4640,16 +4645,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1920, y: 1080}
   m_SizeDelta: {x: 3840, y: 2160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!54 &1401540311 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 321186704847920832, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
-  m_PrefabInstance: {fileID: 294739658}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1401540315 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7472866126383412580, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
-  m_PrefabInstance: {fileID: 294739658}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1421245600
 GameObject:
   m_ObjectHideFlags: 0
@@ -6775,7 +6770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6344cc2f1d5464b478bc725af10fb5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Win_Teleport
-  playerTransform: {fileID: 1401540315}
+  playerTransform: {fileID: 0}
   ballTransform: {fileID: 1232205363}
   targetPositions:
   - {x: 119.653625, y: 11.368171, z: 919.9602}
@@ -7659,6 +7654,7 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 65629973}
   - {fileID: 697507096}
+  - {fileID: 294739658}
   - {fileID: 1288365742}
   - {fileID: 294580435}
   - {fileID: 10697008}
@@ -7681,4 +7677,3 @@ SceneRoots:
   - {fileID: 562256946}
   - {fileID: 833226608}
   - {fileID: 1858187826}
-  - {fileID: 294739658}

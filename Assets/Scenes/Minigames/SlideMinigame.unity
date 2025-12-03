@@ -14496,6 +14496,38 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1930432332}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[1]'
+      value: 
+      objectReference: {fileID: 56473918}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[2]'
+      value: 
+      objectReference: {fileID: 864733164}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[3]'
+      value: 
+      objectReference: {fileID: 716203962}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1064128813}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1064128813}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[6]'
+      value: 
+      objectReference: {fileID: 1836710958}
+    - target: {fileID: 6579824282281508640, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[7]'
+      value: 
+      objectReference: {fileID: 611407048}
     - target: {fileID: 6803288070810235763, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -14581,13 +14613,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: terrains.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: raiseAmountPerSecond
       value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
       propertyPath: 'terrains.Array.data[0]'
       value: 
+      objectReference: {fileID: 1930432332}
+    - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[1]'
+      value: 
+      objectReference: {fileID: 56473918}
+    - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[2]'
+      value: 
+      objectReference: {fileID: 864733164}
+    - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[3]'
+      value: 
+      objectReference: {fileID: 716203962}
+    - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1064128813}
+    - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[5]'
+      value: 
       objectReference: {fileID: 1836710958}
+    - target: {fileID: 8381665140275637370, guid: 05ccb5d285b54e84e81c78469e6c9ae7, type: 3}
+      propertyPath: 'terrains.Array.data[6]'
+      value: 
+      objectReference: {fileID: 611407048}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

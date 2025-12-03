@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;  // For scene checks
+using UnityEngine.UI;  // For Slider
 
 public class MultiGunMode : MonoBehaviour
 {
@@ -16,8 +17,13 @@ public class MultiGunMode : MonoBehaviour
     public float maxLaserDistance = 100f;  // Max length of the laser
 
     [Header("Mode 1 Settings (Terrain Modification)")]
-    public float terrainModifyRadius = 5f;  // Radius of terrain modification area
-    public float terrainModifyStrength = 0.1f;  // Strength of raise/lower (positive = raise, negative = lower)
+    public TerrainAbilityController abilityController;  // From TerrainModifier
+    public float abilityCostPerSecond = 15f;  // Cost per second while holding key
+    public Terrain[] terrains;  // Array of all terrains (assign in Inspector)
+    public float raiseAmountPerSecond = 0.01f;  // How much to raise the terrain per second
+    public float modifyRadius = 3f;  // Radius around modification point to modify
+    public float radiusChangeSpeed = 1f;  // How much the radius changes per scroll unit
+    public Slider radiusSlider;  // Assign the UI Slider in Inspector (read-only reflection)
 
     [Header("Mode 2 Settings (Attract/Repel)")]
     public LayerMask attractRepelLayerMask = -1;  // Layers for attract/repel raycasts (exclude terrain)
@@ -81,6 +87,15 @@ public class MultiGunMode : MonoBehaviour
 
         laserRenderer.positionCount = 2;  // Line from start to end point
         SetMode(1);  // Start in Mode 1
+
+        // Initialize slider for terrain radius (from TerrainModifier)
+        if (radiusSlider != null)
+        {
+            radiusSlider.minValue = 1f;
+            radiusSlider.maxValue = 10f;
+            radiusSlider.value = modifyRadius;
+            // Slider is read-only; no event listener needed
+        }
     }
 
     void Update()
@@ -186,70 +201,137 @@ public class MultiGunMode : MonoBehaviour
 
     private void HandleTerrainModification()
     {
-        if (muzzlePoint == null) return;
-
-        Vector3 startPos = muzzlePoint.position;
-        Vector3 direction = muzzlePoint.forward;
-
-        // Left-click: Raise terrain
-        if (Input.GetMouseButtonDown(0))
+        // Adjust radius with mouse wheel (from TerrainModifier)
+        if (Input.mouseScrollDelta.y != 0)
         {
-            if (Physics.Raycast(startPos, direction, out RaycastHit hit, maxLaserDistance, laserLayerMaskMode1))
+            modifyRadius += Input.mouseScrollDelta.y * radiusChangeSpeed;
+            modifyRadius = Mathf.Clamp(modifyRadius, 1f, 10f);
+            // Update slider to reflect new radius
+            if (radiusSlider != null)
             {
-                ModifyTerrain(hit.point, terrainModifyStrength);  // Positive strength = raise
-                Debug.Log($"Raised terrain at {hit.point}");
+                radiusSlider.value = modifyRadius;
             }
         }
 
-        // Right-click: Lower terrain
-        if (Input.GetMouseButtonDown(1))
+        // Continuous terrain modification (hold mouse button)
+        if (Input.GetMouseButton(0)) // Hold left click to raise terrain
         {
-            if (Physics.Raycast(startPos, direction, out RaycastHit hit, maxLaserDistance, laserLayerMaskMode1))
+            float costThisFrame = abilityCostPerSecond * Time.deltaTime;
+            if (abilityController.UseAbility(costThisFrame))
             {
-                ModifyTerrain(hit.point, -terrainModifyStrength);  // Negative strength = lower
-                Debug.Log($"Lowered terrain at {hit.point}");
+                ModifyTerrainHeight(raiseAmountPerSecond * Time.deltaTime);
+            }
+            else
+            {
+                Debug.Log("Not enough ability to raise terrain.");
+            }
+        }
+        else if (Input.GetMouseButton(1)) // Hold right click to lower terrain
+        {
+            float costThisFrame = abilityCostPerSecond * Time.deltaTime;
+            if (abilityController.UseAbility(costThisFrame))
+            {
+                ModifyTerrainHeight(-raiseAmountPerSecond * Time.deltaTime);
+            }
+            else
+            {
+                Debug.Log("Not enough ability to lower terrain.");
             }
         }
     }
 
-    private void ModifyTerrain(Vector3 worldPoint, float strength)
+    private void ModifyTerrainHeight(float amount)
     {
-        // Find the Terrain component at the hit point
-        Terrain terrain = Terrain.activeTerrain;  // Assumes one active terrain; adjust if multiple
-        if (terrain == null)
+        // Cast a ray from the muzzle forward
+        Ray ray = new Ray(muzzlePoint.position, muzzlePoint.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, maxLaserDistance))
         {
-            Debug.LogWarning("ChangeGunMode: No active Terrain found for modification!");
-            return;
-        }
-
-        // Convert world point to terrain local coordinates
-        Vector3 terrainLocalPos = worldPoint - terrain.transform.position;
-        int mapX = Mathf.RoundToInt((terrainLocalPos.x / terrain.terrainData.size.x) * terrain.terrainData.heightmapResolution);
-        int mapZ = Mathf.RoundToInt((terrainLocalPos.z / terrain.terrainData.size.z) * terrain.terrainData.heightmapResolution);
-
-        // Get current heights
-        int radiusInPixels = Mathf.RoundToInt(terrainModifyRadius / (terrain.terrainData.size.x / terrain.terrainData.heightmapResolution));
-        int width = terrain.terrainData.heightmapResolution;
-        int height = terrain.terrainData.heightmapResolution;
-        float[,] heights = terrain.terrainData.GetHeights(0, 0, width, height);
-
-        // Modify heights in a circular area
-        for (int x = Mathf.Max(0, mapX - radiusInPixels); x < Mathf.Min(width, mapX + radiusInPixels); x++)
-        {
-            for (int z = Mathf.Max(0, mapZ - radiusInPixels); z < Mathf.Min(height, mapZ + radiusInPixels); z++)
+            Vector3 modifyPos = hit.point;
+            // Loop through all terrains and modify each one where it intersects the modification circle
+            foreach (Terrain terr in terrains)
             {
-                float distance = Vector2.Distance(new Vector2(x, z), new Vector2(mapX, mapZ));
-                if (distance <= radiusInPixels)
+                ModifySingleTerrain(terr, amount, modifyPos);
+            }
+        }
+        else
+        {
+            Debug.Log("No terrain hit by raycast.");
+        }
+    }
+
+    private void ModifySingleTerrain(Terrain terr, float amount, Vector3 modifyPos)
+    {
+        TerrainData terrainData = terr.terrainData;
+        Vector3 terrainPos = terr.transform.position;
+        Vector3 localModifyPos = modifyPos - terrainPos; // Modification position relative to this terrain
+
+        int heightmapWidth = terrainData.heightmapResolution;
+        int heightmapHeight = terrainData.heightmapResolution;
+        float terrainSizeX = terrainData.size.x;
+        float terrainSizeZ = terrainData.size.z;
+
+        // Calculate the bounding box of the modification circle in this terrain's local space
+        // Clamp to terrain bounds to find the intersecting area
+        float minX = Mathf.Max(localModifyPos.x - modifyRadius, 0);
+        float maxX = Mathf.Min(localModifyPos.x + modifyRadius, terrainSizeX);
+        float minZ = Mathf.Max(localModifyPos.z - modifyRadius, 0);
+        float maxZ = Mathf.Min(localModifyPos.z + modifyRadius, terrainSizeZ);
+
+        // If no intersection, skip this terrain
+        if (minX >= maxX || minZ >= maxZ) return;
+
+        // Convert world bounds to heightmap pixel coordinates
+        int startX = Mathf.RoundToInt(minX / terrainSizeX * (heightmapWidth - 1));
+        int endX = Mathf.RoundToInt(maxX / terrainSizeX * (heightmapWidth - 1));
+        int startZ = Mathf.RoundToInt(minZ / terrainSizeZ * (heightmapHeight - 1));
+        int endZ = Mathf.RoundToInt(maxZ / terrainSizeZ * (heightmapHeight - 1));
+
+        // Clamp to valid heightmap bounds
+        startX = Mathf.Clamp(startX, 0, heightmapWidth - 1);
+        endX = Mathf.Clamp(endX, 0, heightmapWidth - 1);
+        startZ = Mathf.Clamp(startZ, 0, heightmapHeight - 1);
+        endZ = Mathf.Clamp(endZ, 0, heightmapHeight - 1);
+
+        int width = endX - startX + 1;
+        int height = endZ - startZ + 1;
+
+        if (width <= 0 || height <= 0) return;
+
+        // Get the heightmap data for the intersecting area
+        float[,] heights = terrainData.GetHeights(startX, startZ, width, height);
+
+        // Modify heights only for points within the circle
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                // Calculate world position of this heightmap pixel
+                float worldX = (startX + x) / (float)(heightmapWidth - 1) * terrainSizeX;
+                float worldZ = (startZ + z) / (float)(heightmapHeight - 1) * terrainSizeZ;
+
+                // Distance from modification point to this pixel
+                float distX = worldX - localModifyPos.x;
+                float distZ = worldZ - localModifyPos.z;
+                float distance = Mathf.Sqrt(distX * distX + distZ * distZ);
+
+                if (distance <= modifyRadius)
                 {
-                    // Apply strength with falloff (stronger at center)
-                    float falloff = 1 - (distance / radiusInPixels);
-                    heights[z, x] += strength * falloff;  // Note: z,x order for heightmap
+                    // Cosine falloff for smooth modification
+                    float normalizedDistance = distance / modifyRadius;
+                    float falloff = 0.9f * (1f + Mathf.Cos(normalizedDistance * Mathf.PI));
+
+                    heights[z, x] += amount * falloff;
+                    heights[z, x] = Mathf.Clamp01(heights[z, x]); // Clamp to valid height range
                 }
             }
         }
 
-        // Apply modified heights
-        terrain.terrainData.SetHeights(0, 0, heights);
+        // Apply the modified heights back to the terrain
+        terrainData.SetHeights(startX, startZ, heights);
+
+        // Force update to visuals and collider
+        terr.Flush();
     }
 
     private void HandleAttractRepel()
@@ -338,5 +420,11 @@ public class MultiGunMode : MonoBehaviour
             newMaterials[i] = new Material(newMaterial);
         }
         gunRenderer.materials = newMaterials;
+    }
+
+    // Public method to check if in terrain mode (for external scripts if needed)
+    public bool IsTerrainMode()
+    {
+        return currentMode == 1;
     }
 }
