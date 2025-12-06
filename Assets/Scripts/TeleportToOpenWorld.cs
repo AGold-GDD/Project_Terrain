@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TeleportToSlide : MonoBehaviour
+public class TeleportToOpenWorld : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Teleport slide");
-            SceneManager.LoadScene("SlideMinigame");
+            SceneManager.LoadScene("OpenWorld");
         }
     }
 }

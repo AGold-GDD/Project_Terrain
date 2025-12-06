@@ -1,22 +1,27 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinishLine : MonoBehaviour
 {
-    /*
-    public GameObject FinishText;
+    public GameObject MCPanel;
 
     public void Start()
     {
-        FinishText.SetActive(false);
+       MCPanel.SetActive(false); 
     }
 
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Rock")
+        if (other.gameObject.CompareTag("Player"))
         {
-            FinishText.SetActive(true);
+            MCPanel.SetActive(true);
         }
     }
-    */
+
+    public void ReturnToLobby()
+    {
+        SceneManager.LoadScene("NewMainLobby");
+    }
 }
 

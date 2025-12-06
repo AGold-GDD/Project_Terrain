@@ -6,9 +6,16 @@ public class PlayerPauseMenu : MonoBehaviour
     public GameObject PausePanel;
     private bool IsPaused;
 
+    public GameObject TerrainUI;
+    public GameObject GravityUI;
+    public GameObject GunUI;
+
     private void Start()
     {
         IsPaused = false;
+        TerrainUI.SetActive(true);
+        GravityUI.SetActive(false);
+        GunUI.SetActive(false);
     }
     void Update()
     {
@@ -21,6 +28,25 @@ public class PlayerPauseMenu : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Escape) && IsPaused)
         {
             Resume();
+        }
+
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            TerrainUI.SetActive(true);
+            GravityUI.SetActive(false);
+            GunUI.SetActive(false);
+        }
+        else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            TerrainUI.SetActive(false);
+            GravityUI.SetActive(true);
+            GunUI.SetActive(false);
+        } 
+        else if (Input.GetKey(KeyCode.Alpha3))
+        {
+            TerrainUI.SetActive(false);
+            GravityUI.SetActive(false);
+            GunUI.SetActive(true);
         }
     }
 
@@ -40,6 +66,6 @@ public class PlayerPauseMenu : MonoBehaviour
 
     public void Exit()
     {
-        SceneManager.LoadScene("MainLobby");
+        SceneManager.LoadScene("NewMainLobby");
     }
 }

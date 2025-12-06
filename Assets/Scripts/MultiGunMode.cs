@@ -57,13 +57,15 @@ public class MultiGunMode : MonoBehaviour
         originalMaterials = gunRenderer.materials;
 
         // Check if in "OpenWorld" scene
+        /*
         isInOpenWorld = SceneManager.GetActiveScene().name == "OpenWorld";
         if (!isInOpenWorld)
         {
             Debug.Log("ChangeGunMode: Not in 'OpenWorld' scene. Modes disabled.");
-            SetMode(0);  // Neutral mode
+            SetMode(1);  // Neutral mode
             return;
         }
+        */
 
         // Laser setup: Ensure references are valid
         if (muzzlePoint == null)
@@ -100,7 +102,9 @@ public class MultiGunMode : MonoBehaviour
 
     void Update()
     {
-        if (!isInOpenWorld) return;  // Only process if in "OpenWorld"
+        /*
+        if (!isInOpenWorld || !isCartMini) return;  // Only process if in "OpenWorld"
+        */
 
         // Mode switching inputs
         if (Input.GetKeyDown(KeyCode.Alpha1))
