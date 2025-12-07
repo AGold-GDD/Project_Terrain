@@ -8,10 +8,13 @@ public class CartMinigame : MonoBehaviour
 
     public Transform Player;
 
+    [HideInInspector]
+    public Transform currentResPoint;
+
 
     public void Update()
     {
-        Transform currentResPoint = playerRespawnPoint.transform;
+        currentResPoint = playerRespawnPoint.transform;
 
         if (Input.GetKeyUp(KeyCode.T))
         {

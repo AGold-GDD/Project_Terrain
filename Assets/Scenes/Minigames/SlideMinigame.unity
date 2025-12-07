@@ -1367,7 +1367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c207072f38135564ea168125588090f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  playere: {fileID: 724930413}
+  Player: {fileID: 1825193777}
+  cartMinigame: {fileID: 613642877}
 --- !u!224 &134561363 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1335152024274540515, guid: 453fa9a131dec2346a60db015f754408, type: 3}
@@ -5517,6 +5518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   playerRespawnPoint: {fileID: 776816831}
   Player: {fileID: 1825193777}
+  currentResPoint: {fileID: 0}
 --- !u!4 &613642878
 Transform:
   m_ObjectHideFlags: 0
@@ -6143,50 +6145,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlopeMinigame
   Respawner: {fileID: 0}
   PlayerrespawnPoint: {fileID: 1061932242}
---- !u!1 &664429761
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 664429763}
-  - component: {fileID: 664429762}
-  m_Layer: 0
-  m_Name: reset
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &664429762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 664429761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
---- !u!4 &664429763
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 664429761}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 528.2751, y: 310.5, z: -6.78833}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &673434060
 GameObject:
   m_ObjectHideFlags: 0
@@ -9721,6 +9679,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Terrain Tool Instructions
       objectReference: {fileID: 0}
+    - target: {fileID: 2094240281705465067, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_PressedColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094240281705465067, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094240281705465067, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2164731904669712376, guid: 453fa9a131dec2346a60db015f754408, type: 3}
       propertyPath: GunUI
       value: 
@@ -9733,6 +9703,34 @@ PrefabInstance:
       propertyPath: TerrainUI
       value: 
       objectReference: {fileID: 911127935}
+    - target: {fileID: 2290280605200027190, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_NormalColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290280605200027190, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290280605200027190, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290280605200027190, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290280605200027190, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_PressedColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290280605200027190, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290280605200027190, guid: 453fa9a131dec2346a60db015f754408, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2520909527058265513, guid: 453fa9a131dec2346a60db015f754408, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -12556,7 +12554,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c207072f38135564ea168125588090f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  playere: {fileID: 724930413}
+  Player: {fileID: 1825193777}
+  cartMinigame: {fileID: 613642877}
 --- !u!65 &1435896176
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14300,7 +14299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2110954341240417893, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
       propertyPath: raiseAmountPerSecond
-      value: 0.02
+      value: 0.005
       objectReference: {fileID: 0}
     - target: {fileID: 2110954341240417893, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
       propertyPath: 'terrains.Array.data[0]'
@@ -14344,15 +14343,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2327606526310461018, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 513.5
+      value: 542
       objectReference: {fileID: 0}
     - target: {fileID: 2327606526310461018, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 337.2
+      value: 315.51
       objectReference: {fileID: 0}
     - target: {fileID: 2327606526310461018, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -23.6
+      value: -18.1
       objectReference: {fileID: 0}
     - target: {fileID: 2327606526310461018, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14413,8 +14412,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7929202086053387852, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1702607412}
   m_SourcePrefab: {fileID: 100100000, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
+--- !u!1 &1702607411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7929202086053387852, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
+  m_PrefabInstance: {fileID: 1702607410}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1702607412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702607411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
 --- !u!1 &1704648439
 GameObject:
   m_ObjectHideFlags: 0
@@ -18011,5 +18030,4 @@ SceneRoots:
   - {fileID: 1702607410}
   - {fileID: 1028315304}
   - {fileID: 1758152503}
-  - {fileID: 664429763}
   - {fileID: 751038115}

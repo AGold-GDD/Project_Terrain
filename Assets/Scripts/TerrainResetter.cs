@@ -24,14 +24,17 @@ public class TerrainResetter : MonoBehaviour
         // Check for "G" key press
         if (Input.GetKeyDown(KeyCode.G))
         {
+            Debug.Log("Reset");
             ResetTerrain();
         }
     }
 
     private void ResetTerrain()
     {
+        Debug.Log("Trying to reset");
         if (terrain != null && originalHeights != null)
         {
+            Debug.Log("reseting");
             TerrainData data = terrain.terrainData;
             // Restore the original heightmap to the existing TerrainData
             data.SetHeights(0, 0, originalHeights);
