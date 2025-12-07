@@ -15218,7 +15218,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1800812981}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 521067189}
+        m_TargetAssemblyTypeName: FinishLine, Assembly-CSharp
+        m_MethodName: ReturnToLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1800812981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18025,8 +18037,8 @@ SceneRoots:
   - {fileID: 700977194}
   - {fileID: 1923531614}
   - {fileID: 1486767506}
-  - {fileID: 283239606}
   - {fileID: 1034953372}
+  - {fileID: 283239606}
   - {fileID: 1702607410}
   - {fileID: 1028315304}
   - {fileID: 1758152503}
