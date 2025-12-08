@@ -572,6 +572,7 @@ GameObject:
   - component: {fileID: 56473919}
   - component: {fileID: 56473918}
   - component: {fileID: 56473917}
+  - component: {fileID: 56473920}
   m_Layer: 0
   m_Name: Terrain_(0.00, 0.00, 1000.00)
   m_TagString: Ground
@@ -654,6 +655,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1930432333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &56473920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56473916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
 --- !u!1 &61409576
 GameObject:
   m_ObjectHideFlags: 0
@@ -5405,6 +5418,7 @@ GameObject:
   - component: {fileID: 611407049}
   - component: {fileID: 611407048}
   - component: {fileID: 611407047}
+  - component: {fileID: 611407050}
   m_Layer: 0
   m_Name: Terrain_(1000.00, 0.00, 1000.00)
   m_TagString: Ground
@@ -5487,6 +5501,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1930432333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &611407050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611407046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
 --- !u!1 &613642876
 GameObject:
   m_ObjectHideFlags: 0
@@ -6642,6 +6668,7 @@ GameObject:
   - component: {fileID: 716203963}
   - component: {fileID: 716203962}
   - component: {fileID: 716203961}
+  - component: {fileID: 716203964}
   m_Layer: 0
   m_Name: Terrain_(1000.00, 0.00, 0.00)
   m_TagString: Ground
@@ -6724,6 +6751,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1930432333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &716203964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716203960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
 --- !u!1 &724930413
 GameObject:
   m_ObjectHideFlags: 0
@@ -8348,6 +8387,7 @@ GameObject:
   - component: {fileID: 864733165}
   - component: {fileID: 864733164}
   - component: {fileID: 864733163}
+  - component: {fileID: 864733166}
   m_Layer: 0
   m_Name: Terrain_(0.00, 0.00, -1000.00)
   m_TagString: Ground
@@ -8430,6 +8470,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1930432333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &864733166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864733162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
 --- !u!1 &877685548
 GameObject:
   m_ObjectHideFlags: 0
@@ -10193,6 +10245,7 @@ GameObject:
   - component: {fileID: 1064128814}
   - component: {fileID: 1064128813}
   - component: {fileID: 1064128812}
+  - component: {fileID: 1064128815}
   m_Layer: 0
   m_Name: Terrain_(-1000.00, 0.00, 0.00)
   m_TagString: Ground
@@ -10275,6 +10328,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1930432333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1064128815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064128811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
 --- !u!1 &1074334536
 GameObject:
   m_ObjectHideFlags: 0
@@ -14412,28 +14477,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7929202086053387852, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1702607412}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
---- !u!1 &1702607411 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7929202086053387852, guid: 74e7ca78988b431418d0e80e3cad26ce, type: 3}
-  m_PrefabInstance: {fileID: 1702607410}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1702607412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1702607411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
 --- !u!1 &1704648439
 GameObject:
   m_ObjectHideFlags: 0
@@ -15491,6 +15536,7 @@ GameObject:
   - component: {fileID: 1836710959}
   - component: {fileID: 1836710958}
   - component: {fileID: 1836710957}
+  - component: {fileID: 1836710960}
   m_Layer: 0
   m_Name: Terrain_(-1000.00, 0.00, 1000.00)
   m_TagString: Ground
@@ -15573,6 +15619,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1930432333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1836710960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836710956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
 --- !u!1 &1838829870
 GameObject:
   m_ObjectHideFlags: 0
@@ -16255,6 +16313,7 @@ GameObject:
   - component: {fileID: 1930432333}
   - component: {fileID: 1930432332}
   - component: {fileID: 1930432331}
+  - component: {fileID: 1930432334}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Ground
@@ -16343,6 +16402,18 @@ Transform:
   - {fileID: 611407049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1930432334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930432330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba617ddc7e5bd244b993dea7fcb5f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainResetter
 --- !u!1 &1936177218
 GameObject:
   m_ObjectHideFlags: 0
