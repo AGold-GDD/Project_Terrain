@@ -3,19 +3,21 @@ using UnityEngine.SceneManagement;
 
 public class PlayerPauseMenu : MonoBehaviour
 {
+    //When placing this UI in a new scene and it is not working, make sure the UI event system is in the scene.
+
     public GameObject PausePanel;
     private bool IsPaused;
 
     public GameObject TerrainUI;
-    public GameObject GravityUI;
-    public GameObject GunUI;
+    //public GameObject GravityUI;
+    //public GameObject GunUI;
 
     private void Start()
     {
         IsPaused = false;
         TerrainUI.SetActive(true);
-        GravityUI.SetActive(false);
-        GunUI.SetActive(false);
+        //GravityUI.SetActive(false);
+        //GunUI.SetActive(false);
     }
     void Update()
     {
@@ -33,20 +35,20 @@ public class PlayerPauseMenu : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha1))
         {
             TerrainUI.SetActive(true);
-            GravityUI.SetActive(false);
-            GunUI.SetActive(false);
+            //GravityUI.SetActive(false);
+            //GunUI.SetActive(false);
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
             TerrainUI.SetActive(false);
-            GravityUI.SetActive(true);
-            GunUI.SetActive(false);
+            //GravityUI.SetActive(true);
+            //GunUI.SetActive(false);
         } 
         else if (Input.GetKey(KeyCode.Alpha3))
         {
             TerrainUI.SetActive(false);
-            GravityUI.SetActive(false);
-            GunUI.SetActive(true);
+            //GravityUI.SetActive(false);
+            //GunUI.SetActive(true);
         }
     }
 

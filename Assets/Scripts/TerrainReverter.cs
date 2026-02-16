@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class TerrainReverter : MonoBehaviour
 {
+    [Header("Add terrains here")]
     [SerializeField] private Terrain[] terrains; // Assign the same terrains as in TerrainModifier
 
     private float[][,] originalHeights; // Stores copies of the original heightmaps

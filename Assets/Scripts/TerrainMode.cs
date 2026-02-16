@@ -1,13 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;  // For scene checks
-using UnityEngine.UI;  // For Slider
+using UnityEngine.UI;
 
-public class MultiGunMode : MonoBehaviour
+
+public class TerrainMode : MonoBehaviour
 {
     [Header("Materials for Modes")]
     public Material mode1Material;  // Assign material for Mode 1 (e.g., green texture for terrain mod)
-    public Material mode2Material;  // Assign material for Mode 2 (e.g., blue texture for attract/repel)
-    public Material mode3Material;  // Assign material for Mode 3 (e.g., red texture for sphere shooting)
 
     [Header("Laser Settings")]
     public Transform muzzlePoint;  // Assign the "Muzzle" child Transform here
@@ -19,30 +17,18 @@ public class MultiGunMode : MonoBehaviour
     [Header("Mode 1 Settings (Terrain Modification)")]
     public TerrainAbilityController abilityController;  // From TerrainModifier
     public float abilityCostPerSecond = 15f;  // Cost per second while holding key
+    [Header("Add terrains here")]
     public Terrain[] terrains;  // Array of all terrains (assign in Inspector)
     public float raiseAmountPerSecond = 0.01f;  // How much to raise the terrain per second
     public float modifyRadius = 3f;  // Radius around modification point to modify
     public float radiusChangeSpeed = 1f;  // How much the radius changes per scroll unit
     public Slider radiusSlider;  // Assign the UI Slider in Inspector (read-only reflection)
 
-    [Header("Mode 2 Settings (Attract/Repel)")]
-    public LayerMask attractRepelLayerMask = -1;  // Layers for attract/repel raycasts (exclude terrain)
-    public float attractRepelRange = 50f;  // Max range for attract/repel
-    public float attractForce = 10f;  // Strength of attract force
-    public float repelForce = 10f;  // Strength of repel force
-
-    [Header("Mode 3 Settings (Sphere Shooting)")]
-    public LayerMask sphereShootingLayerMask = -1;  // Layers for sphere shooting laser (exclude terrain)
-    public GameObject spherePrefab;  // Assign a sphere prefab (with Rigidbody) here
-    public float shootForce = 20f;  // Force to apply to shot spheres
-    public float sphereSpreadAngle = 10f;  // Angle spread for 3 spheres (in degrees)
-
     private MeshRenderer gunRenderer;
     private int currentMode = 1;  // Start in Mode 1 (terrain modification)
     private Material[] originalMaterials;
-    private bool isInOpenWorld = false;  // Flag for scene check
 
-    void Start()
+    public void Start()
     {
         gunRenderer = GetComponentInChildren<MeshRenderer>();
 
@@ -77,89 +63,20 @@ public class MultiGunMode : MonoBehaviour
         }
 
         laserRenderer.positionCount = 2;  // Line from start to end point
-        SetMode(1);  // Start in Mode 1
 
         // Initialize slider for terrain radius (from TerrainModifier)
         if (radiusSlider != null)
         {
-            radiusSlider.minValue = 1f;
-            radiusSlider.maxValue = 10f;
+            //radiusSlider.minValue = 1f;
+            //radiusSlider.maxValue = 10f;
             radiusSlider.value = modifyRadius;
             // Slider is read-only; no event listener needed
         }
     }
 
-    void Update()
+    public void Update()
     {
-        // Mode switching inputs
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SetMode(1);  // Mode 1: Terrain Modification
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetMode(2);  // Mode 2: Attract/Repel
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetMode(3);  // Mode 3: Sphere Shooting
-        }
-
-        // Update laser only in active mode
-        if (currentMode >= 1 && currentMode <= 3)
-        {
-            UpdateLaser();
-        }
-
-        // Handle mode-specific actions
-        if (currentMode == 1)
-        {
-            HandleTerrainModification();
-        }
-        else if (currentMode == 2)
-        {
-            HandleAttractRepel();
-        }
-        else if (currentMode == 3)
-        {
-            HandleSphereShooting();
-        }
-    }
-
-    private void SetMode(int mode)
-    {
-        currentMode = mode;
-
-        if (mode == 0)  // Neutral
-        {
-            ApplyMaterial(originalMaterials[0]);  // Revert to original material
-            laserRenderer.enabled = false;
-            Debug.Log("Switched to Neutral Mode (No special abilities)");
-        }
-        else if (mode == 1)  // Mode 1: Terrain Modification
-        {
-            ApplyMaterial(mode1Material);
-            laserRenderer.enabled = true;
-            laserRenderer.startColor = Color.green;
-            laserRenderer.endColor = Color.green;
-            Debug.Log("Switched to Mode 1 (Terrain Modification - Green Laser)");
-        }
-        else if (mode == 2)  // Mode 2: Attract/Repel
-        {
-            ApplyMaterial(mode2Material);
-            laserRenderer.enabled = true;
-            laserRenderer.startColor = Color.blue;
-            laserRenderer.endColor = Color.blue;
-            Debug.Log("Switched to Mode 2 (Attract/Repel - Blue Laser)");
-        }
-        else if (mode == 3)  // Mode 3: Sphere Shooting
-        {
-            ApplyMaterial(mode3Material);
-            laserRenderer.enabled = true;
-            laserRenderer.startColor = Color.red;
-            laserRenderer.endColor = Color.red;
-            Debug.Log("Switched to Mode 3 (Sphere Shooting - Red Laser)");
-        }
+        HandleTerrainModification();
     }
 
     private void UpdateLaser()
@@ -169,11 +86,8 @@ public class MultiGunMode : MonoBehaviour
         Vector3 startPos = muzzlePoint.position;
         Vector3 direction = muzzlePoint.forward;
 
-        // Choose layer mask based on mode
-        LayerMask mask = (currentMode == 1) ? laserLayerMaskMode1 : (currentMode == 2 ? attractRepelLayerMask : sphereShootingLayerMask);
-
         // Raycast to find hit point
-        if (Physics.Raycast(startPos, direction, out RaycastHit hit, maxLaserDistance, mask))
+        if (Physics.Raycast(startPos, direction, out RaycastHit hit, maxLaserDistance))
         {
             Vector3 endPos = hit.point;
             Debug.DrawRay(startPos, direction * hit.distance, Color.red);  // Debug in Scene view
@@ -321,99 +235,5 @@ public class MultiGunMode : MonoBehaviour
 
         // Force update to visuals and collider
         terr.Flush();
-    }
-
-    private void HandleAttractRepel()
-    {
-        if (muzzlePoint == null) return;
-
-        Vector3 startPos = muzzlePoint.position;
-        Vector3 direction = muzzlePoint.forward;
-
-        // Left-click: Attract
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Physics.Raycast(startPos, direction, out RaycastHit hit, attractRepelRange, attractRepelLayerMask))
-            {
-                Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    Vector3 forceDirection = (transform.position - hit.point).normalized;  // Toward player
-                    rb.AddForce(forceDirection * attractForce, ForceMode.Impulse);
-                    Debug.Log($"Attracted object at {hit.point}");
-                }
-            }
-        }
-
-        // Right-click: Repel
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (Physics.Raycast(startPos, direction, out RaycastHit hit, attractRepelRange, attractRepelLayerMask))
-            {
-                Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    Vector3 forceDirection = (hit.point - transform.position).normalized;  // Away from player
-                    rb.AddForce(forceDirection * repelForce, ForceMode.Impulse);
-                    Debug.Log($"Repelled object at {hit.point}");
-                }
-            }
-        }
-    }
-
-    private void HandleSphereShooting()
-    {
-        if (muzzlePoint == null || spherePrefab == null) return;
-
-        Vector3 startPos = muzzlePoint.position;
-        Vector3 direction = muzzlePoint.forward;
-
-        // Left-click: Shoot 1 sphere
-        if (Input.GetMouseButtonDown(0))
-        {
-            GameObject sphere = Instantiate(spherePrefab, startPos, Quaternion.identity);
-            Rigidbody rb = sphere.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.AddForce(direction * shootForce, ForceMode.Impulse);
-            }
-            Debug.Log("Shot 1 sphere");
-        }
-
-        // Right-click: Shoot 3 spheres in a spread
-        if (Input.GetMouseButtonDown(1))
-        {
-            for (int i = -1; i <= 1; i++)  // -1, 0, 1 for left, center, right
-            {
-                Quaternion spreadRotation = Quaternion.Euler(0, i * sphereSpreadAngle, 0);
-                Vector3 spreadDirection = spreadRotation * direction;
-
-                GameObject sphere = Instantiate(spherePrefab, startPos, Quaternion.identity);
-                Rigidbody rb = sphere.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.AddForce(spreadDirection * shootForce, ForceMode.Impulse);
-                }
-            }
-            Debug.Log("Shot 3 spheres");
-        }
-    }
-
-    private void ApplyMaterial(Material newMaterial)
-    {
-        if (gunRenderer == null) return;
-
-        Material[] newMaterials = new Material[originalMaterials.Length];
-        for (int i = 0; i < originalMaterials.Length; i++)
-        {
-            newMaterials[i] = new Material(newMaterial);
-        }
-        gunRenderer.materials = newMaterials;
-    }
-
-    // Public method to check if in terrain mode (for external scripts if needed)
-    public bool IsTerrainMode()
-    {
-        return currentMode == 1;
     }
 }
