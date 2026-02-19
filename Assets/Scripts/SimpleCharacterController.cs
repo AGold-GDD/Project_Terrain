@@ -25,8 +25,7 @@ public class SimpleCharacterController : MonoBehaviour
     public float stepInterval = 0.5f;  // Time between steps (adjust for pace)
     private float stepTimer = 0f;
 
-
-
+    public GameObject PlayerSpawnPoint;
 
     void Start()
     {
@@ -100,6 +99,12 @@ public class SimpleCharacterController : MonoBehaviour
                 jumpAudioSource.Play(); //Play jumping sound effect
             }
         }
+
+        //Press R to respawn at a point/start of level.
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            PlayerRespawn();
+        }
     }
 
 
@@ -113,6 +118,12 @@ public class SimpleCharacterController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    //respawn method. Make sure that in the character controller script, you insert a empty gameobject where you want the player to respawn.
+    public void PlayerRespawn()
+    {
+        transform.position = PlayerSpawnPoint.transform.position;
     }
 
 
