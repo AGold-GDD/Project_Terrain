@@ -8,7 +8,7 @@ public class TeleportToSlide : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Teleport slide");
-            SceneManager.LoadScene("SlideMinigame");
+            SceneManager.LoadScene("NewCartMinigame");
         }
     }
 }
