@@ -11,7 +11,7 @@ public class SimpleCharacterController : MonoBehaviour
     public Slider MouseSlider;
 
     public Rigidbody rb;
-    private bool isGrounded;
+    public bool isGrounded;
 
     private float xRotation = 0f; // For vertical camera rotation
 
@@ -33,6 +33,8 @@ public class SimpleCharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; // Start with cursor locked/hidden for open world
         Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center of screen (uncomment if desired)
+
+
     }
 
 
@@ -105,6 +107,15 @@ public class SimpleCharacterController : MonoBehaviour
         {
             PlayerRespawn();
         }
+
+        //let the player bounce on the green terrain
+        /*
+        if (IsOnBouncyPaint() && isGrounded)
+        {
+            // Apply your bounce force here!
+            rb.AddForce(Vector3.up * 1f, ForceMode.Impulse);
+        }
+        */
     }
 
 
@@ -125,6 +136,26 @@ public class SimpleCharacterController : MonoBehaviour
     {
         transform.position = PlayerSpawnPoint.transform.position;
     }
+
+    // This check if the player is standing on the green terrain
+    /*
+    bool IsOnBouncyPaint()
+    {
+        Terrain terrain = Terrain.activeTerrain;
+        TerrainData tData = terrain.terrainData;
+
+        // Makes the  Player position to AlphaMap coordinates
+        Vector3 terrainPos = transform.position - terrain.transform.position;
+        int mapX = (int)((terrainPos.x / tData.size.x) * tData.alphamapWidth);
+        int mapZ = (int)((terrainPos.z / tData.size.z) * tData.alphamapHeight);
+
+        // Get the weights of all layers at this exact spot
+        float[,,] alpha = tData.GetAlphamaps(mapX, mapZ, 1, 1);
+
+        // Check if the Layer (Index 1) has a high weight
+        return alpha[0, 0, 1] > 0.5f;
+    }
+    */
 
 
     private void OnCollisionStay(Collision collision)

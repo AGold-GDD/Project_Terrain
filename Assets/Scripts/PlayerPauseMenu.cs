@@ -6,7 +6,7 @@ public class PlayerPauseMenu : MonoBehaviour
     //When placing this UI in a new scene and it is not working, make sure the UI event system is in the scene.
 
     public GameObject PausePanel;
-    private bool IsPaused;
+    public bool IsPaused;
 
     public GameObject TerrainUI;
     //public GameObject GravityUI;
