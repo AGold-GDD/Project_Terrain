@@ -6,6 +6,8 @@ public class SimpleCharacterController : MonoBehaviour
     public float speed = 5f;
     public float jumpForce = 5f;
     public float mouseSensitivity; //public float mouseSensitivity = 100f;
+    private bool isDead = false;
+
 
     // mouse sensitivity stuff
     public Slider MouseSlider;
@@ -33,11 +35,17 @@ public class SimpleCharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; // Start with cursor locked/hidden for open world
         Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center of screen (uncomment if desired)
+        if (CheckpointManager.Instance != null)
+        {
+            transform.position = CheckpointManager.Instance.GetLastCheckpoint();
+        }
     }
 
 
     void Update()
     {
+        if (isDead) return;
+
         // setting the mouse sensit
         mouseSensitivity = 100 * MouseSlider.value;
 
@@ -104,6 +112,35 @@ public class SimpleCharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             PlayerRespawn();
+        }
+    }
+
+    public void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+        Debug.Log("Player Died!");
+
+        // Respawn at last checkpoint
+        Vector3 respawnPos = CheckpointManager.Instance.GetLastCheckpoint();
+
+        // If no checkpoint exists yet, respawn at 0,0,0
+        if (respawnPos == Vector3.zero)
+        {
+            respawnPos = new Vector3(0, 1, 0);
+        }
+
+        transform.position = respawnPos;
+        rb.linearVelocity = Vector3.zero;
+        isDead = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Example: If you fall off the map, you die
+        if (collision.gameObject.CompareTag("DeathZone"))
+        {
+            Die();
         }
     }
 

@@ -9,6 +9,7 @@ TagManager:
   - Cart
   - Rock
   - Target
+  - DeathZone
   layers:
   - Default
   - TransparentFX
