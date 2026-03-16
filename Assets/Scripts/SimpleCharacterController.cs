@@ -34,7 +34,6 @@ public class SimpleCharacterController : MonoBehaviour
         Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center of screen (uncomment if desired)
 
-
     }
 
 
@@ -55,10 +54,18 @@ public class SimpleCharacterController : MonoBehaviour
         // Movement
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
-
+        
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
         Vector3 newVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
         rb.linearVelocity = newVelocity;
+        
+
+        // 1. Get your direction vector just like before
+        //Vector3 moveDirection = transform.right * moveX + transform.forward * moveZ;
+
+        // 2. Apply a Force instead of setting the speed directly
+        // We use ForceMode.Acceleration to ignore the mass of the player for consistent feel
+        //rb.AddForce(moveDirection.normalized * speed, ForceMode.Acceleration);
 
         if (isGrounded && (moveX != 0 || moveZ != 0) && !isRiding)
         {
@@ -108,14 +115,11 @@ public class SimpleCharacterController : MonoBehaviour
             PlayerRespawn();
         }
 
-        //let the player bounce on the green terrain
-        /*
-        if (IsOnBouncyPaint() && isGrounded)
+        //This will fix the issue with the webgl sudden increase sensitivity
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
-            // Apply your bounce force here!
-            rb.AddForce(Vector3.up * 1f, ForceMode.Impulse);
+            mouseSensitivity = mouseSensitivity / 2;
         }
-        */
     }
 
 

@@ -16,37 +16,54 @@ public class TerrainLayerPainter : MonoBehaviour
 
     public PlayerPauseMenu pauseMenu;
 
+    // Store the original state here
+    private float[,,] originalAlphamaps;
+
+    void Awake()
+    {
+        // Save the state of the terrain the moment the game starts
+        SaveOriginalTerrain();
+    }
+
     void Update()
     {
-        //Debug.Log(PaintAmount);
+        Debug.Log(PaintAmount);
         //Debug.Log(CountDown);
 
         if (pauseMenu.IsPaused == false)
         {
             // Left mouse click to paint
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && PaintAmount > 0)
             {
                 //Debug.Log("Painting");
                 GreenPaint();
 
+                // 5. As the player paints, it uses paint (wip) to paint the terrain
+                PaintAmount = PaintAmount - PaintUsuage;
+
                 //CountDown = 500;
             }
 
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(1) && PaintAmount > 0)
             {
                 RedPaint();
+
+                //As the player paints, it uses paint (wip) to paint the terrain
+                PaintAmount = PaintAmount - PaintUsuage;
+            }
+
+            if (PaintAmount <= 0)
+            {
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                ResetTerrain();
+                PaintAmount = 100;
             }
         }
 
-        // Takes care of the refill of the paint
-        if (CountDown <= 0 && PaintAmount < 99)
-        {
-            //Debug.Log("Refilling");
-            PaintAmount = PaintAmount + 0.05f;
-
-        }
-        // Cooldown
-        --CountDown;
     }
 
     void GreenPaint()
@@ -76,8 +93,6 @@ public class TerrainLayerPainter : MonoBehaviour
             // 4. Apply changes back to the terrain
             tData.SetAlphamaps(mapX, mapZ, maps);
 
-            // 5. As the player paints, it uses paint (wip) to paint the terrain
-            PaintAmount = PaintAmount - PaintUsuage;
         }
     }
 
@@ -108,8 +123,30 @@ public class TerrainLayerPainter : MonoBehaviour
             // 4. Apply changes back to the terrain
             tData.SetAlphamaps(mapX, mapZ, maps);
 
-            // 5. As the player paints, it uses paint (wip) to paint the terrain
-            PaintAmount = PaintAmount - PaintUsuage;
         }
+    }
+
+    void SaveOriginalTerrain()
+    {
+        TerrainData tData = terrain.terrainData;
+        // Grab every pixel of the alphamap (from 0,0 to the max width/height)
+        originalAlphamaps = tData.GetAlphamaps(0, 0, tData.alphamapWidth, tData.alphamapHeight);
+    }
+
+    // Call this from your UI Button
+    public void ResetTerrain()
+    {
+        if (originalAlphamaps != null)
+        {
+            terrain.terrainData.SetAlphamaps(0, 0, originalAlphamaps);
+            Debug.Log("Terrain Reset!");
+        }
+    }
+
+    // Safety: Resets the terrain when you stop the editor so your 
+    // project files don't stay painted permanently.
+    void OnApplicationQuit()
+    {
+        ResetTerrain();
     }
 }

@@ -4,16 +4,28 @@ public class TerrainLayerDetector : MonoBehaviour
 {
     public SimpleCharacterController characterController;
 
+    //private int timeLeft = 500;
+
     // Update is called once per frame
     void Update()
     {
+        if (IsOnIcyPaint() && characterController.isGrounded) 
+        {
+            characterController.speed = 20;
+            //timeLeft = 500;
+        } 
+        else if (!IsOnIcyPaint() && characterController.isGrounded)
+        {
+            characterController.speed = 5;  
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
         if (IsOnBouncyPaint() && characterController.isGrounded)
         {
-            characterController.rb.AddForce(Vector3.up * 1.5f, ForceMode.Impulse);
-        }
-        else if (IsOnIcyPaint() && characterController.isGrounded) 
-        {
-            characterController.rb.AddForce(Vector3.up * 1.5f, ForceMode.Impulse);
+            characterController.rb.AddForce(Vector3.up * 20f, ForceMode.Impulse);
         }
     }
 
