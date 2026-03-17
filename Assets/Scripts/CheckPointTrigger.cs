@@ -7,7 +7,7 @@ public class CheckPointTrigger : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Cart"))
+        if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Checkpoint reached");
             trackManager.PassedCheckPoint(thisCheckpointIndex);

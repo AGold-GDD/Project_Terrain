@@ -13,7 +13,7 @@ public class SimpleCharacterController : MonoBehaviour
     public Slider MouseSlider;
 
     public Rigidbody rb;
-    private bool isGrounded;
+    public bool isGrounded;
 
     private float xRotation = 0f; // For vertical camera rotation
 
@@ -61,10 +61,18 @@ public class SimpleCharacterController : MonoBehaviour
         // Movement
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
-
+        
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
         Vector3 newVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
         rb.linearVelocity = newVelocity;
+        
+
+        // 1. Get your direction vector just like before
+        //Vector3 moveDirection = transform.right * moveX + transform.forward * moveZ;
+
+        // 2. Apply a Force instead of setting the speed directly
+        // We use ForceMode.Acceleration to ignore the mass of the player for consistent feel
+        //rb.AddForce(moveDirection.normalized * speed, ForceMode.Acceleration);
 
         if (isGrounded && (moveX != 0 || moveZ != 0) && !isRiding)
         {
@@ -112,6 +120,12 @@ public class SimpleCharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             PlayerRespawn();
+        }
+
+        //This will fix the issue with the webgl sudden increase sensitivity
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            mouseSensitivity = mouseSensitivity / 2;
         }
     }
 
@@ -162,6 +176,26 @@ public class SimpleCharacterController : MonoBehaviour
     {
         transform.position = PlayerSpawnPoint.transform.position;
     }
+
+    // This check if the player is standing on the green terrain
+    /*
+    bool IsOnBouncyPaint()
+    {
+        Terrain terrain = Terrain.activeTerrain;
+        TerrainData tData = terrain.terrainData;
+
+        // Makes the  Player position to AlphaMap coordinates
+        Vector3 terrainPos = transform.position - terrain.transform.position;
+        int mapX = (int)((terrainPos.x / tData.size.x) * tData.alphamapWidth);
+        int mapZ = (int)((terrainPos.z / tData.size.z) * tData.alphamapHeight);
+
+        // Get the weights of all layers at this exact spot
+        float[,,] alpha = tData.GetAlphamaps(mapX, mapZ, 1, 1);
+
+        // Check if the Layer (Index 1) has a high weight
+        return alpha[0, 0, 1] > 0.5f;
+    }
+    */
 
 
     private void OnCollisionStay(Collision collision)
