@@ -4,9 +4,16 @@ using UnityEngine.SceneManagement;
 
 public class TrackManager : MonoBehaviour
 {
+    public SimpleCharacterController characterController;
 
     public List<Transform> CheckPoints;
+    public List<Transform> PlayerRespawnPoint;
     public int nextCheckpoint = 0;
+
+    public void Update()
+    {
+        characterController.PlayerSpawnPoint.transform.position = PlayerRespawnPoint[nextCheckpoint].position;
+    }
 
     public void PassedCheckPoint(int checkpoint)
     {

@@ -27,7 +27,7 @@ public class TerrainLayerPainter : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(PaintAmount);
+        //Debug.Log(PaintAmount);
         //Debug.Log(CountDown);
 
         if (pauseMenu.IsPaused == false)

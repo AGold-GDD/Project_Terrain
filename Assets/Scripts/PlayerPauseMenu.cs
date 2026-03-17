@@ -32,6 +32,7 @@ public class PlayerPauseMenu : MonoBehaviour
             Resume();
         }
 
+        /*
         if (Input.GetKey(KeyCode.Alpha1))
         {
             TerrainUI.SetActive(true);
@@ -49,7 +50,8 @@ public class PlayerPauseMenu : MonoBehaviour
             TerrainUI.SetActive(false);
             //GravityUI.SetActive(false);
             //GunUI.SetActive(true);
-        }
+        }\
+        */
     }
 
     public void Paused()
