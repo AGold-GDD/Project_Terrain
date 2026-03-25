@@ -47,28 +47,55 @@ public class SimpleCharacterController : MonoBehaviour
     {
         if (isDead) return;
 
+<<<<<<< Updated upstream
       
+=======
+        // Jetpack hover logic - Context-based (grounded vs airborne)
+>>>>>>> Stashed changes
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
             {
+<<<<<<< Updated upstream
        
+=======
+                // ALWAYS jump first when on ground
+>>>>>>> Stashed changes
                 Jump();
             }
             else if (!isGrounded)
             {
                 if (isHovering)
                 {
+<<<<<<< Updated upstream
            
+=======
+                    // In air + hovering = Drop (deactivate hover)
+>>>>>>> Stashed changes
                     DeactivateHover();
                 }
                 else
                 {
+<<<<<<< Updated upstream
                    
+=======
+                    // In air + not hovering = Activate hover
+>>>>>>> Stashed changes
                     ActivateHover();
                 }
             }
         }
+<<<<<<< Updated upstream
+=======
+
+        // Apply hover logic
+        if (isHovering)
+        {
+            // Lock Y position while hovering (allow X/Z movement)
+            Vector3 currentPos = transform.position;
+            transform.position = new Vector3(currentPos.x, hoverYPosition, currentPos.z);
+        }
+>>>>>>> Stashed changes
 
      
         if (isHovering)
@@ -95,17 +122,29 @@ public class SimpleCharacterController : MonoBehaviour
 
         if (isHovering)
         {
+<<<<<<< Updated upstream
          
+=======
+            // Hovering: X/Z movement, Y velocity = 0
+>>>>>>> Stashed changes
             rb.linearVelocity = new Vector3(move.x * speed, 0f, move.z * speed);
         }
         else
         {
+<<<<<<< Updated upstream
           
+=======
+            // Normal: Full physics control
+>>>>>>> Stashed changes
             Vector3 newVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
             rb.linearVelocity = newVelocity;
         }
 
+<<<<<<< Updated upstream
       
+=======
+        // Footstep sounds
+>>>>>>> Stashed changes
         if (isGrounded && (moveX != 0 || moveZ != 0) && !isRiding)
         {
             stepTimer -= Time.deltaTime;
@@ -136,13 +175,21 @@ public class SimpleCharacterController : MonoBehaviour
             return;
         }
 
+<<<<<<< Updated upstream
         
+=======
+        // Respawn
+>>>>>>> Stashed changes
         if (Input.GetKeyDown(KeyCode.R))
         {
             PlayerRespawn();
         }
 
+<<<<<<< Updated upstream
        
+=======
+        // WebGL sensitivity fix
+>>>>>>> Stashed changes
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
             mouseSensitivity = mouseSensitivity / 2;
@@ -162,7 +209,11 @@ public class SimpleCharacterController : MonoBehaviour
     void ActivateHover()
     {
         isHovering = true;
+<<<<<<< Updated upstream
         hoverYPosition = transform.position.y; 
+=======
+        hoverYPosition = transform.position.y; // Lock current Y position
+>>>>>>> Stashed changes
         Debug.Log("Jetpack ON! Hovering at Y: " + hoverYPosition);
     }
 
@@ -178,7 +229,11 @@ public class SimpleCharacterController : MonoBehaviour
         isDead = true;
         Debug.Log("Player Died!");
 
+<<<<<<< Updated upstream
         
+=======
+        // Reset jetpack state
+>>>>>>> Stashed changes
         DeactivateHover();
 
         Vector3 respawnPos = CheckpointManager.Instance.GetLastCheckpoint();
@@ -214,7 +269,11 @@ public class SimpleCharacterController : MonoBehaviour
 
     public void PlayerRespawn()
     {
+<<<<<<< Updated upstream
         
+=======
+        // Reset jetpack state
+>>>>>>> Stashed changes
         DeactivateHover();
         transform.position = PlayerSpawnPoint.transform.position;
     }
