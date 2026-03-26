@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 //using UnityEngine.UIElements;
 
-public class PlayerPauseMenu : MonoBehaviour
+public class PlayerUIFunction : MonoBehaviour
 {
     //When placing this UI in a new scene and it is not working, make sure the UI event system is in the scene.
 
@@ -14,12 +14,17 @@ public class PlayerPauseMenu : MonoBehaviour
     public GameObject TerrainModeUI;
     public GameObject PaintModeUI;
 
+    public GameObject SettingPage;
+    public GameObject ControlPage;
+    public GameObject ObjectivePage;
+
     //private Image img;
 
     private void Start()
     {
         IsPaused = false;
         NoModeActive();
+        InfoLeft();
     }
     void Update()
     {
@@ -46,6 +51,7 @@ public class PlayerPauseMenu : MonoBehaviour
     public void Resume()
     {
         IsPaused = false;
+        InfoLeft();
         PausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -72,10 +78,38 @@ public class PlayerPauseMenu : MonoBehaviour
         PaintModeUI.SetActive(false);
     }
 
-    public void PaintModeActive() 
+    public void PaintModeActive()
     {
         NoModeUI.SetActive(false);
         TerrainModeUI.SetActive(false);
         PaintModeUI.SetActive(true);
+    }
+
+    public void SettingButton()
+    {
+        SettingPage.SetActive(true);
+        ControlPage.SetActive(false);
+        ObjectivePage.SetActive(false);
+    }
+
+    public void ControlsButton()
+    {
+        SettingPage.SetActive(false);
+        ControlPage.SetActive(true);
+        ObjectivePage.SetActive(false);
+    }
+
+    public void ObjectiveButton()
+    {
+        SettingPage.SetActive(false);
+        ControlPage.SetActive(false);
+        ObjectivePage.SetActive(true);
+    }
+
+    public void InfoLeft()
+    {
+        SettingPage.SetActive(false);
+        ControlPage.SetActive(false);
+        ObjectivePage.SetActive(false);
     }
 }

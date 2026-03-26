@@ -21,7 +21,7 @@ public class TrackManager : MonoBehaviour
         {
             nextCheckpoint++;
 
-            if (nextCheckpoint > CheckPoints.Count)
+            if (nextCheckpoint == 3)
             {
                 Debug.Log("game done");
                 SceneManager.LoadScene("NewMainLobby");
