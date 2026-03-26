@@ -10,6 +10,8 @@ public class TerrainGunModes : MonoBehaviour
     //temporary use
     public TrackManager trackManager;
 
+    public PlayerUIFunction ui;
+
     public bool TerDisabled;
     public bool PanDisabled;
 
@@ -44,9 +46,10 @@ public class TerrainGunModes : MonoBehaviour
             PaintMode();
         }
 
-        if (trackManager.nextCheckpoint == 2)
+        if (trackManager.nextCheckpoint == 1)
         {
             painter.enabled = true;
+            ui.PaintModeActive();
         }
     }
 
