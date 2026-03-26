@@ -47,38 +47,28 @@ public class SimpleCharacterController : MonoBehaviour
     {
         if (isDead) return;
 
-
+      
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
             {
-
+       
                 Jump();
             }
             else if (!isGrounded)
             {
                 if (isHovering)
                 {
-
+           
                     DeactivateHover();
                 }
                 else
                 {
-
+                   
                     ActivateHover();
                 }
             }
         }
-
-
-        // Apply hover logic
-        if (isHovering)
-        {
-            // Lock Y position while hovering (allow X/Z movement)
-            Vector3 currentPos = transform.position;
-            transform.position = new Vector3(currentPos.x, hoverYPosition, currentPos.z);
-        }
-
 
      
         if (isHovering)
@@ -105,17 +95,17 @@ public class SimpleCharacterController : MonoBehaviour
 
         if (isHovering)
         {
-
+         
             rb.linearVelocity = new Vector3(move.x * speed, 0f, move.z * speed);
         }
         else
         {
-
+          
             Vector3 newVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
             rb.linearVelocity = newVelocity;
         }
 
-
+      
         if (isGrounded && (moveX != 0 || moveZ != 0) && !isRiding)
         {
             stepTimer -= Time.deltaTime;
@@ -146,15 +136,13 @@ public class SimpleCharacterController : MonoBehaviour
             return;
         }
 
-
+        
         if (Input.GetKeyDown(KeyCode.R))
         {
             PlayerRespawn();
         }
 
-
-        // WebGL sensitivity fix
-
+       
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
             mouseSensitivity = mouseSensitivity / 2;
@@ -174,11 +162,7 @@ public class SimpleCharacterController : MonoBehaviour
     void ActivateHover()
     {
         isHovering = true;
-
         hoverYPosition = transform.position.y; 
-
-        hoverYPosition = transform.position.y; // Lock current Y position
-
         Debug.Log("Jetpack ON! Hovering at Y: " + hoverYPosition);
     }
 
@@ -194,7 +178,7 @@ public class SimpleCharacterController : MonoBehaviour
         isDead = true;
         Debug.Log("Player Died!");
 
-
+        
         DeactivateHover();
 
         Vector3 respawnPos = CheckpointManager.Instance.GetLastCheckpoint();
@@ -230,7 +214,7 @@ public class SimpleCharacterController : MonoBehaviour
 
     public void PlayerRespawn()
     {
-
+        
         DeactivateHover();
         transform.position = PlayerSpawnPoint.transform.position;
     }
