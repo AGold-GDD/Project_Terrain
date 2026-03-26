@@ -7,7 +7,7 @@ public class TerrainModifier : MonoBehaviour
     public TerrainAbilityController abilityController;
     public float abilityCostPerSecond = 15f; // Cost per second while holding key
     public Terrain[] terrains; // Array of all 9 terrains (assign in Inspector)
-    public float raiseAmountPerSecond = 0.01f; // How much to raise the terrain per second
+    public float raiseAmountPerSecond = 0.05f; // How much to raise the terrain per second
     public float modifyRadius = 3f; // Radius around modification point to modify
     public Transform muzzle; // Assign the muzzle transform in Inspector (e.g., the gun's muzzle point)
     public float maxRayDistance = 100f; // Maximum distance for the raycast
@@ -19,8 +19,8 @@ public class TerrainModifier : MonoBehaviour
         // Initialize slider to match current radius (read-only)
         if (radiusSlider != null)
         {
-            radiusSlider.minValue = 1f;
-            radiusSlider.maxValue = 10f;
+            radiusSlider.minValue = 3f;
+            radiusSlider.maxValue = 15f;
             radiusSlider.value = modifyRadius;
             // Slider is read-only; no event listener needed
         }
@@ -32,7 +32,7 @@ public class TerrainModifier : MonoBehaviour
         if (Input.mouseScrollDelta.y != 0)
         {
             modifyRadius += Input.mouseScrollDelta.y * radiusChangeSpeed;
-            modifyRadius = Mathf.Clamp(modifyRadius, 1f, 10f);
+            modifyRadius = Mathf.Clamp(modifyRadius, 3f, 15f);
             // Update slider to reflect new radius
             if (radiusSlider != null)
             {
