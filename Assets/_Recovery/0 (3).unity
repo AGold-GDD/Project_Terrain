@@ -2489,45 +2489,8 @@ PrefabInstance:
       value: 296.21
       objectReference: {fileID: 0}
     - target: {fileID: 324748365163789988, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5447893
-      objectReference: {fileID: 0}
-    - target: {fileID: 324748365163789988, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5447893
-      objectReference: {fileID: 0}
-    - target: {fileID: 324748365163789988, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5447893
-      objectReference: {fileID: 0}
-    - target: {fileID: 324748365163789988, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -221
-      objectReference: {fileID: 0}
-    - target: {fileID: 324748365163789988, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -40.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563873344545186609, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_text
-      value: "WASD: Move\nSpacebar: Jump/Jetpack (Mid-Jump)\nLeft click: Raise Terrain
-        \nRight click: Lower Terrain\nScroll Wheel: Adjust Modification Area\n\n\n"
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563873344545186609, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_fontSize
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563873344545186609, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_margin.w
-      value: -204.0621
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563873344545186609, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_margin.z
-      value: -361.76852
-      objectReference: {fileID: 0}
-    - target: {fileID: 2563873344545186609, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 36
+      value: -5.9000244
       objectReference: {fileID: 0}
     - target: {fileID: 2856122734419949286, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2549,25 +2512,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4470290862347292921, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 72de18d4602939c4c92fd876ebb8c450, type: 2}
-    - target: {fileID: 4470290862347292921, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -2110108151383613920, guid: 72de18d4602939c4c92fd876ebb8c450, type: 2}
-    - target: {fileID: 4470290862347292921, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4679451596775435924, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5253271801210266985, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6530828960482801497, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
       propertyPath: m_Name
@@ -2651,22 +2598,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7683168877046638264, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832687128651660102, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.1565
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832687128651660102, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 105.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832687128651660102, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -37
-      objectReference: {fileID: 0}
-    - target: {fileID: 8161485126257250558, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8638294566830627686, guid: 25bf8e0ea232faf4082b7f2571c5f4f3, type: 3}

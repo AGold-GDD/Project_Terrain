@@ -26,6 +26,9 @@ public class SimpleCharacterController : MonoBehaviour
 
     public AudioSource jumpAudioSource;
     public AudioSource footstepAudioSource;
+    public AudioSource jetpackAudioSource;
+    public AudioSource jetpackStartAudioSource;
+    public AudioSource jetpackStopAudioSource;
     public float stepInterval = 0.5f;
     private float stepTimer = 0f;
 
@@ -162,14 +165,47 @@ public class SimpleCharacterController : MonoBehaviour
     void ActivateHover()
     {
         isHovering = true;
-        hoverYPosition = transform.position.y; 
+        hoverYPosition = transform.position.y;
+        PlayJetpackStartSound();  
+        PlayJetpackSound();       
         Debug.Log("Jetpack ON! Hovering at Y: " + hoverYPosition);
     }
 
     void DeactivateHover()
     {
         isHovering = false;
+        StopJetpackSound();       
         Debug.Log("Jetpack OFF! Dropping...");
+    }
+
+    void PlayJetpackSound()
+    {
+        if (jetpackAudioSource != null && !jetpackAudioSource.isPlaying)
+        {
+            jetpackAudioSource.Play();
+        }
+    }
+
+    void StopJetpackSound()
+    {
+        if (jetpackAudioSource != null)
+        {
+            jetpackAudioSource.Stop();
+        }
+
+        
+        if (jetpackStopAudioSource != null)
+        {
+            jetpackStopAudioSource.Play();
+        }
+    }
+
+    void PlayJetpackStartSound()
+    {
+        if (jetpackStartAudioSource != null)
+        {
+            jetpackStartAudioSource.Play();
+        }
     }
 
     public void Die()

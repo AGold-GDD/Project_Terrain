@@ -42,7 +42,7 @@ public class Win_Teleport : MonoBehaviour
         Debug.Log("targetPositions count: " + targetPositions.Count + ", ballSpawnPositions count: " + ballSpawnPositions.Count);
     }
 
-    // This method will be called by the Button's OnClick event (advances to next for both)
+
     public void Teleport()
     {
         // Prevent rapid repeated calls
@@ -58,16 +58,18 @@ public class Win_Teleport : MonoBehaviour
         {
             // Increment the index first to advance before teleporting
             int minCount = Mathf.Min(targetPositions.Count, ballSpawnPositions.Count);
-            currentIndex = (currentIndex + 1) % minCount;
+            int nextIndex = (currentIndex + 1) % minCount;
 
-            Debug.Log("Index incremented to: " + currentIndex + " (min count: " + minCount + ")");
-
-            if (currentIndex >= targetPositions.Count || currentIndex >= ballSpawnPositions.Count)
+            if (nextIndex == 2) // 3rd level (0,1,2)
             {
-                Debug.LogError("Index out of range after increment. Resetting to 0.");
-                currentIndex = 0; // Optional: Reset if out of bounds, but this shouldn't happen with %
+                Debug.Log(" Level 3 complete! Loading HUB scene...");
+                LoadHubScene();
                 return;
             }
+
+            // Normal teleport logic for levels 1-2
+            currentIndex = nextIndex;
+            Debug.Log("Index incremented to: " + currentIndex);
 
             // Teleport player to the new current position in the list
             Vector3 playerTarget = targetPositions[currentIndex];
@@ -94,6 +96,18 @@ public class Win_Teleport : MonoBehaviour
             Debug.LogError("Transforms not assigned or one or both lists are empty! Player: " + (playerTransform != null) + ", Ball: " + (ballTransform != null) + ", Target count: " + targetPositions.Count + ", Ball count: " + ballSpawnPositions.Count);
         }
     }
+
+    private void LoadHubScene()
+    {
+        
+        Time.timeScale = 1f;
+        Physics.autoSimulation = true;
+        AudioListener.pause = false;
+
+        // Load hub
+        UnityEngine.SceneManagement.SceneManager.LoadScene("NewMainLobby");
+    }
+
 
     // Respawn only the player to the last respawn point
     private void RespawnPlayer()
