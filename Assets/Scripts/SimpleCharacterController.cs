@@ -81,9 +81,10 @@ public class SimpleCharacterController : MonoBehaviour
             transform.position = new Vector3(currentPos.x, hoverYPosition, currentPos.z);
         }
 
-       
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        //mouseSensitivity = mouseSensitivity * MouseSlider.value;
+
+        float mouseX = Input.GetAxis("Mouse X") * (mouseSensitivity * MouseSlider.value) * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * (mouseSensitivity * MouseSlider.value) * Time.deltaTime;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
