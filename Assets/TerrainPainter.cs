@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TerrainLayerPainter : MonoBehaviour
 {
@@ -10,11 +11,13 @@ public class TerrainLayerPainter : MonoBehaviour
     //testing paint limit
     //public int MaxPaint = 100;
     public float PaintAmount = 100;
-    public float PaintUsuage = .1f;
+    public float PaintUsuage = .05f;
 
     public float CountDown;
 
-    public PlayerPauseMenu pauseMenu;
+    public PlayerUIFunction playerUIFunction;
+
+    public Slider PaintMeter;
 
     // Store the original state here
     private float[,,] originalAlphamaps;
@@ -30,7 +33,7 @@ public class TerrainLayerPainter : MonoBehaviour
         //Debug.Log(PaintAmount);
         //Debug.Log(CountDown);
 
-        if (pauseMenu.IsPaused == false)
+        if (playerUIFunction.IsPaused == false)
         {
             // Left mouse click to paint
             if (Input.GetMouseButton(0) && PaintAmount > 0)
@@ -52,16 +55,13 @@ public class TerrainLayerPainter : MonoBehaviour
                 PaintAmount = PaintAmount - PaintUsuage;
             }
 
-            if (PaintAmount <= 0)
-            {
-
-            }
-
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 ResetTerrain();
                 PaintAmount = 100;
             }
+
+            PaintMeter.value = PaintAmount;
         }
 
     }
@@ -71,10 +71,16 @@ public class TerrainLayerPainter : MonoBehaviour
         Ray ray = new Ray(muzzlePoint.position, muzzlePoint.forward);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
+            // Draws a red line from the muzzle to the hit point for 2 seconds
+            Debug.DrawLine(ray.origin, hit.point, Color.red, 2.0f);
+
+            // Optional: Draw a small sphere at the hit point to see the exact center
+            Debug.Log($"Hit World Pos: {hit.point}");
+
             // 1. Convert World Position to Terrain Map Coordinates
             TerrainData tData = terrain.terrainData;
-            int mapX = (int)(((hit.point.x - terrain.transform.position.x) / tData.size.x) * tData.alphamapWidth);
-            int mapZ = (int)(((hit.point.z - terrain.transform.position.z) / tData.size.z) * tData.alphamapHeight);
+            int mapX = (int)(((hit.point.x - terrain.transform.position.x) / tData.size.x) * tData.alphamapWidth) - (brushSize / 2);
+            int mapZ = (int)(((hit.point.z - terrain.transform.position.z) / tData.size.z) * tData.alphamapHeight) - (brushSize / 2);
 
             // 2. Grab the current alphamap section
             float[,,] maps = tData.GetAlphamaps(mapX, mapZ, brushSize, brushSize);
@@ -92,7 +98,6 @@ public class TerrainLayerPainter : MonoBehaviour
 
             // 4. Apply changes back to the terrain
             tData.SetAlphamaps(mapX, mapZ, maps);
-
         }
     }
 
@@ -103,8 +108,8 @@ public class TerrainLayerPainter : MonoBehaviour
         {
             // 1. Convert World Position to Terrain Map Coordinates
             TerrainData tData = terrain.terrainData;
-            int mapX = (int)(((hit.point.x - terrain.transform.position.x) / tData.size.x) * tData.alphamapWidth);
-            int mapZ = (int)(((hit.point.z - terrain.transform.position.z) / tData.size.z) * tData.alphamapHeight);
+            int mapX = (int)(((hit.point.x - terrain.transform.position.x) / tData.size.x) * tData.alphamapWidth) - (brushSize / 2);
+            int mapZ = (int)(((hit.point.z - terrain.transform.position.z) / tData.size.z) * tData.alphamapHeight) - (brushSize / 2);
 
             // 2. Grab the current alphamap section
             float[,,] maps = tData.GetAlphamaps(mapX, mapZ, brushSize, brushSize);

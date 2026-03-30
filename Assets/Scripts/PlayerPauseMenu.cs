@@ -1,5 +1,8 @@
+using System.Collections;
 using UnityEngine;
+//using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+//using UnityEngine.UIElements;
 
 public class PlayerPauseMenu : MonoBehaviour
 {
@@ -8,16 +11,16 @@ public class PlayerPauseMenu : MonoBehaviour
     public GameObject PausePanel;
     public bool IsPaused;
 
-    public GameObject TerrainUI;
-    //public GameObject GravityUI;
-    //public GameObject GunUI;
+    public GameObject NoModeUI;
+    public GameObject TerrainModeUI;
+    public GameObject PaintModeUI;
+
+    //private Image img;
 
     private void Start()
     {
         IsPaused = false;
-        TerrainUI.SetActive(true);
-        //GravityUI.SetActive(false);
-        //GunUI.SetActive(false);
+        NoModeActive();
     }
     void Update()
     {
@@ -31,36 +34,14 @@ public class PlayerPauseMenu : MonoBehaviour
         {
             Resume();
         }
-
-        /*
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            TerrainUI.SetActive(true);
-            //GravityUI.SetActive(false);
-            //GunUI.SetActive(false);
-        }
-        else if (Input.GetKey(KeyCode.Alpha2))
-        {
-            TerrainUI.SetActive(false);
-            //GravityUI.SetActive(true);
-            //GunUI.SetActive(false);
-        } 
-        else if (Input.GetKey(KeyCode.Alpha3))
-        {
-            TerrainUI.SetActive(false);
-            //GravityUI.SetActive(false);
-            //GunUI.SetActive(true);
-        }\
-        */
     }
-
     public void Paused()
     {
         IsPaused = true;
         PausePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Time.timeScale = 0;
+        PauseGame();
     }
 
     public void Resume()
@@ -69,11 +50,63 @@ public class PlayerPauseMenu : MonoBehaviour
         PausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        Time.timeScale = 1;
+        ResumeGame();
     }
 
     public void Exit()
     {
+        //  CRITICAL: Always resume before loading!
+        ResumeGame();
+
+        // Small delay ensures everything unpauses first
+        StartCoroutine(LoadHubDelayed());
+    }
+
+    private IEnumerator LoadHubDelayed()
+    {
+        yield return null; // Wait 1 frame
         SceneManager.LoadScene("NewMainLobby");
+    }
+
+    //  NEW: Proper pause/resume methods
+    private void PauseGame()
+    {
+        // Pause ALL physics & game objects
+        UnityEngine.Time.timeScale = 0f;
+
+        // ALSO pause physics explicitly
+        Physics.autoSimulation = false;
+
+        // Pause all AudioSources
+        AudioListener.pause = true;
+    }
+
+    private void ResumeGame()
+    {
+        UnityEngine.Time.timeScale = 1f;
+        Physics.autoSimulation = true;
+        AudioListener.pause = false;
+    }
+
+
+    public void NoModeActive()
+    {
+        NoModeUI.SetActive(true);
+        TerrainModeUI.SetActive(false);
+        PaintModeUI.SetActive(false);
+    }
+
+    public void TerrainModeActive()
+    {
+        NoModeUI.SetActive(false);
+        TerrainModeUI.SetActive(true);
+        PaintModeUI.SetActive(false);
+    }
+
+    public void PaintModeActive() 
+    {
+        NoModeUI.SetActive(false);
+        TerrainModeUI.SetActive(false);
+        PaintModeUI.SetActive(true);
     }
 }

@@ -3,12 +3,18 @@ using UnityEngine;
 public class ParkourSettings : MonoBehaviour
 {
     public TerrainGunModes gunModes;
+    public TrackManager trackManager;
 
-    public void Awake()
+    //public TerrainLayerPainter painter;
+    public PlayerUIFunction ui;
+
+    public void Update()
     {
-        //gunModes = GetComponent<TerrainGunModes>();
-        gunModes.TerDisabled = true;
-        gunModes.PaintMode();
-        Debug.Log("did it");
+        if (trackManager.nextCheckpoint == 2)
+        {
+            //painter.enabled = true
+            gunModes.PaintMode();
+            ui.PaintModeActive();
+        }
     }
 }
