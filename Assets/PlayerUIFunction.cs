@@ -23,7 +23,7 @@ public class PlayerUIFunction : MonoBehaviour
     private void Start()
     {
         IsPaused = false;
-        NoModeActive();
+        //NoModeActive();
         InfoLeft();
     }
     void Update()

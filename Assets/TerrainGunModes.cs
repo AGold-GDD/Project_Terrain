@@ -5,10 +5,10 @@ public class TerrainGunModes : MonoBehaviour
 {
     public TerrainMode terrain;
     public TerrainLayerPainter painter;
-    public PlayerPauseMenu pauseMenu;
+    //public PlayerPauseMenu pauseMenu;
 
     //temporary use
-    public TrackManager trackManager;
+    //public TrackManager trackManager;
 
     public PlayerUIFunction ui;
 
@@ -20,18 +20,14 @@ public class TerrainGunModes : MonoBehaviour
   
         if (SceneManager.GetActiveScene().name == "ParkourMinigame")
         {
-            terrain.enabled = false;
-            painter.enabled = false;
+            NoMode();
+            Debug.Log("no mode");
             //pauseMenu.TerrainUI.active = false;
         } else
         {
-            terrain.enabled = true;
-            painter.enabled = false;
+            TerrainMode();
+            Debug.Log("terrain mode");
         }
-
-
-        TerDisabled = false;
-        PanDisabled = false;
     }
 
     // Update is called once per frame
@@ -39,29 +35,39 @@ public class TerrainGunModes : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && !TerDisabled)
         {
+            Debug.Log("Terrain Mode On");
             TerrainMode();
+            
         } 
         else if (Input.GetKeyDown(KeyCode.Alpha2) && !PanDisabled)
         {
+            Debug.Log("Paint Mode On");
             PaintMode();
+            
         }
 
-        if (trackManager.nextCheckpoint == 1)
-        {
-            painter.enabled = true;
-            ui.PaintModeActive();
-        }
     }
 
     public void TerrainMode()
     {
         terrain.enabled = true;
         painter.enabled = false;
+        ui.TerrainModeActive();
     }
 
     public void PaintMode()
     {
         terrain.enabled = false;
         painter.enabled = true;
+        ui.PaintModeActive();
+    }
+
+    public void NoMode()
+    {
+        terrain.enabled = false;
+        painter.enabled = false;
+        TerDisabled = true;
+        PanDisabled = true;
+        ui.NoModeActive();
     }
 }
