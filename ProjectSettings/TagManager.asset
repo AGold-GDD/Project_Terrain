@@ -9,6 +9,7 @@ TagManager:
   - Cart
   - Rock
   - Target
+  - DeathZone
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - ThePlayer
   - Water
   - UI
-  - 
+  - Terrain
   - 
   - 
   - 

@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/OpenWorld.unity
     guid: a993c616eca3f214586496cfbce9624b
   - enabled: 1
+    path: Assets/Scenes/Minigames/ParkourMinigame.unity
+    guid: 676d04bcdb431e741995cc197e9cab8b
+  - enabled: 1
     path: Assets/Scenes/Minigames/NewCartMinigame.unity
     guid: 4ea20f072f45f5a4eb18961c4fcb162c
   m_configObjects:

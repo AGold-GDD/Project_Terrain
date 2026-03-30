@@ -8,7 +8,8 @@ public class CollectibleSphere : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Notify GameManager or Player about collection
-            GameManager.instance.CollectSphere();
+            //COLLECT SPHERE CODE
+            //GameManager.Instance.CollectSphere();
 
             // Destroy the collectible sphere
             Destroy(gameObject);

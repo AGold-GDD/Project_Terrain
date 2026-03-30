@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 //using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -40,7 +41,7 @@ public class PlayerPauseMenu : MonoBehaviour
         PausePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Time.timeScale = 0;
+        PauseGame();
     }
 
     public void Resume()
@@ -49,14 +50,44 @@ public class PlayerPauseMenu : MonoBehaviour
         PausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        Time.timeScale = 1;
+        ResumeGame();
     }
 
     public void Exit()
     {
-        Time.timeScale = 1;
+        //  CRITICAL: Always resume before loading!
+        ResumeGame();
+
+        // Small delay ensures everything unpauses first
+        StartCoroutine(LoadHubDelayed());
+    }
+
+    private IEnumerator LoadHubDelayed()
+    {
+        yield return null; // Wait 1 frame
         SceneManager.LoadScene("NewMainLobby");
     }
+
+    //  NEW: Proper pause/resume methods
+    private void PauseGame()
+    {
+        // Pause ALL physics & game objects
+        UnityEngine.Time.timeScale = 0f;
+
+        // ALSO pause physics explicitly
+        Physics.autoSimulation = false;
+
+        // Pause all AudioSources
+        AudioListener.pause = true;
+    }
+
+    private void ResumeGame()
+    {
+        UnityEngine.Time.timeScale = 1f;
+        Physics.autoSimulation = true;
+        AudioListener.pause = false;
+    }
+
 
     public void NoModeActive()
     {
