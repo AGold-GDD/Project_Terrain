@@ -5,21 +5,34 @@ public class ObjectTerrainLayerDetect : MonoBehaviour
     private Rigidbody rb;
     private bool isGrounded;
     public int PushForce;
+    public Vector3 objectVelocity; // The velocity vector
+    public float objectSpeed;
 
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
+
+    private void Update()
+    {
+
+    }
     private void FixedUpdate()
     {
+        // Access the velocity in the Update method (or FixedUpdate for physics updates)
+        objectVelocity = rb.linearVelocity;
+
         if (IsOnBouncyPaint() && isGrounded)
         {
             rb.AddForce(Vector3.up * PushForce, ForceMode.Impulse);
         }
         else if (IsOnIcyPaint() && isGrounded) 
-        { 
-        
+        {
+            objectVelocity = objectVelocity * 2;
         }
+        //Debug.Log(objectVelocity);
+        //Debug.Log(objectSpeed);
+
     }
 
     bool IsOnBouncyPaint()

@@ -476,7 +476,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   terrain: {fileID: 520339933}
   painter: {fileID: 520339931}
-  trackManager: {fileID: 1977046769}
   ui: {fileID: 1294316420}
   TerDisabled: 0
   PanDisabled: 0
@@ -587,7 +586,7 @@ Transform:
   m_GameObject: {fileID: 628668293}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 500, y: 1, z: 500}
+  m_LocalPosition: {x: 500, y: 2, z: 500}
   m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2238,7 +2237,7 @@ Transform:
   m_GameObject: {fileID: 1851357554}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 380.56, y: 156.9, z: 783.18}
+  m_LocalPosition: {x: 380.56, y: 151, z: 808.94}
   m_LocalScale: {x: 30, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
