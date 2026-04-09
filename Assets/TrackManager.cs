@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class TrackManager : MonoBehaviour
 {
-    public SimpleCharacterController characterController;
+    public NO_JETPACK_SimpleCharacterController characterController;
 
     public List<Transform> CheckPoints;
     public List<Transform> PlayerRespawnPoint;

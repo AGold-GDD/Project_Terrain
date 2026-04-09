@@ -1,16 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SimpleCharacterController : MonoBehaviour
+public class JETPACK_SimpleCharacterController : MonoBehaviour
 {
-    public float speed = 5f;
-    public float jumpForce = 5f;
+    public float speed = 90f;
+    public float jumpForce = 300f;
     public float mouseSensitivity;
     private bool isDead = false;
+
+
 
     // Jetpack hover variables
     public bool isHovering = false;
     private float hoverYPosition;
+    public float heightChangeSpeed = 5f;
 
     // mouse sensitivity stuff
     public Slider MouseSlider;
@@ -44,43 +47,44 @@ public class SimpleCharacterController : MonoBehaviour
         {
             transform.position = CheckpointManager.Instance.GetLastCheckpoint();
         }
+
+        ActivateHover();
     }
 
     void Update()
     {
         if (isDead) return;
 
-      
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        // Smooth jetpack height controls (hold Q to lower, hold E to higher)
+        if (isHovering)
         {
-            if (isGrounded)
+            float heightInput = 0f;
+
+            if (Input.GetKey(KeyCode.E))
             {
-       
-                Jump();
+                heightInput += 1f; // Raise height
             }
-            else if (!isGrounded)
+            if (Input.GetKey(KeyCode.Q))
             {
-                if (isHovering)
-                {
-           
-                    DeactivateHover();
-                }
-                else
-                {
-                   
-                    ActivateHover();
-                }
+                heightInput -= 1f; // Lower height
+            }
+
+            // Gradually adjust hoverYPosition based on input
+            hoverYPosition += heightInput * heightChangeSpeed * Time.deltaTime;
+
+            // Optional: Debug log (remove in final build)
+            if (heightInput != 0f)
+            {
+                Debug.Log("Jetpack height: " + hoverYPosition.ToString("F1"));
             }
         }
 
-     
         if (isHovering)
         {
-          
             Vector3 currentPos = transform.position;
             transform.position = new Vector3(currentPos.x, hoverYPosition, currentPos.z);
         }
-
         //mouseSensitivity = mouseSensitivity * MouseSlider.value;
 
         float mouseX = Input.GetAxis("Mouse X") * (mouseSensitivity * MouseSlider.value) * Time.deltaTime;
@@ -153,7 +157,7 @@ public class SimpleCharacterController : MonoBehaviour
         }
     }
 
-    void Jump()
+    /* void Jump()
     {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         if (jumpAudioSource != null)
@@ -162,6 +166,7 @@ public class SimpleCharacterController : MonoBehaviour
         }
         Debug.Log("Jump!");
     }
+    */
 
     void ActivateHover()
     {

@@ -2441,11 +2441,49 @@ PrefabInstance:
       propertyPath: ui
       value: 
       objectReference: {fileID: 1580552486}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1708720236544863935, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2388339181492180752, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 807034398}
   m_SourcePrefab: {fileID: 100100000, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+--- !u!1 &807034397 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2388339181492180752, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+  m_PrefabInstance: {fileID: 807034396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &807034398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807034397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f6ff21db359734eb27126a9740d134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NO_JETPACK_SimpleCharacterController
+  speed: 90
+  jumpForce: 300
+  mouseSensitivity: 0
+  isHovering: 0
+  heightChangeSpeed: 5
+  MouseSlider: {fileID: 0}
+  rb: {fileID: 0}
+  isGrounded: 0
+  playerCamera: {fileID: 0}
+  isRiding: 0
+  jumpAudioSource: {fileID: 0}
+  footstepAudioSource: {fileID: 0}
+  jetpackAudioSource: {fileID: 0}
+  jetpackStartAudioSource: {fileID: 0}
+  jetpackStopAudioSource: {fileID: 0}
+  stepInterval: 0.5
+  PlayerSpawnPoint: {fileID: 0}
 --- !u!114 &811405797 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6113454932894922337, guid: 941593b9130bb1a479790a8dcb35dbcf, type: 3}

@@ -3,14 +3,14 @@ using UnityEngine;
 public class CartSeatTrigger : MonoBehaviour
 {
     public Transform seatPoint;
-    private SimpleCharacterController currentPlayer;
+    private NO_JETPACK_SimpleCharacterController currentPlayer;
     private Quaternion savedRotation;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            SimpleCharacterController controller = other.GetComponent<SimpleCharacterController>();
+            NO_JETPACK_SimpleCharacterController controller = other.GetComponent<NO_JETPACK_SimpleCharacterController>();
             if (controller != null)
             {
                 currentPlayer = controller;

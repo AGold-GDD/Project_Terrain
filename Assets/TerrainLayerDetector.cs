@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TerrainLayerDetector : MonoBehaviour
 {
-    public SimpleCharacterController characterController;
+    public NO_JETPACK_SimpleCharacterController characterController;
 
     //private int timeLeft = 500;
 
