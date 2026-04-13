@@ -23,7 +23,9 @@ public class TerrainGunModes : MonoBehaviour
 
         switch (CurrentScene)
         {
-            case "ParkourMinigame":
+            case "PaintLevel":
+                PaintMode();
+                break;
             case "NewMainLobby":
                 NoMode();
                 Debug.Log("no mode");

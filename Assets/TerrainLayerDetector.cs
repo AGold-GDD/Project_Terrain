@@ -1,65 +1,64 @@
 using UnityEngine;
 
-public class TerrainLayerDetector : MonoBehaviour
+public partial class TerrainLayerDetector : MonoBehaviour
 {
     public NO_JETPACK_SimpleCharacterController characterController;
+    public SimpleCharacterController characterController;
+    public LayerMask terrainLayer; // Assign the "Terrain" layer in the inspector
 
-    //private int timeLeft = 500;
-
-    // Update is called once per frame
     void Update()
     {
-        if (IsOnIcyPaint() && characterController.isGrounded) 
-        {
-            characterController.speed = 20;
-            //timeLeft = 500;
-        } 
-        else if (!IsOnIcyPaint() && characterController.isGrounded)
-        {
-            characterController.speed = 5;  
-        }
+        int layerIndex = GetCurrentTerrainLayer();
 
+        // Layer Index 2 = Icy, Index 1 = Bouncy (as per your original logic)
+        if (layerIndex == 2 && characterController.isGrounded)
+        {
+            characterController.speed = 24;
+            characterController.jumpForce = 18;
+        }
+        else if (layerIndex != 2 && characterController.isGrounded && layerIndex != 1)
+        {
+            characterController.speed = 12;
+            characterController.jumpForce = 15;
+        }
     }
 
     private void FixedUpdate()
     {
-        if (IsOnBouncyPaint() && characterController.isGrounded)
+        if (GetCurrentTerrainLayer() == 1 && characterController.isGrounded)
         {
-            characterController.rb.AddForce(Vector3.up * 20f, ForceMode.Impulse);
+            characterController.rb.AddForce(Vector3.up * 30f, ForceMode.Impulse);
         }
     }
 
-    bool IsOnBouncyPaint()
+    int GetCurrentTerrainLayer()
     {
-        Terrain terrain = Terrain.activeTerrain;
-        TerrainData tData = terrain.terrainData;
+        RaycastHit hit;
+        // Cast a ray downward from the player's position
+        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, Vector3.down, out hit, 2f, terrainLayer))
+        {
+            Terrain terrain = hit.collider.GetComponent<Terrain>();
+            if (terrain == null) return -1;
 
-        // Makes the  Player position to AlphaMap coordinates
-        Vector3 terrainPos = transform.position - terrain.transform.position;
-        int mapX = (int)((terrainPos.x / tData.size.x) * tData.alphamapWidth);
-        int mapZ = (int)((terrainPos.z / tData.size.z) * tData.alphamapHeight);
+            TerrainData tData = terrain.terrainData;
+            Vector3 terrainPos = hit.point - terrain.transform.position;
 
-        // Get the weights of all layers at this exact spot
-        float[,,] alpha = tData.GetAlphamaps(mapX, mapZ, 1, 1);
+            // Convert hit point to AlphaMap coordinates
+            int mapX = (int)((terrainPos.x / tData.size.x) * tData.alphamapWidth);
+            int mapZ = (int)((terrainPos.z / tData.size.z) * tData.alphamapHeight);
 
-        // Check if the Layer (Index 1) has a high weight
-        return alpha[0, 0, 1] > 0.5f;
-    }
+            // Clamp coordinates to prevent "Invalid Argument" errors if on the very edge
+            mapX = Mathf.Clamp(mapX, 0, tData.alphamapWidth - 1);
+            mapZ = Mathf.Clamp(mapZ, 0, tData.alphamapHeight - 1);
 
-    bool IsOnIcyPaint()
-    {
-        Terrain terrain = Terrain.activeTerrain;
-        TerrainData tData = terrain.terrainData;
+            float[,,] alpha = tData.GetAlphamaps(mapX, mapZ, 1, 1);
 
-        // Makes the  Player position to AlphaMap coordinates
-        Vector3 terrainPos = transform.position - terrain.transform.position;
-        int mapX = (int)((terrainPos.x / tData.size.x) * tData.alphamapWidth);
-        int mapZ = (int)((terrainPos.z / tData.size.z) * tData.alphamapHeight);
-
-        // Get the weights of all layers at this exact spot
-        float[,,] alpha = tData.GetAlphamaps(mapX, mapZ, 1, 1);
-
-        // Check if the Layer (Index 1) has a high weight
-        return alpha[0, 0, 2] > 0.5f;
+            // Loop through layers to find the one with the most weight
+            for (int i = 0; i < tData.alphamapLayers; i++)
+            {
+                if (alpha[0, 0, i] > 0.5f) return i;
+            }
+        }
+        return -1;
     }
 }
