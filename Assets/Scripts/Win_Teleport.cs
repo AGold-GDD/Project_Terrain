@@ -58,13 +58,12 @@ public class Win_Teleport : MonoBehaviour
         {
             // Increment the index first to advance before teleporting
             int minCount = Mathf.Min(targetPositions.Count, ballSpawnPositions.Count);
-            int nextIndex = (currentIndex + 1);
+            int nextIndex = (currentIndex + 1) % minCount;
 
-            if (nextIndex == minCount) // 3rd level (0,1,2)
+            if (nextIndex == 2) // 3rd level (0,1,2)
             {
                 Debug.Log(" Level 3 complete! Loading HUB scene...");
                 LoadHubScene();
-                currentIndex = 0;
                 return;
             }
 
