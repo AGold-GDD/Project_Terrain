@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class NO_JETPACK_SimpleCharacterController : MonoBehaviour
 {
-    public float speed = 90f;
+    public float speed = 12f;
     public float jumpForce = 300f;
     public float mouseSensitivity;
     private bool isDead = false;

@@ -461,7 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c207072f38135564ea168125588090f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeadlyWater
-  player: {fileID: 792186350}
+  player: {fileID: 0}
 --- !u!65 &367021758
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -877,7 +877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c207072f38135564ea168125588090f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeadlyWater
-  player: {fileID: 792186350}
+  player: {fileID: 0}
 --- !u!65 &512536145
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1044,6 +1044,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3427654643628175255, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+      propertyPath: characterController
+      value: 
+      objectReference: {fileID: 1378678579}
+    - target: {fileID: 3427654643628175255, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
       propertyPath: terrainLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -1155,22 +1159,20 @@ PrefabInstance:
       propertyPath: ui
       value: 
       objectReference: {fileID: 396997094}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1708720236544863935, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2388339181492180752, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1378678579}
   m_SourcePrefab: {fileID: 100100000, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
---- !u!114 &792186350 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1708720236544863935, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+--- !u!4 &792186350 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7466801660179113570, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
   m_PrefabInstance: {fileID: 792186349}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378678578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e56b3e861435c3349b5e4952e3cb350b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleCharacterController
 --- !u!114 &792186351 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7045186569968203675, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
@@ -1182,6 +1184,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4564df1bf71fcb74e898ebdb1988781c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!82 &792186352 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4086394438070708693, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+  m_PrefabInstance: {fileID: 792186349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &792186353 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 945141684303858339, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+  m_PrefabInstance: {fileID: 792186349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &792186354 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 1385173726270059778, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+  m_PrefabInstance: {fileID: 792186349}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &804693976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,7 +1320,7 @@ Transform:
   m_GameObject: {fileID: 804693976}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1578, y: 212.3, z: -550.7325}
+  m_LocalPosition: {x: -1578, y: 194.3, z: -550.7325}
   m_LocalScale: {x: 44.70785, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1960,6 +1977,30 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2388339181492180752, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
   m_PrefabInstance: {fileID: 792186349}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1378678579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378678578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f6ff21db359734eb27126a9740d134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NO_JETPACK_SimpleCharacterController
+  speed: 12
+  jumpForce: 300
+  mouseSensitivity: 135
+  MouseSlider: {fileID: 396997093}
+  rb: {fileID: 792186354}
+  isGrounded: 0
+  playerCamera: {fileID: 792186350}
+  isRiding: 0
+  jumpAudioSource: {fileID: 792186353}
+  footstepAudioSource: {fileID: 792186352}
+  stepInterval: 0.5
+  PlayerSpawnPoint: {fileID: 337270826}
 --- !u!1 &1759627724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,7 +2030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da14f60d6d01cb4584b5e4c6181017d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrackManager
-  characterController: {fileID: 792186350}
+  characterController: {fileID: 1378678579}
   painter: {fileID: 792186351}
   CheckPoints:
   - {fileID: 965298766}
@@ -2171,7 +2212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c207072f38135564ea168125588090f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeadlyWater
-  player: {fileID: 792186350}
+  player: {fileID: 0}
 --- !u!65 &1942124078
 BoxCollider:
   m_ObjectHideFlags: 0

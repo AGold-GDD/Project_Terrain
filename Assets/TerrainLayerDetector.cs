@@ -3,7 +3,7 @@ using UnityEngine;
 public partial class TerrainLayerDetector : MonoBehaviour
 {
     public NO_JETPACK_SimpleCharacterController characterController;
-    public SimpleCharacterController characterController;
+    //public JETPACK_SimpleCharacterController characterController;
     public LayerMask terrainLayer; // Assign the "Terrain" layer in the inspector
 
     void Update()

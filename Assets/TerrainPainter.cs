@@ -24,12 +24,12 @@ public class TerrainLayerPainter : MonoBehaviour
     {
         if (!playerUIFunction.IsPaused)
         {
-            if (Input.GetMouseButton(0) && PaintAmount > 0)
+            if (Input.GetMouseButton(0) /*&& PaintAmount > 0*/)
             {
                 HandlePainting(1); // Pass the layer index (Green)
             }
 
-            if (Input.GetMouseButton(1) && PaintAmount > 0)
+            if (Input.GetMouseButton(1) /*&& PaintAmount > 0*/)
             {
                 HandlePainting(2); // Pass the layer index (Red)
             }

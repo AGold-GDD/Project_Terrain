@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class TrackManager : MonoBehaviour
 {
     public NO_JETPACK_SimpleCharacterController characterController;
-    public SimpleCharacterController characterController;
+    //public SimpleCharacterController characterController;
     public TerrainLayerPainter painter;
 
     public List<Transform> CheckPoints;
@@ -32,7 +32,7 @@ public class TrackManager : MonoBehaviour
             switch (CurrentScene)
             {
                 case "PaintLevel":
-                    if (nextCheckpoint == 2)
+                    if (nextCheckpoint == 3)
                     {
                         Debug.Log("game done");
                         SceneManager.LoadScene("NewMainLobby");
