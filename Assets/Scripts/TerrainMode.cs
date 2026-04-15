@@ -76,6 +76,7 @@ public class TerrainMode : MonoBehaviour
 
     public void Update()
     {
+        UpdateLaser();
         HandleTerrainModification();
     }
 

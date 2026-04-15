@@ -9,7 +9,7 @@ public class CheckPointTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Checkpoint reached");
+            //Debug.Log("Checkpoint reached");
             trackManager.PassedCheckPoint(thisCheckpointIndex);
         }
     }

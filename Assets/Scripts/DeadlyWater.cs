@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DeadlyWater : MonoBehaviour
 {
-    public SimpleCharacterController player;
+    public NO_JETPACK_SimpleCharacterController player;
 
     public void OnTriggerEnter(Collider other)
     {

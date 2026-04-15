@@ -15,18 +15,35 @@ public class TerrainGunModes : MonoBehaviour
     public bool TerDisabled;
     public bool PanDisabled;
 
+    private string CurrentScene;
+
     void Start()
     {
-  
-        if (SceneManager.GetActiveScene().name == "ParkourMinigame")
+        CurrentScene = SceneManager.GetActiveScene().name;
+
+        switch (CurrentScene)
         {
-            NoMode();
-            Debug.Log("no mode");
-            //pauseMenu.TerrainUI.active = false;
-        } else
-        {
-            TerrainMode();
-            Debug.Log("terrain mode");
+            case "ParkourMinigame":
+                NoMode();
+                break;
+            case "PaintLevel":
+                PaintMode();
+                break;
+            case "NewMainLobby":
+                NoMode();
+                Debug.Log("no mode");
+                break;
+
+            case "Terrain_Scene":
+                TerrainMode();
+                Debug.Log("monkey ball");
+                PanDisabled = true;
+                break;
+
+            default:
+                TerrainMode();
+                Debug.Log("terrain mode");
+                break;
         }
     }
 
