@@ -2,25 +2,25 @@ using UnityEngine;
 
 public class BallStuckHandler : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("Time in seconds before triggering the upward shoot.")]
-    public float stuckTimeThreshold = 30f;
+    [Header("Jump Settings")]
+    [Tooltip("Upward force applied when jumping.")]
+    public float upwardForce = 100f;
 
-    [Tooltip("Minimum velocity magnitude to reset the timer.")]
-    public float movementThreshold = 0.1f;
-
-    [Tooltip("Upward force applied when stuck.")]
-    public float upwardForce = 100f;  // Increased significantly
-
-    [Tooltip("Cooldown time after shooting to prevent spam.")]
-    public float shootCooldown = 1f;
+    [Tooltip("Cooldown time after jumping (in seconds).")]
+    public float jumpCooldown = 1f;
 
     [Tooltip("Time to disable gravity during launch.")]
     public float gravityDisableTime = 0.5f;
 
+    [Tooltip("Minimum velocity magnitude required to jump.")]
+    public float movementThreshold = 0.1f;
+
+    [Header("Input Settings")]
+    [Tooltip("Key to trigger jump (default: Space).")]
+    public KeyCode jumpKey = KeyCode.Space;
+
     private Rigidbody rb;
-    private float stuckTimer = 0f;
-    private bool canShoot = true;
+    private bool canJump = true;
     private bool gravityWasEnabled;
 
     void Start()
@@ -34,43 +34,41 @@ public class BallStuckHandler : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (rb.linearVelocity.magnitude > movementThreshold)
+        // Check for jump input
+        if (Input.GetKeyDown(jumpKey) && canJump && rb.linearVelocity.magnitude > movementThreshold)
         {
-            stuckTimer = 0f;
-        }
-        else
-        {
-            stuckTimer += Time.fixedDeltaTime;
-
-            if (stuckTimer >= stuckTimeThreshold && canShoot)
-            {
-                ShootUp();
-                stuckTimer = 0f;
-                canShoot = false;
-                Invoke(nameof(ResetCooldown), shootCooldown);
-            }
+            Jump();
         }
     }
 
-    private void ShootUp()
+    public void Jump()
     {
-        // Log before
-        Debug.Log($"Launching ball. Velocity before: {rb.linearVelocity}, Mass: {rb.mass}");
+        Debug.Log($"Player triggered jump! Velocity before: {rb.linearVelocity}, Mass: {rb.mass}");
 
         // Temporarily disable gravity to prevent immediate fall
         gravityWasEnabled = rb.useGravity;
         rb.useGravity = false;
 
-        // Apply a massive upward force + velocity override for reliability
+        // Apply upward force + slight random for natural feel
         rb.AddForce(Vector3.up * upwardForce + Random.insideUnitSphere * 10f, ForceMode.Impulse);
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, upwardForce / rb.mass), rb.linearVelocity.z);  // Ensure upward velocity
 
-        // Re-enable gravity after a short delay
+        // Ensure minimum upward velocity
+        rb.linearVelocity = new Vector3(
+            rb.linearVelocity.x,
+            Mathf.Max(rb.linearVelocity.y, upwardForce / rb.mass * 0.8f),
+            rb.linearVelocity.z
+        );
+
+        // Start cooldown
+        canJump = false;
+        Invoke(nameof(ResetCooldown), jumpCooldown);
+
+        // Re-enable gravity after delay
         Invoke(nameof(ReEnableGravity), gravityDisableTime);
 
-        Debug.Log($"Ball launched! Velocity after: {rb.linearVelocity}");
+        Debug.Log($"Jump executed! Velocity after: {rb.linearVelocity}");
     }
 
     private void ReEnableGravity()
@@ -80,6 +78,12 @@ public class BallStuckHandler : MonoBehaviour
 
     private void ResetCooldown()
     {
-        canShoot = true;
+        canJump = true;
+    }
+
+
+    public void JumpButton()
+    {
+        Jump();
     }
 }

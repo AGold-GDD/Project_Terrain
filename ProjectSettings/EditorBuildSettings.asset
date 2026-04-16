@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Minigames/NewCartMinigame.unity
     guid: 4ea20f072f45f5a4eb18961c4fcb162c
+  - enabled: 1
+    path: Assets/Scenes/PaintLevel.unity
+    guid: d9b9a62d8702e6c4284bb0ec6cb753eb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
