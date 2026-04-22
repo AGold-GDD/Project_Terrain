@@ -647,6 +647,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1746687815998343644, guid: 941593b9130bb1a479790a8dcb35dbcf, type: 3}
+      propertyPath: PlayerData
+      value: 
+      objectReference: {fileID: 11400000, guid: dfc12485af2db2e4aafd07ddd700d651, type: 2}
+    - target: {fileID: 1746687815998343644, guid: 941593b9130bb1a479790a8dcb35dbcf, type: 3}
+      propertyPath: MouseSlider
+      value: 
+      objectReference: {fileID: 396997093}
     - target: {fileID: 1983829657847684437, guid: 941593b9130bb1a479790a8dcb35dbcf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1023,6 +1031,14 @@ PrefabInstance:
       propertyPath: 'terrains.Array.data[8]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1385173726270059778, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385173726270059778, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+      propertyPath: m_LinearDamping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1708720236544863935, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
       propertyPath: speed
       value: 12
@@ -1117,7 +1133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8140469182344978086, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 175
+      value: 152.7
       objectReference: {fileID: 0}
     - target: {fileID: 8140469182344978086, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1125,7 +1141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8140469182344978086, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 846.22
+      value: 845.9
       objectReference: {fileID: 0}
     - target: {fileID: 8140469182344978086, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1990,7 +2006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NO_JETPACK_SimpleCharacterController
   speed: 12
-  jumpForce: 300
+  jumpForce: 15
   mouseSensitivity: 135
   MouseSlider: {fileID: 396997093}
   rb: {fileID: 792186354}
@@ -2400,6 +2416,7 @@ SceneRoots:
   - {fileID: 1057130816}
   - {fileID: 33559229}
   - {fileID: 1879648027}
+  - {fileID: 866079338}
   - {fileID: 1942124081}
   - {fileID: 367021761}
   - {fileID: 512536148}
@@ -2408,4 +2425,3 @@ SceneRoots:
   - {fileID: 1281968573}
   - {fileID: 804693981}
   - {fileID: 1759627726}
-  - {fileID: 866079338}

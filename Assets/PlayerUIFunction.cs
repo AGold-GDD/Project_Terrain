@@ -1,5 +1,5 @@
 using UnityEngine;
-//using UnityEngine.UI;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 //using UnityEngine.UIElements;
 
@@ -18,16 +18,23 @@ public class PlayerUIFunction : MonoBehaviour
     public GameObject ControlPage;
     public GameObject ObjectivePage;
 
+    public PlayerData PlayerData;
+
+    public Slider MouseSlider;
+
     //private Image img;
 
     private void Start()
     {
+        MouseSlider.value = PlayerData.MouseSen;
         IsPaused = false;
         //NoModeActive();
         InfoLeft();
     }
     void Update()
     {
+        PlayerData.MouseSen = MouseSlider.value;
+
         PausePanel.SetActive(IsPaused);
 
         if (Input.GetKeyUp(KeyCode.Escape) && !IsPaused)
