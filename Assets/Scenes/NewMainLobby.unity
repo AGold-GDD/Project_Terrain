@@ -4536,6 +4536,7 @@ MonoBehaviour:
   _mxHubClip: {fileID: 8300000, guid: abc7f5e503c614f5786b705567ea9049, type: 3}
   _ambMachineryClip: {fileID: 8300000, guid: 99b482eea97b541caae84fa996f098c6, type: 3}
   _ambRoomClip: {fileID: 8300000, guid: b732e44c53a62478d811d73ddfd25816, type: 3}
+  _loopSourcePoolRoot: {fileID: 0}
   audioMixerGroup: {fileID: 0}
   SFXMixer: {fileID: 0}
 --- !u!1 &1269411317 stripped
