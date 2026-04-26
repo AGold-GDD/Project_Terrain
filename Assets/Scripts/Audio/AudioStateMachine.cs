@@ -7,7 +7,7 @@ public class AudioStateMachine
     public void ChangeState(IAudioState newState)
     {
         if (_currentState == newState) return;
-        _currentState?.OnExit();
+        if (_currentState != null) _currentState?.OnExit();
         _currentState = newState;
         _currentState?.OnEnter();
     }

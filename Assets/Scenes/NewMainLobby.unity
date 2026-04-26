@@ -4532,13 +4532,73 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioBehavior
   _loopSourceA: {fileID: 1209103137}
   _loopSourceB: {fileID: 1209103136}
-  _mxPlanetClip: {fileID: 0}
+  _mxPlanetClip: {fileID: 8300000, guid: 3314a5d5a2c3e4c3d95283b5459841b8, type: 3}
   _mxHubClip: {fileID: 8300000, guid: abc7f5e503c614f5786b705567ea9049, type: 3}
-  _ambMachineryClip: {fileID: 8300000, guid: 99b482eea97b541caae84fa996f098c6, type: 3}
-  _ambRoomClip: {fileID: 8300000, guid: b732e44c53a62478d811d73ddfd25816, type: 3}
+  _mxMoveClip: {fileID: 8300000, guid: 0cdcff30723864d3082e3b3c274690ac, type: 3}
+  _mxTerrainUpClip: {fileID: 0}
+  _mxTerrainDownClip: {fileID: 0}
+  _ambMachineryClip: {fileID: 8300000, guid: bf3a13047d2894f539efe948cf2b7a41, type: 3}
+  _ambRoomClip: {fileID: 8300000, guid: ce013489fc5044b6198ec51bef72b38a, type: 3}
+  _ambWindClip: {fileID: 8300000, guid: 264eef8c221b24f0495d11bb23f86335, type: 3}
   _loopSourcePoolRoot: {fileID: 0}
-  audioMixerGroup: {fileID: 0}
-  SFXMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  sfxMixer: {fileID: -7196199828846791915, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  mxMixer: {fileID: -9091826068881510535, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  ambMixer: {fileID: 6742518042619651924, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  hubMixer: {fileID: 6489281282671942912, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  planetMixer: {fileID: 875760852330109696, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  moveMixer: {fileID: 8044223061761347643, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  terrainUpMixer: {fileID: -8554777479373168111, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  terrainDownMixer: {fileID: 1775509150373439393, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  playSnapshot: {fileID: 5014077017567914532, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  pauseSnapshot: {fileID: 3881468757408123587, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  PlayerVelocity: 0
+  smoothMultiplier: 10
+  minVelocity: 0
+  midVelocity: 16
+  maxVelocity: 30
+  moveMixerCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 8.505208
+      outSlope: 8.505208
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.30280963
+    - serializedVersion: 3
+      time: 0.13783951
+      value: 0.6384331
+      inSlope: 1.3161256
+      outSlope: 1.3161256
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.2386788
+    - serializedVersion: 3
+      time: 0.4929996
+      value: 0.88467395
+      inSlope: 0.15393196
+      outSlope: 0.15393196
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.22159332
+      outWeight: 0.52000046
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.04680513
+      outSlope: 0.04680513
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5127631
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1269411317 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 511595357382458967, guid: a1353041155509e45a5f0bdd36035eca, type: 3}
@@ -5420,6 +5480,10 @@ PrefabInstance:
     - target: {fileID: 1986143511464867977, guid: 941593b9130bb1a479790a8dcb35dbcf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433332256693923658, guid: 941593b9130bb1a479790a8dcb35dbcf, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 4945649988330505034, guid: 941593b9130bb1a479790a8dcb35dbcf, type: 3}
       propertyPath: m_AnchorMax.x

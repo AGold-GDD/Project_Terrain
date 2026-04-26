@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioLoopPlayer
 {
@@ -17,24 +18,72 @@ public class AudioLoopPlayer
         _audioBehavior = audioBehavior;
     }
 
-    public void StartLoop(AudioClip clip, double loopDuration, double startDelay = 0.1)
+    public void StartLoop(AudioClip clip, double loopDuration, double fadeDuration = 0, double startDelay = 0.1)
     {
+        Debug.Log("AudioLoopPlayer :: StopLoop"); 
         if (clip == null || _audioBehavior == null)
             return;
 
         _clip = clip;
+        
+        if (loopDuration < 0) { loopDuration = clip.length;}
+        
         _loopDuration = Mathf.Max(0.01f, (float)loopDuration);
         _activeIndex = 0;
 
         _sourceA = _audioBehavior.GetPooledLoopSource();
         _sourceB = _audioBehavior.GetPooledLoopSource();
 
+        AudioMixerGroup mixerGroup = null;
+        
+        if (_clip.name.Contains("AMB_"))
+        {
+            mixerGroup = _audioBehavior.ambMixer;
+        }
+        else if (_clip.name.Contains("MX_menu"))
+        {
+            mixerGroup = _audioBehavior.hubMixer;
+        }
+        else if (_clip.name.Contains("MX_planet_base"))
+        {
+            mixerGroup = _audioBehavior.planetMixer;
+        }
+        else if (_clip.name.Contains("MX_planet_move"))
+        {
+            mixerGroup = _audioBehavior.moveMixer;
+        }
+        else if (_clip.name.Contains("MX_planet_terrainUp"))
+        {
+            mixerGroup = _audioBehavior.terrainUpMixer;
+        }
+        else if (_clip.name.Contains("MX_planet_terrainDown"))
+        {
+            mixerGroup = _audioBehavior.terrainDownMixer;
+        }
+        else
+        {
+            mixerGroup = _audioBehavior.mxMixer;
+        }
+        
+        _sourceA.outputAudioMixerGroup = mixerGroup;
+        _sourceB.outputAudioMixerGroup = mixerGroup;
+        
+        
         if (_sourceA == null || _sourceB == null)
         {
             StopLoop();
             return;
         }
 
+        if (fadeDuration > 0)
+        {
+            _sourceA.volume = 0.0f;                                             
+            _sourceB.volume = 0.0f;
+
+            _audioBehavior.FadeLoopSource(_sourceA, 1, fadeDuration);
+            _audioBehavior.FadeLoopSource(_sourceB, 1, fadeDuration);
+        }
+        
         double dspNow = AudioSettings.dspTime;
         _nextStartTime = dspNow + startDelay;
 
@@ -59,17 +108,18 @@ public class AudioLoopPlayer
         }
     }
 
-    public void StopLoop()
+    public void StopLoop(double fadeDuration = 0)
     {
+        Debug.Log("AudioLoopPlayer :: StopLoop");
         if (_sourceA != null)
         {
-            _audioBehavior.ReleaseLoopSource(_sourceA);
+            _audioBehavior.StopLoop(_sourceA, fadeDuration);
             _sourceA = null;
         }
 
         if (_sourceB != null)
         {
-            _audioBehavior.ReleaseLoopSource(_sourceB);
+            _audioBehavior.StopLoop(_sourceB, fadeDuration);
             _sourceB = null;
         }
 
@@ -79,6 +129,7 @@ public class AudioLoopPlayer
 
     private void ScheduleSource(int index, double startTime)
     {
+        Debug.Log("AudioLoopPlayer :: ScheduleSource"); 
         AudioSource source = index == 0 ? _sourceA : _sourceB;
         if (source == null)
             return;

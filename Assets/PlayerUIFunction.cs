@@ -18,6 +18,11 @@ public class PlayerUIFunction : MonoBehaviour
     public GameObject ControlPage;
     public GameObject ObjectivePage;
 
+
+    public event System.Action OnPause;
+    public event System.Action OnResume;
+    public event System.Action OnDestroyed;
+
     //private Image img;
 
     private void Start()
@@ -42,6 +47,7 @@ public class PlayerUIFunction : MonoBehaviour
     public void Paused()
     {
         IsPaused = true;
+        OnPause?.Invoke();
         PausePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -51,6 +57,7 @@ public class PlayerUIFunction : MonoBehaviour
     public void Resume()
     {
         IsPaused = false;
+        OnResume?.Invoke();
         InfoLeft();
         PausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
@@ -111,5 +118,10 @@ public class PlayerUIFunction : MonoBehaviour
         SettingPage.SetActive(false);
         ControlPage.SetActive(false);
         ObjectivePage.SetActive(false);
+    }
+
+    void OnDestroy()
+    {
+        OnDestroyed?.Invoke();
     }
 }
