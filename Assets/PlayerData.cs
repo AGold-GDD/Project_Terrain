@@ -5,7 +5,8 @@ public class PlayerData : ScriptableObject
 {
     public float MouseSen;
 
-    public int PaintLevel1;
-    public int PaintLevel2;
-    public int PaintLevel3;
+    public float PaintLevel1 = 0;
+    public float PaintLevel2 = 0;
+    public float PaintLevel3 = 0;
+
 }
