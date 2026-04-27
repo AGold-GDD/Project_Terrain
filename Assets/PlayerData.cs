@@ -4,4 +4,8 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public float MouseSen;
+
+    public int PaintLevel1;
+    public int PaintLevel2;
+    public int PaintLevel3;
 }
