@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Win_Teleport : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform; // Drag the player's GameObject here in the Inspector
     [SerializeField] private Transform ballTransform; // Drag the ball's GameObject here in the Inspector
-
 
     [Header("Player Spawn Points")]
     [SerializeField] private List<Vector3> targetPositions = new List<Vector3>(); // Add your player spawn locations here
@@ -207,11 +205,11 @@ public class Win_Teleport : MonoBehaviour
 
     void Update()
     {
-        /* if (Input.GetKeyDown(KeyCode.T))
-             RespawnPlayer();
-         if (Input.GetKeyDown(KeyCode.R))
-             RespawnBall();
-       */
+       /* if (Input.GetKeyDown(KeyCode.T))
+            RespawnPlayer();
+        if (Input.GetKeyDown(KeyCode.R))
+            RespawnBall();
+      */
     }
 
     private void LoadHubScene()
