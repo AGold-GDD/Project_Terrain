@@ -118,7 +118,6 @@ GameObject:
   - component: {fileID: 303129112041304431}
   - component: {fileID: 2206665997531911539}
   - component: {fileID: 3114164672003847685}
-  - component: {fileID: 2140302577217846639}
   m_Layer: 0
   m_Name: Player_body  UPDATED
   m_TagString: Player
@@ -199,7 +198,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &2646779497852636765
 CapsuleCollider:
@@ -266,20 +264,13 @@ MonoBehaviour:
   speed: 8
   jumpForce: 15
   mouseSensitivity: 135
-  isHovering: 0
-  heightChangeSpeed: 5
   MouseSlider: {fileID: 0}
   rb: {fileID: 0}
-  isGrounded: 0
   playerCamera: {fileID: 8366877624388024754}
   isRiding: 0
   jumpAudioSource: {fileID: 2206665997531911539}
   footstepAudioSource: {fileID: 3114164672003847685}
-  jetpackAudioSource: {fileID: 0}
-  jetpackStartAudioSource: {fileID: 0}
-  jetpackStopAudioSource: {fileID: 0}
   stepInterval: 0.43
-  PlayerSpawnPoint: {fileID: 0}
 --- !u!82 &2206665997531911539
 AudioSource:
   m_ObjectHideFlags: 0
@@ -474,18 +465,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2140302577217846639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3649995453815523520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9c69e4f7da6a4d7da1300c3181205c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SendPlayerVelocity
 --- !u!1 &7078468767532785315
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +554,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &8040364338032674166
 CapsuleCollider:
@@ -689,7 +667,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &9108479869765990296
 BoxCollider:
@@ -1076,7 +1053,7 @@ MonoBehaviour:
   laserColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!120 &8011753692656677171
 LineRenderer:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1122,7 +1099,6 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -1181,6 +1157,7 @@ LineRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
+  m_MaskInteraction: 0
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
