@@ -28,6 +28,7 @@ public class TerrainGunModes : MonoBehaviour
                 break;
             case "PaintLevel":
                 PaintMode();
+                TerDisabled = true;
                 break;
             case "NewMainLobby":
                 NoMode();

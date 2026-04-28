@@ -2349,7 +2349,7 @@ RectTransform:
   m_Father: {fileID: 8639826218801704100}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3134,7 +3134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6054536527479698833
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3936,8 +3936,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 504897730450477490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5262,8 +5262,9 @@ MonoBehaviour:
   SettingPage: {fileID: 6493763664481828776}
   ControlPage: {fileID: 3958244083042952}
   ObjectivePage: {fileID: 6041738041859702828}
-  PlayerData: {fileID: 0}
-  MouseSlider: {fileID: 0}
+  PlayerData: {fileID: 11400000, guid: dfc12485af2db2e4aafd07ddd700d651, type: 2}
+  MouseSlider: {fileID: 1767539817849537942}
+  Objective: {fileID: 2992767724571010952}
 --- !u!1 &9038818512960914363
 GameObject:
   m_ObjectHideFlags: 0

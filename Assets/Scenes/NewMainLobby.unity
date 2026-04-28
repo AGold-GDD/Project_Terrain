@@ -2639,6 +2639,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPrefab_V2
       objectReference: {fileID: 0}
+    - target: {fileID: 3427654643628175255, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+      propertyPath: characterController
+      value: 
+      objectReference: {fileID: 807034398}
+    - target: {fileID: 3427654643628175255, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+      propertyPath: terrainLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 7045186569968203675, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
       propertyPath: terrain
       value: 
@@ -2739,16 +2747,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NO_JETPACK_SimpleCharacterController
   speed: 90
   jumpForce: 300
-  mouseSensitivity: 0
-  MouseSlider: {fileID: 0}
-  rb: {fileID: 0}
+  mouseSensitivity: 135
+  MouseSlider: {fileID: 614548027}
+  rb: {fileID: 807034400}
   isGrounded: 0
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 807034399}
   isRiding: 0
   jumpAudioSource: {fileID: 0}
   footstepAudioSource: {fileID: 0}
   stepInterval: 0.5
-  PlayerSpawnPoint: {fileID: 0}
+  PlayerSpawnPoint: {fileID: 2109743827}
+--- !u!4 &807034399 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7466801660179113570, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+  m_PrefabInstance: {fileID: 807034396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &807034400 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 1385173726270059778, guid: 91a91ea47081f114497489d808a1a4e9, type: 3}
+  m_PrefabInstance: {fileID: 807034396}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &811405797 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6113454932894922337, guid: 941593b9130bb1a479790a8dcb35dbcf, type: 3}

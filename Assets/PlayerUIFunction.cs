@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 //using UnityEngine.UIElements;
 
@@ -22,6 +23,9 @@ public class PlayerUIFunction : MonoBehaviour
 
     public Slider MouseSlider;
 
+    private string CurrentScene;
+    public TextMeshProUGUI Objective;
+
     //private Image img;
 
     private void Start()
@@ -30,6 +34,29 @@ public class PlayerUIFunction : MonoBehaviour
         IsPaused = false;
         //NoModeActive();
         InfoLeft();
+
+        CurrentScene = SceneManager.GetActiveScene().name;
+        switch (CurrentScene)
+        {
+            case "ParkourMinigame":
+                Objective.text = "Learn about this new terrain to unlock the new mode.";
+                break;
+            case "PaintLevel":
+                Objective.text = "Traverse through the place using the paint mode. Try to finish the obstacle quickly.";
+                break;
+            case "NewMainLobby":
+                Objective.text = "No Objctive. Just chill and relax until next mission.";
+                break;
+
+            case "Terrain_Scene":
+                Objective.text = "Get the ball to the end of the obstacle.";
+                break;
+
+            default:
+                
+                Debug.Log("terrain mode");
+                break;
+        }
     }
     void Update()
     {
