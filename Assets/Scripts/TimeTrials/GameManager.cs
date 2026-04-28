@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public float totalTime = 60f; 
     public TextMeshProUGUI timerText;
 
-    private float currentTime;
+    public float currentTime;
     private bool isGameActive = true;
 
     private void Awake()

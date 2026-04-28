@@ -8,6 +8,10 @@ public class PaintLevelSetting : MonoBehaviour
 
     public TrackManager manager;
 
+    public GameManager gameManager;
+
+    public TerrainLayerPainter painter;
+
     private int cleared = 0;
 
     public void Update()
@@ -22,6 +26,12 @@ public class PaintLevelSetting : MonoBehaviour
         {
             player.transform.position = manager.PlayerRespawnPoint[2].transform.position;
             cleared = 2;
+        }
+
+        if (gameManager.currentTime <= 0.1)
+        {
+            Debug.Log("reset");
+            painter.ResetAllTerrains();
         }
 
 
