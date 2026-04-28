@@ -36,10 +36,11 @@ public class BallStuckHandler : MonoBehaviour
 
     void Update()
     {
-        // Check for jump input
-        if (Input.GetKeyDown(jumpKey) && canJump && rb.linearVelocity.magnitude > movementThreshold)
+        // FIXED: Check input BEFORE character controller processes it
+        if (Input.GetKeyDown(KeyCode.Space) && canJump && rb.linearVelocity.magnitude > movementThreshold)
         {
             Jump();
+            return; // Prevent other scripts from using Space
         }
     }
 
