@@ -7,7 +7,7 @@ public class GoalDetector : MonoBehaviour
     [Header("UI References")]
     public GameObject victoryPanel;
     public Button resetButton;
-    public TextMeshProUGUI timeDisplay;
+    public TextMeshProUGUI timeDisplay;  //  NEW: Timer display on victory panel
 
     [Header("Respawn Settings")]
     public Transform ballStartArea;
@@ -17,10 +17,11 @@ public class GoalDetector : MonoBehaviour
     public bool lockCursorOnReset = true;
 
     private bool hasWon = false;
-    private TimeManager levelTimer;
+    private TimeManager levelTimer;  //  NEW: Timer reference
 
     void Start()
     {
+        //  NEW: Find timer
         levelTimer = FindObjectOfType<TimeManager>();
 
         if (victoryPanel != null)
@@ -38,7 +39,7 @@ public class GoalDetector : MonoBehaviour
             hasWon = true;
             ShowVictoryUI();
 
-            // PERFECT - already works!
+            //  NEW: Complete level & show time!
             if (levelTimer != null)
             {
                 levelTimer.CompleteLevel();
@@ -55,17 +56,11 @@ public class GoalDetector : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-
-        // NEW: Show time on YOUR victory panel too!
-        if (timeDisplay != null && levelTimer != null)
-        {
-            timeDisplay.text = "Time: " + levelTimer.FormattedTime;
-        }
     }
 
     public void ResetBall()
     {
-        // Your existing ball reset...
+        // Reset existing ball logic
         GameObject ball = GameObject.FindWithTag("Ball");
         if (ball != null && ballStartArea != null)
         {
@@ -78,13 +73,14 @@ public class GoalDetector : MonoBehaviour
             }
         }
 
-        // Restart timer for retry
+        //  NEW: Restart timer
         if (levelTimer != null)
         {
-            levelTimer.ResetSession(); // NEW: Full reset (clears session)
+            levelTimer.StartTimer();
         }
 
-        victoryPanel.SetActive(false);
+        if (victoryPanel != null)
+            victoryPanel.SetActive(false);
         hasWon = false;
         Time.timeScale = 1f;
 
