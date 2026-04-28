@@ -178,7 +178,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -315,7 +314,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -532,7 +530,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -669,7 +666,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1157,10 +1153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   PausePanel: {fileID: 1454528744154107555}
-  IsPaused: 0
-  NoModeUI: {fileID: 0}
-  TerrainModeUI: {fileID: 0}
-  PaintModeUI: {fileID: 0}
 --- !u!1 &2909163331200621293
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,7 +1331,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 1.19
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: -18.9
   m_lineSpacingMax: 0
@@ -1921,7 +1912,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 1.19
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: -18.9
   m_lineSpacingMax: 0
@@ -2155,7 +2145,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 1.19
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: -18.9
   m_lineSpacingMax: 0
@@ -2333,7 +2322,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 1.19
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: -18.9
   m_lineSpacingMax: 0
@@ -2785,7 +2773,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2912,7 +2899,7 @@ PrefabInstance:
       objectReference: {fileID: 4437253012372300342}
     - target: {fileID: 3649995453815523520, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
       propertyPath: m_Name
-      value: NEW_player
+      value: Player_body (UI Update) Variant 1
       objectReference: {fileID: 0}
     - target: {fileID: 7168243815346979190, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
       propertyPath: m_LocalPosition.x
