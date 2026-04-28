@@ -103,8 +103,9 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
 
         if (isHovering)
         {
-         
-            rb.linearVelocity = new Vector3(move.x * speed, 0f, move.z * speed);
+
+            float jetpackSpeed = speed * 2f;  
+            rb.linearVelocity = new Vector3(move.x * jetpackSpeed, 0f, move.z * jetpackSpeed);
         }
         else
         {
@@ -145,11 +146,11 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
         }
 
         
-        if (Input.GetKeyDown(KeyCode.R))
+       /* if (Input.GetKeyDown(KeyCode.R))
         {
             PlayerRespawn();
         }
-
+        */
        
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {

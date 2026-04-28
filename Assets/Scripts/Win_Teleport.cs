@@ -5,118 +5,136 @@ public class Win_Teleport : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform; // Drag the player's GameObject here in the Inspector
     [SerializeField] private Transform ballTransform; // Drag the ball's GameObject here in the Inspector
-    [SerializeField] private List<Vector3> targetPositions = new List<Vector3>(); // Add your player spawn locations here in the Inspector
-    [SerializeField] private List<Vector3> ballSpawnPositions = new List<Vector3>(); // Add your ball spawn locations here (can be independent size)
 
-    private int currentIndex = 0; // Tracks which location to use next for advancement
-    private Vector3 lastRespawnPoint; // Stores the last player teleported position
-    private Vector3 lastBallSpawnPoint; // Stores the last ball teleported position
-    private float teleportCooldown = 0f; // Prevents rapid repeated teleports
-    private float cooldownDuration = 0.5f; // Time in seconds to wait before allowing another teleport
+    [Header("Player Spawn Points")]
+    [SerializeField] private List<Vector3> targetPositions = new List<Vector3>(); // Add your player spawn locations here
+    [SerializeField] private List<Vector3> targetRotations = new List<Vector3>(); // NEW: Player rotations (Euler angles)
+
+    [Header("Ball Spawn Points")]
+    [SerializeField] private List<Vector3> ballSpawnPositions = new List<Vector3>(); // Ball spawn locations
+
+    private int currentIndex = 0;
+    private Vector3 lastRespawnPoint;
+    private Vector3 lastRespawnRotation; // NEW: Store last rotation
+    private Vector3 lastBallSpawnPoint;
+    private float teleportCooldown = 0f;
+    private float cooldownDuration = 0.5f;
 
     void Start()
     {
-        // Initialize last points to the first locations or starting positions
+        InitializeLastPoints();
+    }
+
+    private void InitializeLastPoints()
+    {
+        // Initialize player position and rotation
         if (targetPositions.Count > 0)
         {
             lastRespawnPoint = targetPositions[0];
-            Debug.Log("Initialized lastRespawnPoint to: " + lastRespawnPoint);
+            lastRespawnRotation = targetRotations.Count > 0 ? targetRotations[0] : playerTransform.eulerAngles;
+            Debug.Log($"Initialized player spawn: Pos={lastRespawnPoint}, Rot={lastRespawnRotation}");
         }
         else
         {
             lastRespawnPoint = playerTransform.position;
-            Debug.Log("No targetPositions set; using player's current position as lastRespawnPoint: " + lastRespawnPoint);
+            lastRespawnRotation = playerTransform.eulerAngles;
         }
 
+        // Initialize ball position
         if (ballSpawnPositions.Count > 0)
         {
             lastBallSpawnPoint = ballSpawnPositions[0];
-            Debug.Log("Initialized lastBallSpawnPoint to: " + lastBallSpawnPoint);
         }
         else
         {
             lastBallSpawnPoint = ballTransform.position;
-            Debug.Log("No ballSpawnPositions set; using ball's current position as lastBallSpawnPoint: " + lastBallSpawnPoint);
         }
 
-        Debug.Log("targetPositions count: " + targetPositions.Count + ", ballSpawnPositions count: " + ballSpawnPositions.Count);
+        // Validate rotation list matches position list
+        ValidateRotationList();
+
+        Debug.Log($"Lists - Positions: {targetPositions.Count}, Rotations: {targetRotations.Count}, Ball: {ballSpawnPositions.Count}");
     }
 
+    private void ValidateRotationList()
+    {
+        // Auto-populate rotations if list is empty but positions exist
+        if (targetRotations.Count == 0 && targetPositions.Count > 0)
+        {
+            for (int i = 0; i < targetPositions.Count; i++)
+            {
+                targetRotations.Add(Vector3.zero); // Default forward-facing
+            }
+            Debug.Log("Auto-populated rotation list with zero rotations (forward facing)");
+        }
+        // Trim or pad rotation list to match position list
+        else if (targetRotations.Count != targetPositions.Count)
+        {
+            Debug.LogWarning($"Rotation list size ({targetRotations.Count}) doesn't match position list ({targetPositions.Count}). Trimming/padding...");
+            while (targetRotations.Count < targetPositions.Count)
+                targetRotations.Add(Vector3.zero);
+            while (targetRotations.Count > targetPositions.Count)
+                targetRotations.RemoveAt(targetRotations.Count - 1);
+        }
+    }
 
     public void Teleport()
     {
-        // Prevent rapid repeated calls
-        if (Time.time < teleportCooldown)
-        {
-            Debug.Log("Teleport on cooldown. Ignoring call.");
-            return;
-        }
+        if (Time.time < teleportCooldown) return;
 
         Debug.Log("Teleport called. Current index before increment: " + currentIndex);
 
         if (playerTransform != null && ballTransform != null && targetPositions.Count > 0 && ballSpawnPositions.Count > 0)
         {
-            // Increment the index first to advance before teleporting
             int minCount = Mathf.Min(targetPositions.Count, ballSpawnPositions.Count);
-            int nextIndex = (currentIndex + 1) % minCount;
+            int nextIndex = (currentIndex + 1);
 
-            if (nextIndex == 2) // 3rd level (0,1,2)
+            if (nextIndex == 3)
             {
-                Debug.Log(" Level 3 complete! Loading HUB scene...");
+                Debug.Log("Level 3 complete! Loading HUB scene...");
                 LoadHubScene();
                 return;
             }
 
-            // Normal teleport logic for levels 1-2
             currentIndex = nextIndex;
-            Debug.Log("Index incremented to: " + currentIndex);
 
-            // Teleport player to the new current position in the list
-            Vector3 playerTarget = targetPositions[currentIndex];
-            playerTransform.position = playerTarget;
-            lastRespawnPoint = playerTarget;
-            Debug.Log("Player teleported to: " + playerTarget);
+            // MODIFIED: Teleport player with POSITION + ROTATION
+            Vector3 playerTargetPos = targetPositions[currentIndex];
+            Vector3 playerTargetRot = targetRotations.Count > currentIndex ? targetRotations[currentIndex] : Vector3.zero;
 
-            // Teleport ball to the corresponding position
+            playerTransform.position = playerTargetPos;
+            playerTransform.eulerAngles = playerTargetRot; // NEW: Set rotation!
+
+            lastRespawnPoint = playerTargetPos;
+            lastRespawnRotation = playerTargetRot;
+
+            Debug.Log($"Player teleported to: Pos={playerTargetPos}, Rot={playerTargetRot}");
+
+            // Ball teleport (unchanged)
             Vector3 ballTarget = ballSpawnPositions[currentIndex];
             ballTransform.position = ballTarget;
             lastBallSpawnPoint = ballTarget;
             Debug.Log("Ball teleported to: " + ballTarget);
 
-            // Optional: Reset velocities if using physics
             ResetVelocities();
-
-            // Set cooldown to prevent immediate re-calls
             teleportCooldown = Time.time + cooldownDuration;
 
-            Debug.Log($"Advanced to location {currentIndex}. Next will be {(currentIndex + 1) % minCount}. Cooldown active until: " + teleportCooldown);
+            Debug.Log($"Advanced to location {currentIndex}");
         }
         else
         {
-            Debug.LogError("Transforms not assigned or one or both lists are empty! Player: " + (playerTransform != null) + ", Ball: " + (ballTransform != null) + ", Target count: " + targetPositions.Count + ", Ball count: " + ballSpawnPositions.Count);
+            Debug.LogError("Missing required assignments or empty lists!");
         }
     }
 
-    private void LoadHubScene()
-    {
-        
-        Time.timeScale = 1f;
-        Physics.autoSimulation = true;
-        AudioListener.pause = false;
-
-        // Load hub
-        UnityEngine.SceneManagement.SceneManager.LoadScene("NewMainLobby");
-    }
-
-
-    // Respawn only the player to the last respawn point
+    // MODIFIED: Respawn player with rotation support
     private void RespawnPlayer()
     {
         if (playerTransform != null)
         {
             playerTransform.position = lastRespawnPoint;
+            playerTransform.eulerAngles = lastRespawnRotation; // NEW: Restore rotation!
 
-            // Optional: Reset velocity if using physics
             Rigidbody rb = playerTransform.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -124,83 +142,81 @@ public class Win_Teleport : MonoBehaviour
                 rb.angularVelocity = Vector3.zero;
             }
 
-            Debug.Log("Player respawned to last respawn point: " + lastRespawnPoint);
-        }
-        else
-        {
-            Debug.LogError("Player Transform not assigned!");
+            Debug.Log($"Player respawned to: Pos={lastRespawnPoint}, Rot={lastRespawnRotation}");
         }
     }
 
-    // Respawn only the ball to the last respawn point
+    // Respawn ball (unchanged)
     private void RespawnBall()
     {
         if (ballTransform != null)
         {
             ballTransform.position = lastBallSpawnPoint;
 
-            // Optional: Reset velocity if using physics
             Rigidbody rb = ballTransform.GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
-
-            Debug.Log("Ball respawned to last respawn point: " + lastBallSpawnPoint);
-        }
-        else
-        {
-            Debug.LogError("Ball Transform not assigned!");
         }
     }
 
-    // Helper method to reset velocities for both (used only in Teleport)
     private void ResetVelocities()
     {
-        Rigidbody playerRb = playerTransform.GetComponent<Rigidbody>();
-        if (playerRb != null)
+        // Unchanged - reset both rigidbodies
+        if (playerTransform != null)
         {
-            playerRb.linearVelocity = Vector3.zero;
-            playerRb.angularVelocity = Vector3.zero;
+            Rigidbody playerRb = playerTransform.GetComponent<Rigidbody>();
+            if (playerRb != null)
+            {
+                playerRb.linearVelocity = Vector3.zero;
+                playerRb.angularVelocity = Vector3.zero;
+            }
         }
 
-        Rigidbody ballRb = ballTransform.GetComponent<Rigidbody>();
-        if (ballRb != null)
+        if (ballTransform != null)
         {
-            ballRb.linearVelocity = Vector3.zero;
-            ballRb.angularVelocity = Vector3.zero;
+            Rigidbody ballRb = ballTransform.GetComponent<Rigidbody>();
+            if (ballRb != null)
+            {
+                ballRb.linearVelocity = Vector3.zero;
+                ballRb.angularVelocity = Vector3.zero;
+            }
         }
     }
 
-    // Optional: Call this at the start of the game to reset the index
     public void ResetIndex()
     {
         currentIndex = 0;
-        teleportCooldown = 0f; // Reset cooldown on index reset
+        teleportCooldown = 0f;
+
         if (targetPositions.Count > 0)
         {
             lastRespawnPoint = targetPositions[0];
+            lastRespawnRotation = targetRotations.Count > 0 ? targetRotations[0] : Vector3.zero;
         }
         if (ballSpawnPositions.Count > 0)
         {
             lastBallSpawnPoint = ballSpawnPositions[0];
         }
-        Debug.Log("Index reset to 0. Last points updated. Cooldown reset.");
+        Debug.Log("Index reset to 0");
     }
 
     void Update()
     {
-        // Check for 'T' key press (respawn player only)
-        if (Input.GetKeyDown(KeyCode.T))
-        {
+       /* if (Input.GetKeyDown(KeyCode.T))
             RespawnPlayer();
-        }
-
-        // Check for 'R' key press (respawn ball only)
         if (Input.GetKeyDown(KeyCode.R))
-        {
             RespawnBall();
-        }
+      */
+    }
+
+    private void LoadHubScene()
+    {
+        Time.timeScale = 1f;
+        Physics.autoSimulation = true;
+        AudioListener.pause = false;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("NewMainLobby");
     }
 }

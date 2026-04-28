@@ -1,12 +1,13 @@
-// Your ORIGINAL GoalDetector.cs (with the fix applied)
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GoalDetector : MonoBehaviour
 {
     [Header("UI References")]
     public GameObject victoryPanel;
     public Button resetButton;
+    public TextMeshProUGUI timeDisplay;  //  NEW: Timer display on victory panel
 
     [Header("Respawn Settings")]
     public Transform ballStartArea;
@@ -16,9 +17,13 @@ public class GoalDetector : MonoBehaviour
     public bool lockCursorOnReset = true;
 
     private bool hasWon = false;
+    private TimeManager levelTimer;  //  NEW: Timer reference
 
     void Start()
     {
+        //  NEW: Find timer
+        levelTimer = FindObjectOfType<TimeManager>();
+
         if (victoryPanel != null)
             victoryPanel.SetActive(false);
 
@@ -33,6 +38,12 @@ public class GoalDetector : MonoBehaviour
         {
             hasWon = true;
             ShowVictoryUI();
+
+            //  NEW: Complete level & show time!
+            if (levelTimer != null)
+            {
+                levelTimer.CompleteLevel();
+            }
         }
     }
 
@@ -49,7 +60,7 @@ public class GoalDetector : MonoBehaviour
 
     public void ResetBall()
     {
-        // Your existing ResetBall code (unchanged)
+        // Reset existing ball logic
         GameObject ball = GameObject.FindWithTag("Ball");
         if (ball != null && ballStartArea != null)
         {
@@ -60,6 +71,12 @@ public class GoalDetector : MonoBehaviour
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
+        }
+
+        //  NEW: Restart timer
+        if (levelTimer != null)
+        {
+            levelTimer.StartTimer();
         }
 
         if (victoryPanel != null)

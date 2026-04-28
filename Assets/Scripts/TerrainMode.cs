@@ -19,7 +19,7 @@ public class TerrainMode : MonoBehaviour
     public float abilityCostPerSecond = 15f;  // Cost per second while holding key
     [Header("Add terrains here")]
     public Terrain[] terrains;  // Array of all terrains (assign in Inspector)
-    public float raiseAmountPerSecond = 0.01f;  // How much to raise the terrain per second
+    public float raiseAmountPerSecond = 0.03f;  // How much to raise the terrain per second
     public float modifyRadius = 3f;  // Radius around modification point to modify
     public float radiusChangeSpeed = 1f;  // How much the radius changes per scroll unit
     public Slider radiusSlider;  // Assign the UI Slider in Inspector (read-only reflection)
