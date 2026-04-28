@@ -69,7 +69,9 @@ public class TerrainMode : MonoBehaviour
         {
             //radiusSlider.minValue = 1f;
             //radiusSlider.maxValue = 10f;
-            radiusSlider.value = modifyRadius;
+            //radiusSlider.value = modifyRadius;
+            radiusSlider.value = 6f;
+            modifyRadius = 6f;
             // Slider is read-only; no event listener needed
         }
     }
@@ -109,7 +111,7 @@ public class TerrainMode : MonoBehaviour
         if (Input.mouseScrollDelta.y != 0)
         {
             modifyRadius += Input.mouseScrollDelta.y * radiusChangeSpeed;
-            modifyRadius = Mathf.Clamp(modifyRadius, 1f, 10f);
+            modifyRadius = Mathf.Clamp(modifyRadius, 1f, 15f);
             // Update slider to reflect new radius
             if (radiusSlider != null)
             {

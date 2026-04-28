@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class Win_Teleport : MonoBehaviour
 {
-    [SerializeField] private Transform playerTransform; // Drag the player's GameObject here in the Inspector
-    [SerializeField] private Transform ballTransform; // Drag the ball's GameObject here in the Inspector
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private Transform ballTransform;
 
     [Header("Player Spawn Points")]
-    [SerializeField] private List<Vector3> targetPositions = new List<Vector3>(); // Add your player spawn locations here
-    [SerializeField] private List<Vector3> targetRotations = new List<Vector3>(); // NEW: Player rotations (Euler angles)
+    [SerializeField] private List<Vector3> targetPositions = new List<Vector3>();
+    [SerializeField] private List<Vector3> targetRotations = new List<Vector3>();
 
     [Header("Ball Spawn Points")]
-    [SerializeField] private List<Vector3> ballSpawnPositions = new List<Vector3>(); // Ball spawn locations
+    [SerializeField] private List<Vector3> ballSpawnPositions = new List<Vector3>();
 
     private int currentIndex = 0;
     private Vector3 lastRespawnPoint;
-    private Vector3 lastRespawnRotation; // NEW: Store last rotation
+    private Vector3 lastRespawnRotation;
     private Vector3 lastBallSpawnPoint;
     private float teleportCooldown = 0f;
     private float cooldownDuration = 0.5f;
@@ -27,7 +27,6 @@ public class Win_Teleport : MonoBehaviour
 
     private void InitializeLastPoints()
     {
-        // Initialize player position and rotation
         if (targetPositions.Count > 0)
         {
             lastRespawnPoint = targetPositions[0];
@@ -40,7 +39,6 @@ public class Win_Teleport : MonoBehaviour
             lastRespawnRotation = playerTransform.eulerAngles;
         }
 
-        // Initialize ball position
         if (ballSpawnPositions.Count > 0)
         {
             lastBallSpawnPoint = ballSpawnPositions[0];
@@ -50,24 +48,20 @@ public class Win_Teleport : MonoBehaviour
             lastBallSpawnPoint = ballTransform.position;
         }
 
-        // Validate rotation list matches position list
         ValidateRotationList();
-
         Debug.Log($"Lists - Positions: {targetPositions.Count}, Rotations: {targetRotations.Count}, Ball: {ballSpawnPositions.Count}");
     }
 
     private void ValidateRotationList()
     {
-        // Auto-populate rotations if list is empty but positions exist
         if (targetRotations.Count == 0 && targetPositions.Count > 0)
         {
             for (int i = 0; i < targetPositions.Count; i++)
             {
-                targetRotations.Add(Vector3.zero); // Default forward-facing
+                targetRotations.Add(Vector3.zero);
             }
-            Debug.Log("Auto-populated rotation list with zero rotations (forward facing)");
+            Debug.Log("Auto-populated rotation list with zero rotations");
         }
-        // Trim or pad rotation list to match position list
         else if (targetRotations.Count != targetPositions.Count)
         {
             Debug.LogWarning($"Rotation list size ({targetRotations.Count}) doesn't match position list ({targetPositions.Count}). Trimming/padding...");
@@ -82,58 +76,58 @@ public class Win_Teleport : MonoBehaviour
     {
         if (Time.time < teleportCooldown) return;
 
-        Debug.Log("Teleport called. Current index before increment: " + currentIndex);
+        Debug.Log($"Teleport called. Current: {currentIndex} -> Next: {currentIndex + 1}");
 
-        if (playerTransform != null && ballTransform != null && targetPositions.Count > 0 && ballSpawnPositions.Count > 0)
+        if (playerTransform == null || ballTransform == null || targetPositions.Count == 0 || ballSpawnPositions.Count == 0)
         {
-            int minCount = Mathf.Min(targetPositions.Count, ballSpawnPositions.Count);
-            int nextIndex = (currentIndex + 1);
+            Debug.LogError("Missing required assignments!");
+            return;
+        }
 
+        int nextIndex = currentIndex + 1;
+
+        TimeManager tm = FindObjectOfType<TimeManager>();
+        if (tm != null)
+        {
             if (nextIndex == 3)
             {
-                Debug.Log("Level 3 complete! Loading HUB scene...");
-                LoadHubScene();
+                Debug.Log("Final checkpoint - showing results");
+                tm.CompleteLevel();
+                Invoke(nameof(LoadHubScene), 3f);
                 return;
             }
-
-            currentIndex = nextIndex;
-
-            // MODIFIED: Teleport player with POSITION + ROTATION
-            Vector3 playerTargetPos = targetPositions[currentIndex];
-            Vector3 playerTargetRot = targetRotations.Count > currentIndex ? targetRotations[currentIndex] : Vector3.zero;
-
-            playerTransform.position = playerTargetPos;
-            playerTransform.eulerAngles = playerTargetRot; // NEW: Set rotation!
-
-            lastRespawnPoint = playerTargetPos;
-            lastRespawnRotation = playerTargetRot;
-
-            Debug.Log($"Player teleported to: Pos={playerTargetPos}, Rot={playerTargetRot}");
-
-            // Ball teleport (unchanged)
-            Vector3 ballTarget = ballSpawnPositions[currentIndex];
-            ballTransform.position = ballTarget;
-            lastBallSpawnPoint = ballTarget;
-            Debug.Log("Ball teleported to: " + ballTarget);
-
-            ResetVelocities();
-            teleportCooldown = Time.time + cooldownDuration;
-
-            Debug.Log($"Advanced to location {currentIndex}");
+            else
+            {
+                tm.CheckpointReached();
+            }
         }
-        else
-        {
-            Debug.LogError("Missing required assignments or empty lists!");
-        }
+
+        currentIndex = nextIndex;
+
+        Vector3 playerTargetPos = targetPositions[currentIndex];
+        Vector3 playerTargetRot = targetRotations.Count > currentIndex ? targetRotations[currentIndex] : Vector3.zero;
+
+        playerTransform.position = playerTargetPos;
+        playerTransform.eulerAngles = playerTargetRot;
+        lastRespawnPoint = playerTargetPos;
+        lastRespawnRotation = playerTargetRot;
+
+        Vector3 ballTarget = ballSpawnPositions[currentIndex];
+        ballTransform.position = ballTarget;
+        lastBallSpawnPoint = ballTarget;
+
+        ResetVelocities();
+        teleportCooldown = Time.time + cooldownDuration;
+
+        Debug.Log($"Teleported to checkpoint {currentIndex}");
     }
 
-    // MODIFIED: Respawn player with rotation support
     private void RespawnPlayer()
     {
         if (playerTransform != null)
         {
             playerTransform.position = lastRespawnPoint;
-            playerTransform.eulerAngles = lastRespawnRotation; // NEW: Restore rotation!
+            playerTransform.eulerAngles = lastRespawnRotation;
 
             Rigidbody rb = playerTransform.GetComponent<Rigidbody>();
             if (rb != null)
@@ -146,7 +140,6 @@ public class Win_Teleport : MonoBehaviour
         }
     }
 
-    // Respawn ball (unchanged)
     private void RespawnBall()
     {
         if (ballTransform != null)
@@ -164,7 +157,6 @@ public class Win_Teleport : MonoBehaviour
 
     private void ResetVelocities()
     {
-        // Unchanged - reset both rigidbodies
         if (playerTransform != null)
         {
             Rigidbody playerRb = playerTransform.GetComponent<Rigidbody>();
@@ -205,11 +197,6 @@ public class Win_Teleport : MonoBehaviour
 
     void Update()
     {
-       /* if (Input.GetKeyDown(KeyCode.T))
-            RespawnPlayer();
-        if (Input.GetKeyDown(KeyCode.R))
-            RespawnBall();
-      */
     }
 
     private void LoadHubScene()

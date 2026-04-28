@@ -8,8 +8,6 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
     public float mouseSensitivity;
     private bool isDead = false;
 
-
-
     // Jetpack hover variables
     public bool isHovering = false;
     private float hoverYPosition;
@@ -29,13 +27,19 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
 
     public AudioSource jumpAudioSource;
     public AudioSource footstepAudioSource;
-    public AudioSource jetpackAudioSource;
-    public AudioSource jetpackStartAudioSource;
-    public AudioSource jetpackStopAudioSource;
+
+    // JETPACK AUDIO SOURCES - EXCLUSIVE PLAYBACK
+    public AudioSource jetpackNormalAudioSource;  // Loops when NO height change
+    public AudioSource jetpackUpAudioSource;      // Plays INSTEAD of normal when E
+    public AudioSource jetpackDownAudioSource;    // Plays INSTEAD of normal when Q
+
     public float stepInterval = 0.5f;
     private float stepTimer = 0f;
 
     public GameObject PlayerSpawnPoint;
+
+    // PAUSE SUPPORT
+    private bool wasPaused = false;
 
     void Start()
     {
@@ -53,31 +57,43 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
 
     void Update()
     {
-        if (isDead) return;
+        // PAUSE CHECK - Stop jetpack sounds when paused
+        bool isPaused = Time.timeScale == 0f;
+        if (isPaused && !wasPaused)
+        {
+            StopAllJetpackSounds();
+        }
+        wasPaused = isPaused;
 
+        if (isDead || isPaused) return;
 
-        // Smooth jetpack height controls (hold Q to lower, hold E to higher)
+        // Jetpack height controls with PERFECT audio exclusivity
         if (isHovering)
         {
+            bool pressingUp = Input.GetKey(KeyCode.E);
+            bool pressingDown = Input.GetKey(KeyCode.Q);
             float heightInput = 0f;
 
-            if (Input.GetKey(KeyCode.E))
+            if (pressingUp)
             {
-                heightInput += 1f; // Raise height
+                // E: Up sound ONLY (normal completely stops)
+                heightInput += 1f;
+                PlayJetpackUpOnly();
             }
-            if (Input.GetKey(KeyCode.Q))
+            else if (pressingDown)
             {
-                heightInput -= 1f; // Lower height
+                // Q: Down sound ONLY (normal completely stops)
+                heightInput -= 1f;
+                PlayJetpackDownOnly();
+            }
+            else
+            {
+                // Neither: Normal loop ONLY (up/down completely stop)
+                PlayJetpackNormalOnly();
             }
 
-            // Gradually adjust hoverYPosition based on input
+            // Apply height change
             hoverYPosition += heightInput * heightChangeSpeed * Time.deltaTime;
-
-            // Optional: Debug log (remove in final build)
-            if (heightInput != 0f)
-            {
-                Debug.Log("Jetpack height: " + hoverYPosition.ToString("F1"));
-            }
         }
 
         if (isHovering)
@@ -85,7 +101,6 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
             Vector3 currentPos = transform.position;
             transform.position = new Vector3(currentPos.x, hoverYPosition, currentPos.z);
         }
-        //mouseSensitivity = mouseSensitivity * MouseSlider.value;
 
         float mouseX = Input.GetAxis("Mouse X") * (mouseSensitivity * MouseSlider.value) * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * (mouseSensitivity * MouseSlider.value) * Time.deltaTime;
@@ -95,7 +110,6 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
-        
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
@@ -103,18 +117,15 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
 
         if (isHovering)
         {
-
-            float jetpackSpeed = speed * 2f;  
+            float jetpackSpeed = speed * 2f;
             rb.linearVelocity = new Vector3(move.x * jetpackSpeed, 0f, move.z * jetpackSpeed);
         }
         else
         {
-          
             Vector3 newVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
             rb.linearVelocity = newVelocity;
         }
 
-      
         if (isGrounded && (moveX != 0 || moveZ != 0) && !isRiding)
         {
             stepTimer -= Time.deltaTime;
@@ -145,75 +156,97 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
             return;
         }
 
-        
-       /* if (Input.GetKeyDown(KeyCode.R))
-        {
-            PlayerRespawn();
-        }
-        */
-       
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
             mouseSensitivity = mouseSensitivity / 2;
         }
     }
 
-    /* void Jump()
-    {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        if (jumpAudioSource != null)
-        {
-            jumpAudioSource.Play();
-        }
-        Debug.Log("Jump!");
-    }
-    */
-
     void ActivateHover()
     {
         isHovering = true;
         hoverYPosition = transform.position.y;
-        PlayJetpackStartSound();  
-        PlayJetpackSound();       
+        if (Time.timeScale != 0f) // Don't play if already paused
+        {
+            PlayJetpackNormalOnly();
+        }
         Debug.Log("Jetpack ON! Hovering at Y: " + hoverYPosition);
     }
 
     void DeactivateHover()
     {
         isHovering = false;
-        StopJetpackSound();       
+        StopAllJetpackSounds();
         Debug.Log("Jetpack OFF! Dropping...");
     }
 
-    void PlayJetpackSound()
+    // ========== PERFECT EXCLUSIVE AUDIO METHODS ==========
+
+    void PlayJetpackNormalOnly()
     {
-        if (jetpackAudioSource != null && !jetpackAudioSource.isPlaying)
+        // Stop up/down, play normal
+        StopJetpackUpSound();
+        StopJetpackDownSound();
+        if (jetpackNormalAudioSource != null && !jetpackNormalAudioSource.isPlaying && Time.timeScale != 0f)
         {
-            jetpackAudioSource.Play();
+            jetpackNormalAudioSource.Play();
         }
     }
 
-    void StopJetpackSound()
+    void PlayJetpackUpOnly()
     {
-        if (jetpackAudioSource != null)
+        // Stop normal/down, play up
+        StopJetpackNormalSound();
+        StopJetpackDownSound();
+        if (jetpackUpAudioSource != null && !jetpackUpAudioSource.isPlaying && Time.timeScale != 0f)
         {
-            jetpackAudioSource.Stop();
-        }
-
-        
-        if (jetpackStopAudioSource != null)
-        {
-            jetpackStopAudioSource.Play();
+            jetpackUpAudioSource.Play();
         }
     }
 
-    void PlayJetpackStartSound()
+    void PlayJetpackDownOnly()
     {
-        if (jetpackStartAudioSource != null)
+        // Stop normal/up, play down
+        StopJetpackNormalSound();
+        StopJetpackUpSound();
+        if (jetpackDownAudioSource != null && !jetpackDownAudioSource.isPlaying && Time.timeScale != 0f)
         {
-            jetpackStartAudioSource.Play();
+            jetpackDownAudioSource.Play();
         }
     }
+
+    void StopJetpackNormalSound()
+    {
+        if (jetpackNormalAudioSource != null)
+        {
+            jetpackNormalAudioSource.Stop();
+        }
+    }
+
+    void StopJetpackUpSound()
+    {
+        if (jetpackUpAudioSource != null)
+        {
+            jetpackUpAudioSource.Stop();
+        }
+    }
+
+    void StopJetpackDownSound()
+    {
+        if (jetpackDownAudioSource != null)
+        {
+            jetpackDownAudioSource.Stop();
+        }
+    }
+
+    void StopAllJetpackSounds()
+    {
+        StopJetpackNormalSound();
+        StopJetpackUpSound();
+        StopJetpackDownSound();
+    }
+
+    // ========== END AUDIO METHODS ==========
 
     public void Die()
     {
@@ -221,7 +254,6 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
         isDead = true;
         Debug.Log("Player Died!");
 
-        
         DeactivateHover();
 
         Vector3 respawnPos = CheckpointManager.Instance.GetLastCheckpoint();
@@ -257,10 +289,10 @@ public class JETPACK_SimpleCharacterController : MonoBehaviour
 
     public void PlayerRespawn()
     {
-        
         DeactivateHover();
         transform.position = PlayerSpawnPoint.transform.position;
     }
+
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))

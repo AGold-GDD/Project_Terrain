@@ -6,53 +6,61 @@ public class BallStuckHandler : MonoBehaviour
     [Tooltip("Upward force applied when jumping.")]
     public float upwardForce = 100f;
 
-    [Tooltip("Cooldown time after jumping (in seconds).")]
-    public float jumpCooldown = 1f;
+    [Tooltip("Time between automatic jumps (in seconds).")]
+    public float jumpInterval = 3f;  
 
     [Tooltip("Time to disable gravity during launch.")]
     public float gravityDisableTime = 0.5f;
 
-    [Tooltip("Minimum velocity magnitude required to jump.")]
-    public float movementThreshold = 0.1f;
-
-    [Header("Input Settings")]
-    [Tooltip("Key to trigger jump (default: Space).")]
-    public KeyCode jumpKey = KeyCode.Space;
+    [Tooltip("Only jump if velocity is below this threshold (stuck detection).")]
+    public float stuckVelocityThreshold = 0.5f; 
 
     private Rigidbody rb;
-    private bool canJump = true;
     private bool gravityWasEnabled;
+    private float jumpTimer = 0f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         if (rb == null)
         {
-            Debug.LogError("BallStuckHandler requires a Rigidbody component on the GameObject.");
+            Debug.LogError("BallStuckHandler requires a Rigidbody component.");
             enabled = false;
             return;
         }
+
+        Debug.Log($"BallStuckHandler AUTO mode - Jumps every {jumpInterval}s when stuck");
     }
 
     void Update()
     {
-        // Check for jump input
-        if (Input.GetKeyDown(jumpKey) && canJump && rb.linearVelocity.magnitude > movementThreshold)
+       
+        jumpTimer += Time.deltaTime;
+
+        if (jumpTimer >= jumpInterval && IsBallStuck())
         {
             Jump();
+            jumpTimer = 0f;  // Reset timer
         }
+    }
+
+    bool IsBallStuck()
+    {
+        // Ball is "stuck" if moving too slowly
+        return rb.linearVelocity.magnitude < stuckVelocityThreshold;
     }
 
     public void Jump()
     {
-        Debug.Log($"Player triggered jump! Velocity before: {rb.linearVelocity}, Mass: {rb.mass}");
+        Debug.Log($"AUTO Jump! Velocity: {rb.linearVelocity.magnitude:F2}");
 
-        // Temporarily disable gravity to prevent immediate fall
+        // Disable gravity temporarily
         gravityWasEnabled = rb.useGravity;
         rb.useGravity = false;
 
-        // Apply upward force + slight random for natural feel
-        rb.AddForce(Vector3.up * upwardForce + Random.insideUnitSphere * 10f, ForceMode.Impulse);
+        // Apply upward force + random for natural feel
+        Vector3 jumpForce = Vector3.up * upwardForce + Random.insideUnitSphere * 10f;
+        rb.AddForce(jumpForce, ForceMode.Impulse);
 
         // Ensure minimum upward velocity
         rb.linearVelocity = new Vector3(
@@ -61,14 +69,8 @@ public class BallStuckHandler : MonoBehaviour
             rb.linearVelocity.z
         );
 
-        // Start cooldown
-        canJump = false;
-        Invoke(nameof(ResetCooldown), jumpCooldown);
-
         // Re-enable gravity after delay
         Invoke(nameof(ReEnableGravity), gravityDisableTime);
-
-        Debug.Log($"Jump executed! Velocity after: {rb.linearVelocity}");
     }
 
     private void ReEnableGravity()
@@ -76,14 +78,10 @@ public class BallStuckHandler : MonoBehaviour
         rb.useGravity = gravityWasEnabled;
     }
 
-    private void ResetCooldown()
-    {
-        canJump = true;
-    }
-
-
+   
     public void JumpButton()
     {
         Jump();
+        jumpTimer = 0f;  // Reset auto-timer
     }
 }
