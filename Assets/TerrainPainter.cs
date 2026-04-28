@@ -47,7 +47,7 @@ public class TerrainLayerPainter : MonoBehaviour
     void HandlePainting(int layerIndex)
     {
         Ray ray = new Ray(muzzlePoint.position, muzzlePoint.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, 40f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
             Terrain hitTerrain = hit.collider.GetComponent<Terrain>();
 
