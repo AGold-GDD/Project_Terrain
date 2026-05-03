@@ -49,5 +49,7 @@ public class AudioPlanetState : IAudioState
         _loopPlayers[0]?.StopLoop(3);
 
         _loopPlayers.Clear();
+        
+        OnResume();
     }
 }

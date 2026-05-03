@@ -59,5 +59,7 @@ public class AudioHubState : IAudioState
             loopPlayer?.StopLoop(3);
         }
         _loopPlayers.Clear();
+        
+        OnResume();
     }
 }
