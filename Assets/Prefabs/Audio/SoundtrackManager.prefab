@@ -57,17 +57,17 @@ MonoBehaviour:
   _ambRoomClip: {fileID: 8300000, guid: ce013489fc5044b6198ec51bef72b38a, type: 3}
   _ambWindClip: {fileID: 8300000, guid: 264eef8c221b24f0495d11bb23f86335, type: 3}
   _loopSourcePoolRoot: {fileID: 0}
-  audioMixer: {fileID: 24100000, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  sfxMixer: {fileID: -7196199828846791915, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  mxMixer: {fileID: -9091826068881510535, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  ambMixer: {fileID: 6742518042619651924, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  hubMixer: {fileID: 6489281282671942912, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  planetMixer: {fileID: 875760852330109696, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  moveMixer: {fileID: 8044223061761347643, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  terrainUpMixer: {fileID: -8554777479373168111, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  terrainDownMixer: {fileID: 1775509150373439393, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  playSnapshot: {fileID: 5014077017567914532, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
-  pauseSnapshot: {fileID: 3881468757408123587, guid: 9b0c1b2fc41b6477c9c5cbbe0fce2a39, type: 2}
+  audioMixer: {fileID: 24100000, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  sfxMixer: {fileID: -7196199828846791915, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  mxMixer: {fileID: -9091826068881510535, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  ambMixer: {fileID: 6742518042619651924, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  hubMixer: {fileID: 6489281282671942912, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  planetMixer: {fileID: 875760852330109696, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  moveMixer: {fileID: 8044223061761347643, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  terrainUpMixer: {fileID: -8554777479373168111, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  terrainDownMixer: {fileID: 1775509150373439393, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  playSnapshot: {fileID: 5014077017567914532, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+  pauseSnapshot: {fileID: 3881468757408123587, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
   PlayerVelocity: 0
   smoothMultiplier: 10
   maxVelocity: 30
