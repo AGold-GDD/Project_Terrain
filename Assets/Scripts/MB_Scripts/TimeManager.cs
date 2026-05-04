@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class TimeManager : MonoBehaviour
 {
@@ -10,15 +11,20 @@ public class TimeManager : MonoBehaviour
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI resultsText;
     public GameObject resultsPanel;
-    public TextMeshProUGUI segmentTimesText; // NEW: Shows all segment times at end
+    public TextMeshProUGUI segmentTimesText;
+
+    [Header("Name Input UI")]
+    public TMP_InputField playerNameInput;
+    public Button submitScoreButton;
+    public TextMeshProUGUI submitMessage;
+    public GameObject nameInputPanel; // Container for name input UI
 
     [Header("Settings")]
     public bool startTimerOnAwake = true;
 
-    // NEW: Segment timing system
     [Header("Segment Timing")]
     public bool trackSegmentTimes = true;
-    private List<float> segmentTimes = new List<float>();  // Time per checkpoint segment
+    private List<float> segmentTimes = new List<float>();
     private float segmentStartTime = 0f;
     private int currentSegment = 0;
 
@@ -36,10 +42,6 @@ public class TimeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else
-        {
-            //DontDestroyOnLoad(gameObject);
-        }
     }
 
     void Start()
@@ -48,6 +50,9 @@ public class TimeManager : MonoBehaviour
         {
             StartTimer();
         }
+
+        // Hide name input UI initially
+        HideNameInputUI();
     }
 
     void Update()
@@ -56,6 +61,12 @@ public class TimeManager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             UpdateTimerDisplay();
+        }
+
+        // NEW: Prevent input blocking during results
+        if (levelCompleted && EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(playerNameInput?.gameObject);
         }
     }
 
@@ -76,7 +87,6 @@ public class TimeManager : MonoBehaviour
         Debug.Log($"Timer STOPPED at: {FormattedTime}");
     }
 
-    // NEW: Called when hitting each checkpoint
     public void CheckpointReached()
     {
         if (!trackSegmentTimes || levelCompleted) return;
@@ -90,7 +100,6 @@ public class TimeManager : MonoBehaviour
         Debug.Log($"Checkpoint {currentSegment}: {FormatTime(segmentTime)} (Total: {FormattedTime})");
     }
 
-    // NEW: Get formatted segment times for UI
     public string GetSegmentTimesFormatted()
     {
         if (!trackSegmentTimes || segmentTimes.Count == 0) return "No segments recorded";
@@ -111,7 +120,6 @@ public class TimeManager : MonoBehaviour
     {
         if (levelCompleted) return;
 
-        // Final segment time
         if (trackSegmentTimes)
         {
             float finalSegmentTime = elapsedTime - segmentStartTime;
@@ -144,11 +152,81 @@ public class TimeManager : MonoBehaviour
             resultsText.text = $"\nTotal Time: {FormattedTime}";
         }
 
-        // NEW: Show segment times
         if (segmentTimesText != null)
         {
             segmentTimesText.text = GetSegmentTimesFormatted();
         }
+
+        ShowNameInputUI();
+    }
+
+    void ShowNameInputUI()
+    {
+        if (nameInputPanel != null)
+        {
+            nameInputPanel.SetActive(true);
+        }
+
+        if (playerNameInput != null)
+        {
+            playerNameInput.text = PlayerPrefs.GetString("LastPlayerName", "Player");
+            playerNameInput.Select();
+            playerNameInput.ActivateInputField();
+        }
+
+        if (submitScoreButton != null)
+        {
+            submitScoreButton.onClick.RemoveAllListeners();
+            submitScoreButton.onClick.AddListener(SavePlayerScore);
+        }
+    }
+
+    void HideNameInputUI()
+    {
+        if (nameInputPanel != null)
+        {
+            nameInputPanel.SetActive(false);
+        }
+        if (submitMessage != null)
+        {
+            submitMessage.gameObject.SetActive(false);
+        }
+    }
+
+    public void SavePlayerScore()
+    {
+        string playerName = playerNameInput != null ? playerNameInput.text.Trim() : "Anonymous";
+        if (string.IsNullOrEmpty(playerName)) playerName = "Anonymous";
+
+        PlayerPrefs.SetString("LastPlayerName", playerName);
+        SaveScoreToPrefs(playerName, elapsedTime);
+
+        if (submitMessage != null)
+        {
+            submitMessage.text = $"Saved: {playerName} - {FormattedTime}";
+            submitMessage.gameObject.SetActive(true);
+        }
+
+        // Hide input after 2 seconds
+        Invoke(nameof(HideNameInputUI), 2f);
+
+        Debug.Log($"Score saved: {playerName} - {FormattedTime}");
+    }
+
+    private void SaveScoreToPrefs(string name, float time)
+    {
+        int scoreCount = PlayerPrefs.GetInt("ScoreCount", 0);
+        PlayerPrefs.SetFloat($"Score_{scoreCount}_Time", time);
+        PlayerPrefs.SetString($"Score_{scoreCount}_Name", name);
+        PlayerPrefs.SetInt("ScoreCount", scoreCount + 1);
+
+        // Keep only top 20 scores (room to grow)
+        if (scoreCount + 1 > 20)
+        {
+            PlayerPrefs.SetInt("ScoreCount", 20);
+        }
+
+        PlayerPrefs.Save();
     }
 
     string FormatTime(float totalSeconds)

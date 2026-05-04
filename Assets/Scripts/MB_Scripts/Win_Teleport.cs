@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Win_Teleport : MonoBehaviour
 {
@@ -13,12 +14,17 @@ public class Win_Teleport : MonoBehaviour
     [Header("Ball Spawn Points")]
     [SerializeField] private List<Vector3> ballSpawnPositions = new List<Vector3>();
 
+    [Header("UI Timing")]
+    [SerializeField] private float showResultsDelay = 0.5f;  // Wait 0.5s before UI
+    [SerializeField] private float totalSceneDelay = 4f;     // Total time before scene load
+
     private int currentIndex = 0;
     private Vector3 lastRespawnPoint;
     private Vector3 lastRespawnRotation;
     private Vector3 lastBallSpawnPoint;
     private float teleportCooldown = 0f;
     private float cooldownDuration = 0.5f;
+    private bool finalCheckpointReached = false;
 
     void Start()
     {
@@ -72,37 +78,57 @@ public class Win_Teleport : MonoBehaviour
         }
     }
 
+    // SIMPLIFIED TELEPORT - FULLY INTEGRATED
     public void Teleport()
     {
-        if (Time.time < teleportCooldown) return;
-
-        Debug.Log($"Teleport called. Current: {currentIndex} -> Next: {currentIndex + 1}");
-
-        if (playerTransform == null || ballTransform == null || targetPositions.Count == 0 || ballSpawnPositions.Count == 0)
-        {
-            Debug.LogError("Missing required assignments!");
-            return;
-        }
+        if (Time.time < teleportCooldown || finalCheckpointReached) return;
 
         int nextIndex = currentIndex + 1;
 
+        if (playerTransform == null || ballTransform == null || targetPositions.Count == 0 || ballSpawnPositions.Count == 0)
+        {
+            Debug.LogError("Missing assignments!");
+            return;
+        }
+
+        TimeManager tm = FindObjectOfType<TimeManager>();
+
+        // ONLY FINAL CHECKPOINT (index == targetPositions.Count)
+        if (nextIndex >= targetPositions.Count)
+        {
+            Debug.Log(" FINAL CHECKPOINT #3!");
+            finalCheckpointReached = true;
+
+            // 1. Final teleport
+            DoFinalTeleport();
+
+            // 2. Checkpoint call (for final segment time)
+            if (tm != null) tm.CheckpointReached();
+
+            // 3. Show results
+            Invoke(nameof(ShowResults), 0.5f);
+            Invoke(nameof(LoadHubScene), 4f);
+            return;
+        }
+
+        // REGULAR CHECKPOINTS (1 & 2 only)
+        if (tm != null) tm.CheckpointReached();
+        DoTeleport(nextIndex);
+    }
+
+    private void ShowResults()
+    {
         TimeManager tm = FindObjectOfType<TimeManager>();
         if (tm != null)
         {
-            if (nextIndex == 3)
-            {
-                Debug.Log("Final checkpoint - showing results");
-                tm.CompleteLevel();
-                Invoke(nameof(LoadHubScene), 3f);
-                return;
-            }
-            else
-            {
-                tm.CheckpointReached();
-            }
+            tm.CompleteLevel();
+            Debug.Log("Results UI shown  enter name and save");
         }
+    }
 
-        currentIndex = nextIndex;
+    private void DoTeleport(int index)
+    {
+        currentIndex = index;
 
         Vector3 playerTargetPos = targetPositions[currentIndex];
         Vector3 playerTargetRot = targetRotations.Count > currentIndex ? targetRotations[currentIndex] : Vector3.zero;
@@ -120,6 +146,30 @@ public class Win_Teleport : MonoBehaviour
         teleportCooldown = Time.time + cooldownDuration;
 
         Debug.Log($"Teleported to checkpoint {currentIndex}");
+    }
+
+    private void DoFinalTeleport()
+    {
+        if (targetPositions.Count > 0)
+        {
+            int finalIndex = targetPositions.Count - 1;
+            Vector3 finalPos = targetPositions[finalIndex];
+            Vector3 finalRot = targetRotations.Count > finalIndex ? targetRotations[finalIndex] : Vector3.zero;
+
+            playerTransform.position = finalPos;
+            playerTransform.eulerAngles = finalRot;
+            lastRespawnPoint = finalPos;
+            lastRespawnRotation = finalRot;
+
+            if (ballSpawnPositions.Count > 0)
+            {
+                ballTransform.position = ballSpawnPositions[finalIndex];
+                lastBallSpawnPoint = ballSpawnPositions[finalIndex];
+            }
+        }
+
+        ResetVelocities();
+        Debug.Log("Teleported to FINAL position");
     }
 
     private void RespawnPlayer()
@@ -181,6 +231,7 @@ public class Win_Teleport : MonoBehaviour
     public void ResetIndex()
     {
         currentIndex = 0;
+        finalCheckpointReached = false;
         teleportCooldown = 0f;
 
         if (targetPositions.Count > 0)
@@ -195,15 +246,11 @@ public class Win_Teleport : MonoBehaviour
         Debug.Log("Index reset to 0");
     }
 
-    void Update()
-    {
-    }
-
     private void LoadHubScene()
     {
         Time.timeScale = 1f;
         Physics.autoSimulation = true;
         AudioListener.pause = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("NewMainLobby");
+        SceneManager.LoadScene("NewMainLobby");
     }
 }
