@@ -24,6 +24,14 @@ PrefabInstance:
       propertyPath: rb
       value: 
       objectReference: {fileID: 1385173726270059778}
+    - target: {fileID: 2206665997531911539, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -7196199828846791915, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
+    - target: {fileID: 3114164672003847685, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -7196199828846791915, guid: 58e12a9ca88724a578b819825762f0fe, type: 2}
     - target: {fileID: 3649995453815523520, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
       propertyPath: m_Name
       value: PlayerPrefab_V2
@@ -208,17 +216,6 @@ Rigidbody:
   m_CorrespondingSourceObject: {fileID: 52730896071912146, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
   m_PrefabInstance: {fileID: 1405816129251319760}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1708720236544863935 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 303129112041304431, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
-  m_PrefabInstance: {fileID: 1405816129251319760}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2388339181492180752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e56b3e861435c3349b5e4952e3cb350b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleCharacterController
 --- !u!1 &2388339181492180752 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3649995453815523520, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
@@ -236,7 +233,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecedddd5d12fe504dbce6afc3069fe34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  characterController: {fileID: 1708720236544863935}
+  characterController: {fileID: 0}
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &2735206644660702274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3924624986177803154, guid: 8c037b85d184a7642a5de7817edf58b0, type: 3}
@@ -336,13 +336,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4564df1bf71fcb74e898ebdb1988781c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  terrain: {fileID: 0}
-  layerToPaint: 1
+  mode2Material: {fileID: 0}
   brushSize: 5
   muzzlePoint: {fileID: 2735206644660702274}
   PaintAmount: 100
-  PaintUsuage: 0.1
-  CountDown: 0
+  PaintUsage: 0.05
   playerUIFunction: {fileID: 0}
   PaintMeter: {fileID: 0}
 --- !u!120 &8983838872676052707 stripped
